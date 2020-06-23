@@ -5,7 +5,7 @@ const config = require('./config/appSettings');
 
 exports.run = () => {
     mongoose.connect(
-        `mongodb://${config.db_user}:${config.db_pass}@mongo:27017`,
+        `mongodb://${config.db_user}:${config.db_pass}@${config.db_host}:27017`,
         { useNewUrlParser: true, useUnifiedTopology: true, dbName: config.db_name, useCreateIndex: true, }
     );
 

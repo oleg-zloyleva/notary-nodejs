@@ -66,6 +66,17 @@ const newSchema = new mongoose.Schema({
     updatedAt: 'updated_at'
   }
 });
+// newSchema.set('validateBeforeSave', false);
+newSchema.path('email').validate(function(value, done) {
+  console.log('+++++++++++++++++++++++++++++++++++');
+  this.model('User').count({ email: value }, function(err, count) {
+    if (err) {
+      return done(err);
+    }
+    // If `count` is greater than zero, "invalidate"
+    done(!count);
+  });
+}, 'Email already exists');
 const User = mongoose.model('User', newSchema);
 
 module.exports = User;

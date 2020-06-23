@@ -1,5 +1,6 @@
 const router = require('express').Router();
+const apiPrefix = require('../config/appSettings').apiPrefix;
 
-router.use('/auth', require('./auth'));
+router.use(`${apiPrefix}/auth`, require('./auth'));
 
 module.exports = router;

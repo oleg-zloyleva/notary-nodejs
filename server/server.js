@@ -9,6 +9,7 @@ const mongo = require('./mongo');
 mongo.run();
 
 /** Middleware */
+app.use(express.json());
 
 /** Routers */
 app.use(require('./controllers'));

@@ -1,6 +1,7 @@
 'use strict';
 const assert = require('assert').strict;
 const bcrypt = require('bcrypt');
+const config = require('../config/appSettings');
 
 module.exports = {
   up: (models, mongoose) => {
@@ -10,7 +11,7 @@ module.exports = {
           document: {
             name: 'Test',
             phone: '123456789',
-            password: bcrypt.hashSync('123456789',10),
+            password: bcrypt.hashSync('123456789',config.bcryptSalt),
             phone_verified_at: Date.now(),
           }
         }
