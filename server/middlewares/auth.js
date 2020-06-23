@@ -1,15 +1,19 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/users');
+const { unauthorizedResponseHandler } = require('../helpers/http');
 
-module.exports = (req,res,next) => {
+module.exports = async (req,res,next) => {
     let token = null;
     if ( req.header('Authorization') && (token = req.header('Authorization').replace('Bearer ', '')) && token) {
         req.token = jwt.verify(token, process.env.JWT_KEY);
-        // user?
-        console.log(req.token);
+        const user = await User.findOne({
+            phone: req.token.phone
+        });
+
+        if (!user) return unauthorizedResponseHandler(res, 'Unauthorized user');
+        req.user = user;
         next();
     } else {
-        return res.status(401).json({
-            error: "Access token is required"
-        })
+        return unauthorizedResponseHandler(res, 'Access token is required');
     }
 }

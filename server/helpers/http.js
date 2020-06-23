@@ -9,11 +9,21 @@ exports.catchResponseHandler = (res,errMsg,code=500) => {
         ]
     });
 };
-exports.notFoundResponseHandler = (res,errMsg,code=404) => {
-    return res.status(code).json({
+exports.notFoundResponseHandler = (res,errMsg) => {
+    return res.status(404).json({
         errors: [
             {
-                status: code,
+                status: 404,
+                title:  errMsg,
+            }
+        ]
+    });
+};
+exports.unauthorizedResponseHandler = (res,errMsg) => {
+    return res.status(401).json({
+        errors: [
+            {
+                status: 401,
                 title:  errMsg,
             }
         ]
