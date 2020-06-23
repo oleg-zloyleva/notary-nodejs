@@ -16,7 +16,10 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "npx mongoosejs-cli db:seed:all",
+    "unseed": "npx mongoosejs-cli db:seed:undo:all",
+    "fresh": "npm run unseed && npm run seed"
   },
   "keywords": [],
   "author": "",

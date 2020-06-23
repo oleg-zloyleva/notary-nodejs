@@ -8,8 +8,10 @@ module.exports = {
       {
         insertOne: {
           document: {
-            name: 'first test',
+            name: 'Test',
+            phone: '123456789',
             password: bcrypt.hashSync('123456789',10),
+            phone_verified_at: Date.now(),
           }
         }
       }

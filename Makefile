@@ -21,3 +21,7 @@ connect_server: # node command line
 
 connect_mongo: # node command line
 	@docker-compose -f ${DOCKER_CONFIG} exec mongo bash
+
+
+fresh: # node command : reseeding data in Mongo
+	@docker-compose -f ${DOCKER_CONFIG} exec  -w /www/ server bash -c "npm run fresh"
