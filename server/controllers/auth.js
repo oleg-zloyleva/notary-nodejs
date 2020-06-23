@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const config = require('../config/appSettings');
+const auth = require('../middlewares/auth');
 const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
 const {getSMSCode} = require('../helpers/func');
 
@@ -89,6 +90,12 @@ router.post('/activate', async (req, res) => {
         console.log(e);
         return catchResponseHandler(res, "Can't activate user");
     }
+});
+
+router.get('/me', auth, (req,res) => {
+    res.json({
+        data: 'ok'
+    })
 });
 
 module.exports = router;
