@@ -2,6 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
+const BlackList = require('../models/blacklist');
 const config = require('../config/appSettings');
 const auth = require('../middlewares/auth');
 const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
@@ -96,6 +97,23 @@ router.get('/me', auth, (req,res) => {
     res.json({
         data: req.user
     })
+});
+
+router.get('/logout', auth, async (req,res) => {
+    try{
+        await BlackList.create({
+            token: req.token,
+            expiresAt: req.tokenData.exp * 1000,
+        });
+
+        res.json({
+            data: "ok",
+        })
+    }catch (e) {
+        // todo logger ERROR
+        console.log(e);
+        return catchResponseHandler(res, "Can't logout user");
+    }
 });
 
 module.exports = router;
