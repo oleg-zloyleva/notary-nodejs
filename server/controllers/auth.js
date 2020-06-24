@@ -6,7 +6,7 @@ const BlackList = require('../models/blacklist');
 const config = require('../config/appSettings');
 const auth = require('../middlewares/auth');
 const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
-const {getSMSCode} = require('../helpers/func');
+const {getSMSCode, getNewPassword} = require('../helpers/func');
 
 router.post('/login', async (req, res) => {
     try {
@@ -50,9 +50,10 @@ router.post('/register', async (req, res) => {
     try {
         const sms_code = getSMSCode();
         await User.init();
+        // todo update with upsert = true, filter: phone and phone_verified_at => $exists: false
         const newUser = await User.create({
             name: req.body.name,
-            password: bcrypt.hashSync(req.body.password,config.bcryptSalt),
+            password: getNewPassword(req.body.password),
             phone: req.body.phone,
             sms_code,
         });
@@ -70,9 +71,14 @@ router.post('/register', async (req, res) => {
 router.post('/activate', async (req, res) => {
     try {
         const {sms_code} = req.body;
-        const user = await User.findOne({sms_code});
+        const user = await User.findOne({
+            sms_code,
+            phone_verified_at: {
+                $exists: false
+            }
+        });
 
-        if (!user) return notFoundResponseHandler(res,'User not found');
+        if (!user) return notFoundResponseHandler(res,'User for activation is not found');
         const token = jwt.sign(
             {phone: user.phone},
             config.jwtSalt,
