@@ -99,12 +99,6 @@ router.post('/activate', async (req, res) => {
     }
 });
 
-router.get('/me', auth, (req,res) => {
-    res.json({
-        data: req.user
-    })
-});
-
 router.get('/logout', auth, async (req,res) => {
     try{
         await BlackList.create({
