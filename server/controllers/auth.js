@@ -94,7 +94,7 @@ router.post('/activate', async (req, res) => {
 
 router.get('/me', auth, (req,res) => {
     res.json({
-        data: 'ok'
+        data: req.user
     })
 });
 
