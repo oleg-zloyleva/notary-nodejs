@@ -1,14 +1,14 @@
 'use strict';
 const mongoose = require('mongoose');
-const ScreenImage = require('../schemas/ScreenImage');
 
 const newSchema = new mongoose.Schema({
-  number: {
+  url: {
     type: String
   },
-  passport: [ScreenImage],
-  inn: [ScreenImage],
-  user: { // relation to user
+  check: {
+    type: Boolean
+  },
+  owner: { // relation to user
     type: ObjectId
   }
 }, {
@@ -17,4 +17,4 @@ const newSchema = new mongoose.Schema({
     updatedAt: 'updated_at'
   }
 });
-module.exports = mongoose.model('DocProxyTypeA', newSchema);
+module.exports = newSchema;
