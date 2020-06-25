@@ -31,7 +31,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/', auth, upload.fields([{ name: 'passport', maxCount: 5 },{ name: 'inn', maxCount: 10 }]), async (req, res) => {
-    // console.log("REQ",req.files);
+    // console.log("REQ",req.files.passport);
+    req.files.passport.map( async el => {
+        console.log(el)
+        await ScreenImage.create({
+            destination: el.destination,
+            filename: el.filename,
+            path: el.path,
+        });
+    });
     res.json({})
 });
 
