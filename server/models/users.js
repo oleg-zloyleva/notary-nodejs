@@ -1,5 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
+const { Role } = require('../helpers/constants');
 
 const newSchema = new mongoose.Schema({
   name: {
@@ -58,7 +59,7 @@ const newSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'user'],
+    enum: Object.values(Role),
   },
 }, {
   timestamps: {

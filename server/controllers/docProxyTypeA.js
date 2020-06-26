@@ -2,8 +2,9 @@ const router = require('express').Router();
 const path = require('path');
 const crypto = require("crypto");
 const fs = require('fs');
+const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
 
-const ScreenImage = require('../models/ScreenImage');
+const DocProxyTypeA = require('../models/DocProxyTypeA');
 
 const mime = require('mime');
 const auth = require('../middlewares/auth');
@@ -30,17 +31,54 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post('/', auth, upload.fields([{ name: 'passport', maxCount: 5 },{ name: 'inn', maxCount: 10 }]), async (req, res) => {
+router.post('/', auth, /** middleware create PATH & to req */ upload.fields([{ name: 'passport', maxCount: 10 },{ name: 'inn', maxCount: 1 }]), async (req, res) => {
     // console.log("REQ",req.files.passport);
-    req.files.passport.map( async el => {
-        console.log(el)
-        await ScreenImage.create({
-            destination: el.destination,
-            filename: el.filename,
-            path: el.path,
+
+    try {
+        const document = await DocProxyTypeA.create({
+            representative: req.body.representative,
+            user: req.user._id,
         });
-    });
-    res.json({})
+
+        res.json({
+            data: true
+        })
+    }catch (e) {
+        // todo logger ERROR
+        console.log(e);
+        return catchResponseHandler(res, "Can't create doc");
+    }
+});
+
+router.post('/:id', auth, upload.fields([{ name: 'passport', maxCount: 10 },{ name: 'inn', maxCount: 1 }]), async (req, res) => {
+    // console.log("REQ",req.files.passport);
+
+    try {
+        const document = await DocProxyTypeA.findOne({
+            _id: req.params.id,
+        });
+
+        Object.keys(req.files).map(doc => {
+            req.files[doc].map( async el => {
+
+                document[doc].push({
+                    destination: el.destination,
+                    filename: el.filename,
+                    path: el.path,
+                    // access: [req.user._id], // todo set users array
+                });
+            });
+        });
+        document.save();
+
+        res.json({
+            data: true
+        })
+    }catch (e) {
+        // todo logger ERROR
+        console.log(e);
+        return catchResponseHandler(res, "Can't create doc");
+    }
 });
 
 module.exports = router;

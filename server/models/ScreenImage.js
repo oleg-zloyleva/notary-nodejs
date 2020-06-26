@@ -11,6 +11,9 @@ const newSchema = new mongoose.Schema({
   path: {
     type: String
   },
+  access: {
+    type: [mongoose.ObjectId]
+  },
 }, {
   timestamps: {
     createdAt: 'created_at',

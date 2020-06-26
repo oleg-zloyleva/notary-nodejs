@@ -2,15 +2,18 @@
 const mongoose = require('mongoose');
 
 const newSchema = new mongoose.Schema({
-  url: {
+  destination: {
     type: String
   },
-  check: {
-    type: Boolean
+  filename: {
+    type: String
   },
-  owner: { // relation to user
-    type: ObjectId
-  }
+  path: {
+    type: String
+  },
+  access: {
+    type: [mongoose.ObjectId]
+  },
 }, {
   timestamps: {
     createdAt: 'created_at',

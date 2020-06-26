@@ -4,6 +4,7 @@ const path = require('path');
 
 const mime = require('mime');
 const auth = require('../middlewares/auth');
+const ScreenImage = require('../models/ScreenImage');
 
 router.get('/:img', auth, (req,res) => {
 
