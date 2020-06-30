@@ -30,7 +30,8 @@ const newSchema = new mongoose.Schema({
 
   user: { // relation to user
     type: mongoose.ObjectId
-  }
+  },
+  access: [mongoose.ObjectId] // users who has access to doc and screens
 }, {
   timestamps: {
     createdAt: 'created_at',

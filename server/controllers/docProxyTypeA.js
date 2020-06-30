@@ -5,6 +5,7 @@ const fs = require('fs');
 const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
 
 const DocProxyTypeA = require('../models/DocProxyTypeA');
+const { Representative,DocProxyTypeAFields } = require('../helpers/constants');
 
 const mime = require('mime');
 const auth = require('../middlewares/auth');
@@ -38,6 +39,7 @@ router.post('/', auth, /** middleware create PATH & to req */ upload.fields([{ n
         const document = await DocProxyTypeA.create({
             representative: req.body.representative,
             user: req.user._id,
+            // access: [req.user._id], // todo set users array
         });
 
         res.json({
@@ -54,30 +56,36 @@ router.post('/:id', auth, upload.fields([{ name: 'passport', maxCount: 10 },{ na
     // console.log("REQ",req.files.passport);
 
     try {
-        const document = await DocProxyTypeA.findOne({
-            _id: req.params.id,
-        });
+        const document = await DocProxyTypeA.findById(req.params.id);
+        if (document) {
 
-        Object.keys(req.files).map(doc => {
-            req.files[doc].map( async el => {
+            const fields = (document.representative === Representative.INDIVIDUAL)
+                ? DocProxyTypeAFields[Representative.INDIVIDUAL]
+                : DocProxyTypeAFields[Representative.ENTITY];
 
-                document[doc].push({
-                    destination: el.destination,
-                    filename: el.filename,
-                    path: el.path,
-                    // access: [req.user._id], // todo set users array
+            fields.map(doc => {
+                req.files[doc].map( async el => {
+
+                    document[doc].push({
+                        destination: el.destination,
+                        filename: el.filename,
+                        path: el.path,
+                        // access: [req.user._id], // todo set users array
+                    });
                 });
             });
-        });
-        document.save();
+            document.save();
 
-        res.json({
-            data: true
-        })
+            res.json({
+                data: true
+            })
+        } else {
+            notFoundResponseHandler(res, 'Document not found')
+        }
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't create doc");
+        return catchResponseHandler(res, "Can't update doc. Invalid id");
     }
 });
 
