@@ -16,16 +16,19 @@
   "devDependencies": {
     "assert": "^2.0.0",
     "colors": "^1.4.0",
+    "jest": "^26.1.0",
     "nodemon": "^2.0.4",
-    "swagger-ui-express": "^4.1.4",
-    "swagger-jsdoc": "^4.0.0"
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
     "dev": "nodemon -e js,json,yaml server.js",
     "demon_dev": "nodemon -e js,json,yaml server.js &",
     "seed": "npx mongoosejs-cli db:seed:all",
     "unseed": "npx mongoosejs-cli db:seed:undo:all",
-    "fresh": "npm run unseed && npm run seed"
+    "fresh": "npm run unseed && npm run seed",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
