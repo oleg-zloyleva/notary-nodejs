@@ -39,6 +39,7 @@ router.post('/reset', async (req, res) => {
         });
         if (!user) return notFoundResponseHandler(res,'User not found');
         user.new_phone = req.body.new_phone;
+        // todo send SMS
         user.sms_code = getSMSCode();
         user.save();
 

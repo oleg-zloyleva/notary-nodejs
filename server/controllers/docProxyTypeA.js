@@ -32,6 +32,42 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+router.get('/', auth, async (req, res) => {
+    try {
+        const document = await DocProxyTypeA.find({
+            user: req.user._id
+        });
+
+        if (!document) {
+            return notFoundResponseHandler(res,'Document not found')
+        }
+        res.json({
+            data: document
+        })
+    }catch (e) {
+        // todo logger ERROR
+        console.log(e);
+        return catchResponseHandler(res, "Can't find doc, broken id");
+    }
+});
+
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const document = await DocProxyTypeA.findById(req.params.id);
+
+        if (!document) {
+            return notFoundResponseHandler(res,'Document not found')
+        }
+        res.json({
+            data: document
+        })
+    }catch (e) {
+        // todo logger ERROR
+        console.log(e);
+        return catchResponseHandler(res, "Can't find doc, broken id");
+    }
+});
+
 router.post('/', auth, /** middleware create PATH & to req */ upload.fields([{ name: 'passport', maxCount: 10 },{ name: 'inn', maxCount: 1 }]), async (req, res) => {
     // console.log("REQ",req.files.passport);
 
@@ -43,7 +79,7 @@ router.post('/', auth, /** middleware create PATH & to req */ upload.fields([{ n
         });
 
         res.json({
-            data: true
+            data: document
         })
     }catch (e) {
         // todo logger ERROR

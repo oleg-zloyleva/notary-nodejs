@@ -7,19 +7,22 @@
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mime": "latest",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.19",
     "mongoosejs-cli": "^1.0.5",
-    "multer": "^1.4.2",
-    "mime": "latest"
+    "multer": "^1.4.2"
   },
   "devDependencies": {
     "assert": "^2.0.0",
     "colors": "^1.4.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "swagger-ui-express": "^4.1.4",
+    "swagger-jsdoc": "^4.0.0"
   },
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon -e js,json,yaml server.js",
+    "demon_dev": "nodemon -e js,json,yaml server.js &",
     "seed": "npx mongoosejs-cli db:seed:all",
     "unseed": "npx mongoosejs-cli db:seed:undo:all",
     "fresh": "npm run unseed && npm run seed"

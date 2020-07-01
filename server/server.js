@@ -4,12 +4,50 @@ const express = require('express');
 const app = express();
 const config = require('./config/appSettings');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+
 /** DB connection */
 const mongo = require('./mongo');
 mongo.run();
 
 /** Middleware */
 app.use(express.json());
+
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'REST API for notary service',
+        version: '1.0.0',
+        description: 'This is the REST API for notary service',
+    },
+    components: {
+        securitySchemes: {
+            BearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+            }
+        },
+    },
+};
+
+// options for the swagger docs
+const options = {
+    // import swaggerDefinitions
+    swaggerDefinition,
+    // path to the API docs
+    apis: ['./swagger/**/*.yaml'],
+};
+// initialize swagger-jsdoc
+const swaggerSpec = swaggerJSDoc(options);
+const swaggerSetup = {
+    ...swaggerSpec,
+    servers: [
+        {url: '/api'}
+    ]
+};
+app.use(`${config.apiPrefix}/doc`, swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
 /** Routers */
 app.use(require('./controllers'));

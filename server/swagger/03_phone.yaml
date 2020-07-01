@@ -1,0 +1,55 @@
+tags:
+  - name: 'Phone'
+    description: Manage user's phone
+
+paths:
+  /phone/change:
+    post:
+      tags:
+        - Phone
+      summary: Send SMS code to new user's phone.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Change'
+      responses:
+        '200':
+          description: SMS code was sended
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Phone
+      summary: Reset password by SMS code & return token.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Confirm'
+      responses:
+        '200':
+          description: Change phone is done
+      security:
+        - BearerAuth: []
+
+
+definitions:
+  Change:
+    type: object
+    properties:
+      new_phone:
+        type: string
+        example: '2222222222'
+  Confirm:
+    type: object
+    properties:
+      sms_code:
+        type: string
+        example: '123456789'
