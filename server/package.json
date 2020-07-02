@@ -17,6 +17,7 @@
     "assert": "^2.0.0",
     "colors": "^1.4.0",
     "jest": "^26.1.0",
+    "node-mocks-http": "^1.8.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2",
     "swagger-jsdoc": "^4.0.0",
