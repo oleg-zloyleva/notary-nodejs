@@ -1,14 +1,12 @@
-const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/users');
-const BlackList = require('../models/blacklist');
-const config = require('../config/appSettings');
-const auth = require('../middlewares/auth');
-const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
-const {getSMSCode, getNewPassword} = require('../helpers/func');
 
-router.post('/login', async (req, res) => {
+const config = require('../../config/appSettings');
+const User = require('../../models/users');
+const {catchResponseHandler,notFoundResponseHandler} = require('../../helpers/http');
+const {getSMSCode, getNewPassword} = require('../../helpers/func');
+
+exports.login = async (req, res) => {
     try {
         const {phone, password} = req.body;
         const user = await User.findOne({phone});
@@ -44,9 +42,9 @@ router.post('/login', async (req, res) => {
         console.log(e);
         return catchResponseHandler(res, "Can't login current user");
     }
-});
+};
 
-router.post('/register', async (req, res) => {
+exports.register = async (req, res) => {
     try {
         const sms_code = getSMSCode();
         await User.init();
@@ -66,9 +64,9 @@ router.post('/register', async (req, res) => {
         console.log(e);
         return catchResponseHandler(res, "Can't create new user");
     }
-});
+};
 
-router.post('/activate', async (req, res) => {
+exports.activate = async (req, res) => {
     try {
         const {sms_code} = req.body;
         const user = await User.findOne({
@@ -97,9 +95,9 @@ router.post('/activate', async (req, res) => {
         console.log(e);
         return catchResponseHandler(res, "Can't activate user");
     }
-});
+};
 
-router.get('/logout', auth, async (req,res) => {
+exports.logout = async (req,res) => {
     try{
         await BlackList.create({
             token: req.token,
@@ -114,6 +112,4 @@ router.get('/logout', auth, async (req,res) => {
         console.log(e);
         return catchResponseHandler(res, "Can't logout user");
     }
-});
-
-module.exports = router;
+};
