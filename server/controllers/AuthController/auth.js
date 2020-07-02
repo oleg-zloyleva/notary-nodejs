@@ -1,33 +1,25 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-const config = require('../../config/appSettings');
 const User = require('../../models/users');
 const {catchResponseHandler,notFoundResponseHandler} = require('../../helpers/http');
-const {getSMSCode, getNewPassword} = require('../../helpers/func');
+const {getSMSCode, getNewPassword, getToken,isPasswordCorrect} = require('../../helpers/func');
 
 exports.login = async (req, res) => {
     try {
         const {phone, password} = req.body;
-        const user = await User.findOne({phone});
+        // Find & check password -> user || Exception
 
-        if (!user) return notFoundResponseHandler(res,'User not found');
-        if ( bcrypt.compareSync(password, user.password) ) {
-            const token = jwt.sign(
-                {phone: user.phone},
-                config.jwtSalt,
-                { expiresIn: +config.expiresIn * 1000 }
-            );
+        const user = await User.loginUserReturnToken(req.body);
 
-            user.phone_verified_at = Date.now();
-            user.sms_code = null;
-            user.save();
+        // const user = await User.findOne({phone});
+
+        // if (!user) return notFoundResponseHandler(res,'User not found');
+        if ( isPasswordCorrect(password, user) ) {
+            const token = getToken(user);
 
             return res.json({
                 token
             })
         }else {
-            res.status(401).json({
+            return res.status(401).json({
                 errors: [
                     {
                         status: 401,
@@ -36,7 +28,6 @@ exports.login = async (req, res) => {
                 ]
             });
         }
-
     } catch (e) {
         // todo logger ERROR
         console.log(e);
@@ -77,11 +68,7 @@ exports.activate = async (req, res) => {
         });
 
         if (!user) return notFoundResponseHandler(res,'User for activation is not found');
-        const token = jwt.sign(
-            {phone: user.phone},
-            config.jwtSalt,
-            { expiresIn: +config.expiresIn * 1000 }
-        );
+        const token = getToken(user);
 
         user.phone_verified_at = Date.now();
         user.sms_code = null;
@@ -104,7 +91,7 @@ exports.logout = async (req,res) => {
             expiresAt: req.tokenData.exp * 1000,
         });
 
-        res.json({
+        return res.json({
             data: "ok",
         })
     }catch (e) {

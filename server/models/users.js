@@ -67,16 +67,13 @@ const newSchema = new mongoose.Schema({
     updatedAt: 'updated_at'
   }
 });
-// newSchema.set('validateBeforeSave', false);
-// newSchema.path('email').validate(function(value, done) {
-//   this.model('User').count({ email: value }, function(err, count) {
-//     if (err) {
-//       return done(err);
-//     }
-//     // If `count` is greater than zero, "invalidate"
-//     done(!count);
-//   });
-// }, 'Email already exists');
+
+newSchema.statics.loginUserReturnToken = async function({phone, password}){
+  const user = await this.findOne({phone});
+  if (!user) throw new Error('User not found');
+  return user;
+};
+
 const User = mongoose.model('User', newSchema);
 
 module.exports = User;
