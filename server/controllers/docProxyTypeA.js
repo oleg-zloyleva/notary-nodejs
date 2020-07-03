@@ -47,7 +47,7 @@ router.get('/', auth, async (req, res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't find doc, broken id");
+        return catchResponseHandler(e,res, "Can't find doc, broken id");
     }
 });
 
@@ -64,7 +64,7 @@ router.get('/:id', auth, async (req, res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't find doc, broken id");
+        return catchResponseHandler(e,res, "Can't find doc, broken id");
     }
 });
 
@@ -84,7 +84,7 @@ router.post('/', auth, /** middleware create PATH & to req */ upload.fields([{ n
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't create doc");
+        return catchResponseHandler(e,res, "Can't create doc");
     }
 });
 
@@ -121,7 +121,7 @@ router.post('/:id', auth, upload.fields([{ name: 'passport', maxCount: 10 },{ na
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't update doc. Invalid id");
+        return catchResponseHandler(e,res, "Can't update doc. Invalid id");
     }
 });
 

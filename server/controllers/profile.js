@@ -28,7 +28,7 @@ router.put('/', auth, async (req, res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't send code for change user's phone");
+        return catchResponseHandler(e,res, "Can't send code for change user's phone");
     }
 });
 

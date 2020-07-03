@@ -25,7 +25,7 @@ router.post('/change', auth, async (req,res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't change user's password");
+        return catchResponseHandler(e,res, "Can't change user's password");
     }
 });
 
@@ -49,7 +49,7 @@ router.post('/reset', async (req, res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't get sms code");
+        return catchResponseHandler(e,res, "Can't get sms code");
     }
 });
 
@@ -78,7 +78,7 @@ router.patch('/reset', async (req, res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't get sms code");
+        return catchResponseHandler(e,res, "Can't get sms code");
     }
 });
 

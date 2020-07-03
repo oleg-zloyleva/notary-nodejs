@@ -1,14 +1,14 @@
+const CustomError = require('../errors/customError');
 
-exports.catchResponseHandler = (res,errMsg,code=500) => {
-    return res.status(code).json({
-        errors: [
-            {
-                status: code,
-                title:  errMsg,
-            }
-        ]
+exports.catchResponseHandler = (e,res,errMsg) => {
+    const data = (e instanceof CustomError)
+        ? {status:e._statusCode,title:e.message,}
+        : {status:500,title:errMsg};
+    return res.status(data.status).json({
+        errors: [data]
     });
 };
+
 exports.notFoundResponseHandler = (res,errMsg) => {
     return res.status(404).json({
         errors: [
@@ -19,6 +19,7 @@ exports.notFoundResponseHandler = (res,errMsg) => {
         ]
     });
 };
+
 exports.unauthorizedResponseHandler = (res,errMsg) => {
     return res.status(401).json({
         errors: [

@@ -16,7 +16,7 @@ router.post('/change', auth, async (req,res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't send code for change user's phone");
+        return catchResponseHandler(e,res, "Can't send code for change user's phone");
     }
 });
 
@@ -36,7 +36,7 @@ router.patch('/change', auth, async (req,res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't change user's phone");
+        return catchResponseHandler(e,res, "Can't change user's phone");
     }
 });
 

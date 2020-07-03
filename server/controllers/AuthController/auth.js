@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
     } catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't login current user");
+        return catchResponseHandler(e,res, "Can't login current user");
     }
 };
 
@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
     } catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't create new user");
+        return catchResponseHandler(e,res, "Can't create new user");
     }
 };
 
@@ -58,7 +58,7 @@ exports.activate = async (req, res) => {
     } catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't activate user");
+        return catchResponseHandler(e,res, "Can't activate user");
     }
 };
 
@@ -75,6 +75,6 @@ exports.logout = async (req,res) => {
     }catch (e) {
         // todo logger ERROR
         console.log(e);
-        return catchResponseHandler(res, "Can't logout user");
+        return catchResponseHandler(e,res, "Can't logout user");
     }
 };
