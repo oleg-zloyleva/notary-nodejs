@@ -1,4 +1,3 @@
-
 const { login, register, activate, logout } = require('./auth');
 const User = require('../../models/users');
 const httpMocks = require('node-mocks-http');
@@ -12,6 +11,9 @@ const mockRegister = {
 const mockLogin = {
     password: '123456789',
     phone: '0991234567',
+};
+const mockActivate = {
+    sms_code: '123456789',
 };
 
 const mockPassword = {
@@ -67,5 +69,16 @@ describe('AuthController. Call register method & User.create', () => {
         expect(res.statusCode).toBe(200);
         expect(res._isEndCalled()).toBeTruthy();
         expect(res._getJSONData()).toStrictEqual({data: mockRegister})
+    })
+});
+
+describe('AuthController. Call activate method & User.update', () => {
+    test('Should call activate method', async () => {
+        User.findOneAndUpdate = await jest.fn().mockResolvedValue({phone: '123456789'});
+        req.body = mockActivate;
+        await activate(req,res);
+        expect(User.findOneAndUpdate).toBeCalled();
+        expect(res.statusCode).toBe(200);
+        expect(res._isEndCalled()).toBeTruthy();
     })
 });

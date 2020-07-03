@@ -38,26 +38,8 @@ exports.register = async (req, res) => {
 
 exports.activate = async (req, res) => {
     try {
-        const {sms_code} = req.body;
-
-        const user = await User.findOneAndUpdate(
-            {
-                sms_code,
-                phone_verified_at: {
-                    $exists: false
-                }
-            },
-            {
-                phone_verified_at: Date.now(),
-                sms_code: null,
-            }
-        );
-
-        if (!user) throw new CustomError('User for activation is not found',404);
-
-        return res.json({
-            token: getToken(user)
-        })
+        const token = await User.activateUsersBySMS(req.body);
+        return res.json({token})
     } catch (e) {
         // todo logger ERROR
         console.log(e);
@@ -69,11 +51,11 @@ exports.logout = async (req,res) => {
     try{
         await BlackList.create({
             token: req.token,
-            expiresAt: req.tokenData.exp * 1000,
+            expiresAt: req.tokenData.exp * 1000, // todo cron check this value & delete document if date old
         });
 
         return res.json({
-            data: "ok",
+            data: true,
         })
     }catch (e) {
         // todo logger ERROR

@@ -77,6 +77,24 @@ newSchema.statics.loginUserReturnToken = async function({phone, password}){
   return getToken(user);
 };
 
+newSchema.statics.activateUsersBySMS = async function({sms_code}){
+  const user = await this.findOneAndUpdate(
+      {
+        sms_code,
+        phone_verified_at: {
+          $exists: false
+        }
+      },
+      {
+        phone_verified_at: Date.now(),
+        sms_code: null,
+      }
+  );
+
+  if (!user) throw new CustomError('User for activation is not found',404);
+  return getToken(user);
+};
+
 const User = mongoose.model('User', newSchema);
 
 module.exports = User;
