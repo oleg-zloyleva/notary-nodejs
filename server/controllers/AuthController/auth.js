@@ -1,33 +1,11 @@
 const User = require('../../models/users');
 const {catchResponseHandler,notFoundResponseHandler} = require('../../helpers/http');
-const {getSMSCode, getNewPassword, getToken,isPasswordCorrect} = require('../../helpers/func');
+const {getSMSCode, getNewPassword, getToken} = require('../../helpers/func');
 
 exports.login = async (req, res) => {
     try {
-        const {phone, password} = req.body;
-        // Find & check password -> user || Exception
-
-        const user = await User.loginUserReturnToken(req.body);
-
-        // const user = await User.findOne({phone});
-
-        // if (!user) return notFoundResponseHandler(res,'User not found');
-        if ( isPasswordCorrect(password, user) ) {
-            const token = getToken(user);
-
-            return res.json({
-                token
-            })
-        }else {
-            return res.status(401).json({
-                errors: [
-                    {
-                        status: 401,
-                        title: 'Login failed! Check authentication credentials'
-                    }
-                ]
-            });
-        }
+        const token = await User.loginUserReturnToken(req.body);
+        return res.json({token})
     } catch (e) {
         // todo logger ERROR
         console.log(e);

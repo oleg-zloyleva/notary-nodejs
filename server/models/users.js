@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const { Role } = require('../helpers/constants');
+const {getToken,isPasswordCorrect} = require('../helpers/func');
 
 const newSchema = new mongoose.Schema({
   name: {
@@ -70,8 +71,9 @@ const newSchema = new mongoose.Schema({
 
 newSchema.statics.loginUserReturnToken = async function({phone, password}){
   const user = await this.findOne({phone});
-  if (!user) throw new Error('User not found');
-  return user;
+  if (!user) throw new Error('User not found'); // status 404
+  if ( !isPasswordCorrect(password, user) ) throw new Error('Wrong phone or password'); // status 401
+  return getToken(user);
 };
 
 const User = mongoose.model('User', newSchema);
