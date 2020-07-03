@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const CustomError = require('../errors/customError');
 const { Role } = require('../helpers/constants');
-const {getToken,isPasswordCorrect} = require('../helpers/func');
+const {getToken,getNewPassword,getSMSCode,isPasswordCorrect} = require('../helpers/func');
 
 const newSchema = new mongoose.Schema({
   name: {
@@ -93,6 +93,19 @@ newSchema.statics.activateUsersBySMS = async function({sms_code}){
 
   if (!user) throw new CustomError('User for activation is not found',404);
   return getToken(user);
+};
+
+newSchema.statics.registerNewUser = async function ({name,password,phone}) {
+  await this.init();
+  // todo update with upsert = true, filter: phone and phone_verified_at => $exists: false
+  const newUser = await this.create({
+    name: name,
+    password: getNewPassword(password),
+    phone: phone,
+    sms_code: getSMSCode(),
+  });
+
+  return process.env.NODE_ENV === 'development' ? newUser : true; // todo remove after
 };
 
 const User = mongoose.model('User', newSchema);

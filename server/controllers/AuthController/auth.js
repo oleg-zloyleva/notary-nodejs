@@ -1,7 +1,5 @@
 const User = require('../../models/users');
-const CustomError = require('../../errors/customError');
-const {catchResponseHandler,notFoundResponseHandler} = require('../../helpers/http');
-const {getSMSCode, getNewPassword, getToken} = require('../../helpers/func');
+const {catchResponseHandler} = require('../../helpers/http');
 
 exports.login = async (req, res) => {
     try {
@@ -16,19 +14,8 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
     try {
-        const sms_code = getSMSCode();
-        await User.init();
-        // todo update with upsert = true, filter: phone and phone_verified_at => $exists: false
-        const newUser = await User.create({
-            name: req.body.name,
-            password: getNewPassword(req.body.password),
-            phone: req.body.phone,
-            sms_code,
-        });
-
-        return res.json({
-            data: process.env.NODE_ENV === 'development' ? newUser : true,// todo remove after
-        })
+        const data = await User.registerNewUser(req.body);
+        return res.json({data})
     } catch (e) {
         // todo logger ERROR
         console.log(e);
