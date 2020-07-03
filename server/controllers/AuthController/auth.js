@@ -1,4 +1,5 @@
 const User = require('../../models/users');
+const CustomError = require('../../errors/customError');
 const {catchResponseHandler,notFoundResponseHandler} = require('../../helpers/http');
 const {getSMSCode, getNewPassword, getToken} = require('../../helpers/func');
 
@@ -38,22 +39,24 @@ exports.register = async (req, res) => {
 exports.activate = async (req, res) => {
     try {
         const {sms_code} = req.body;
-        const user = await User.findOne({
-            sms_code,
-            phone_verified_at: {
-                $exists: false
+
+        const user = await User.findOneAndUpdate(
+            {
+                sms_code,
+                phone_verified_at: {
+                    $exists: false
+                }
+            },
+            {
+                phone_verified_at: Date.now(),
+                sms_code: null,
             }
-        });
+        );
 
-        if (!user) return notFoundResponseHandler(res,'User for activation is not found');
-        const token = getToken(user);
-
-        user.phone_verified_at = Date.now();
-        user.sms_code = null;
-        user.save();
+        if (!user) throw new CustomError('User for activation is not found',404);
 
         return res.json({
-            token
+            token: getToken(user)
         })
     } catch (e) {
         // todo logger ERROR

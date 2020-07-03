@@ -41,7 +41,7 @@ describe('AuthController. exist methods', () => {
 
 describe('AuthController. Call login method & User.findOne', () => {
     test('Should call login. Success login, and return token', async () => {
-        User.findOne = await jest.fn().mockResolvedValue({
+        User.loginUserReturnToken = await jest.fn().mockResolvedValue({
             password: mockPassword.passwordHash,
             phone: mockLogin.phone,
         });
@@ -49,7 +49,7 @@ describe('AuthController. Call login method & User.findOne', () => {
         req.body = mockLogin;
 
         await login(req,res);
-        expect(User.findOne).toBeCalledWith({phone: mockLogin.phone});
+        expect(User.loginUserReturnToken).toBeCalledWith(mockLogin);
         expect(res.statusCode).toBe(200);
         expect(res._isEndCalled()).toBeTruthy();
     })
