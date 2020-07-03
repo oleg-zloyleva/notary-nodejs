@@ -52,6 +52,11 @@ app.use(`${config.apiPrefix}/doc`, swaggerUi.serve, swaggerUi.setup(swaggerSetup
 /** Routers */
 app.use(require('./controllers'));
 
+// app.use((err,req,res,next) => {
+//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n", err)
+//     res.json({data: "error"})
+// });
+
 app.listen(config.port, () => {
     console.log(`App was started at ${config.port} port. And connected to Mongo`.white.bgCyan);
 });

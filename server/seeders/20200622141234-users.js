@@ -11,7 +11,7 @@ module.exports = {
         insertOne: {
           document: {
             name: 'User',
-            phone: '123456789',
+            phone: '1234567890',
             password: bcrypt.hashSync('123456789',config.bcryptSalt),
             phone_verified_at: Date.now(),
             role: Role.USER,
@@ -22,7 +22,7 @@ module.exports = {
         insertOne: {
           document: {
             name: 'Notary',
-            phone: '111111111',
+            phone: '1111111111',
             password: bcrypt.hashSync('123456789',config.bcryptSalt),
             phone_verified_at: Date.now(),
             role: Role.NOTARY,
