@@ -1,40 +1,33 @@
 const User = require('../../models/users');
-const {catchResponseHandler} = require('../../helpers/http');
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
     try {
         const token = await User.loginUserReturnToken(req.body);
-        return res.json({token})
+        return res.json({token});
     } catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't login current user");
+        return next(e);
     }
 };
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
     try {
         const data = await User.registerNewUser(req.body);
         return res.json({data})
     } catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't create new user");
+        return next(e);
     }
 };
 
-exports.activate = async (req, res) => {
+exports.activate = async (req, res, next) => {
     try {
         const token = await User.activateUsersBySMS(req.body);
         return res.json({token})
     } catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't activate user");
+        return next(e);
     }
 };
 
-exports.logout = async (req,res) => {
+exports.logout = async (req,res, next) => {
     try{
         await BlackList.create({
             token: req.token,
@@ -45,8 +38,6 @@ exports.logout = async (req,res) => {
             data: true,
         })
     }catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't logout user");
+        return next(e);
     }
 };

@@ -1,11 +1,15 @@
 const colors = require('colors');
 const express = require('express');
+const { MongoError } = require('mongodb');
 
 const app = express();
 const config = require('./config/appSettings');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+
+const FormRequestError = require('./errors/formRequestError');
+const CustomError = require('./errors/customError');
 
 /** DB connection */
 const mongo = require('./mongo');
@@ -52,10 +56,42 @@ app.use(`${config.apiPrefix}/doc`, swaggerUi.serve, swaggerUi.setup(swaggerSetup
 /** Routers */
 app.use(require('./controllers'));
 
-// app.use((err,req,res,next) => {
-//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n", err)
-//     res.json({data: "error"})
-// });
+app.use((err,req,res,next) => {
+    if (err instanceof FormRequestError) {
+        console.log("FormRequestError >>>>>>>>>>>>>>\n", err);
+        return res.status(err._statusCode).json({
+            errors: err.array,
+        });
+    }
+    next(err)
+});
+
+app.use((err,req,res,next) => {
+    if (err instanceof CustomError) {
+        console.log("CustomError >>>>>>>>>>>>>>\n", err);
+        return res.status(err._statusCode).json({
+            errors: [{status:err._statusCode,title:err.message,}]
+        });
+    }
+    next(err)
+});
+
+app.use((err,req,res,next) => {
+    if (err instanceof MongoError) {
+        console.log("MongoError >>>>>>>>>>>>>>\n", err);
+        return res.status(503).json({
+            errors: [{status:503,title:err.message,}]
+        });
+    }
+    next(err)
+});
+
+app.use((err,req,res,next) => {
+    console.log("General >>>>>>>>>>>>>>\n", err);
+    return res.status(500).json({
+        errors: [{status:500,title:err.message,}]
+    });
+});
 
 app.listen(config.port, () => {
     console.log(`App was started at ${config.port} port. And connected to Mongo`.white.bgCyan);

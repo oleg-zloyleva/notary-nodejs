@@ -7,7 +7,7 @@ const config = require('../config/appSettings');
 const {catchResponseHandler,notFoundResponseHandler} = require('../helpers/http');
 const {getNewPassword,getSMSCode} = require('../helpers/func');
 
-router.post('/change', auth, async (req,res) => {
+router.post('/change', auth, async (req,res,next) => {
     try {
         // update password
         await User.updateOne(
@@ -19,17 +19,15 @@ router.post('/change', auth, async (req,res) => {
             token: req.token,
             expiresAt: req.tokenData.exp * 1000,
         });
-        res.json({
+        return res.json({
             data: 'Password was changed. User is logout'
         })
     }catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't change user's password");
+        return next(e);
     }
 });
 
-router.post('/reset', async (req, res) => {
+router.post('/reset', async (req, res, next) => {
     try {
         const user = await User.findOne({
             phone: req.body.phone,
@@ -47,13 +45,14 @@ router.post('/reset', async (req, res) => {
             data: process.env.NODE_ENV === 'development' ? user : true,// todo remove after
         })
     }catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't get sms code");
+        // // todo logger ERROR
+        // console.log(e);
+        // return catchResponseHandler(e,res, "Can't get sms code");
+        return next(e);
     }
 });
 
-router.patch('/reset', async (req, res) => {
+router.patch('/reset', async (req, res, next) => {
     try {
         const user = await User.findOne({
             sms_code: req.body.sms_code,
@@ -76,9 +75,10 @@ router.patch('/reset', async (req, res) => {
             token
         })
     }catch (e) {
-        // todo logger ERROR
-        console.log(e);
-        return catchResponseHandler(e,res, "Can't get sms code");
+        // // todo logger ERROR
+        // console.log(e);
+        // return catchResponseHandler(e,res, "Can't get sms code");
+        return next(e);
     }
 });
 

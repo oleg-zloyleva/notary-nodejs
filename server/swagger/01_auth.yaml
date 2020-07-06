@@ -65,7 +65,7 @@ definitions:
     properties:
       phone:
         type: string
-        example: '123456789'
+        example: '1234567890'
       password:
         type: string
         example: '123456789'

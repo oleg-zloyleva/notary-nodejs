@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const CustomError = require('../errors/customError');
+const ValidationsError = require('../errors/formRequestError');
 
 exports.checkValidation = (req, res, next) => {
     const errors = validationResult(req).formatWith(
@@ -9,10 +9,8 @@ exports.checkValidation = (req, res, next) => {
         })
     );
     if (!errors.isEmpty()) {
-        return res.status(422).json({
-            errors: errors.array()
-        });
+        const error = new ValidationsError(errors.array());
+        next(error);
     }
-// throw new CustomError("ERROR checkValidation",422);
     next();
 };
