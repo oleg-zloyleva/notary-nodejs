@@ -1,6 +1,8 @@
 'use strict';
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const CustomError = require('../errors/customError');
+const config = require('../config/appSettings');
 const { Role } = require('../helpers/constants');
 const {getToken,getNewPassword,getSMSCode,isPasswordCorrect} = require('../helpers/func');
 
@@ -106,6 +108,62 @@ newSchema.statics.registerNewUser = async function ({name,password,phone}) {
   });
 
   return process.env.NODE_ENV === 'development' ? newUser : true; // todo remove after
+};
+
+newSchema.statics.createSMSForResetPassword = async function ({phone}) {
+  const user = await this.findOneAndUpdate(
+      {
+        phone,
+        phone_verified_at: {
+          $exists: true
+        },
+      },
+      {
+        sms_code: getSMSCode(),
+      },
+      {
+        new: true
+      }
+  );
+  // todo send SMS
+  if (!user) throw new CustomError('User not found',404);
+
+  return process.env.NODE_ENV === 'development' ? user : true; // todo remove after
+};
+
+newSchema.statics.resetPassword = async function ({sms_code,password}){
+  const user = await this.findOneAndUpdate(
+      {
+        sms_code: sms_code,
+        phone_verified_at: {
+          $exists: true
+        },
+      },
+      {
+        password: getNewPassword(password),
+        sms_code: null,
+      },
+      {
+        new: true
+      }
+  );
+  if (!user) throw new CustomError('User not found',404);
+
+  const token = jwt.sign(
+      {phone: user.phone},
+      config.jwtSalt,
+      { expiresIn: +config.expiresIn * 1000 }
+  );
+
+  return token
+};
+
+newSchema.statics.changePassword = async function ({user,body: {password}}){
+  await this.findOneAndUpdate(
+      {_id: user._id},
+      {password: getNewPassword(password)},
+      {new: true}
+  );
 };
 
 const User = mongoose.model('User', newSchema);

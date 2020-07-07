@@ -15,7 +15,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/definitions/Change'
+              $ref: '#/definitions/ChangePhone'
       responses:
         '200':
           description: SMS code was sended
@@ -41,7 +41,7 @@ paths:
 
 
 definitions:
-  Change:
+  ChangePhone:
     type: object
     properties:
       new_phone:

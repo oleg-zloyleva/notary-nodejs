@@ -17,4 +17,11 @@ const newSchema = new mongoose.Schema({
   }
 });
 
+newSchema.statics.invalidateToken = async function({token,tokenData}){
+  await this.create({
+    token: token,
+    expiresAt: tokenData.exp * 1000,
+  });
+};
+
 module.exports = mongoose.model('BlackList', newSchema);
