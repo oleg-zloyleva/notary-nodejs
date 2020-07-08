@@ -1,74 +1,8 @@
 'use strict';
 const mongoose = require('mongoose');
 const CustomError = require('../errors/customError');
-const { Role } = require('../helpers/constants');
 const {getToken,getNewPassword,getSMSCode,isPasswordCorrect} = require('../helpers/func');
-
-const newSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Require field name']
-  },
-  last_name: {
-    type: String
-  },
-  patronymic: {
-    type: String
-  },
-  email: {
-    type: String,
-    lowercase: true,
-    unique: true,
-    sparse: true,
-    trim: true,
-  },
-  phone: {
-    type: String,
-    unique: true,
-    sparse: true,
-    trim: true,
-  },
-  new_phone: {
-    type: String,
-  },
-  password: {
-    type: String,
-    required: [true, 'Require field password']
-  },
-  sms_code: {
-    type: String,
-  },
-  phone_verified_at: {
-    type: Date,
-  },
-  passport_series: {
-    type: String,
-  },
-  passport_number: {
-    type: String,
-  },
-  passport_issued: {
-    type: String,
-  },
-  passport_issued_date: {
-    type: Date,
-  },
-  idn: {
-    type: String,
-  },
-  birth_day: {
-    type: Date,
-  },
-  role: {
-    type: String,
-    enum: Object.values(Role),
-  },
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
-});
+const newSchema = require('../schemas/UserSchema');
 
 newSchema.statics.loginUserReturnToken = async function({phone, password}){
   const user = await this.findOne({phone});
@@ -194,6 +128,22 @@ newSchema.statics.changePhone = async function ({user, body: {sms_code}}){
     return process.env.NODE_ENV === 'development' ? data : true; // todo remove after
   }
   throw new CustomError('User not fount',404)
+};
+
+newSchema.statics.updateMyProfile = async function(
+    {
+      user,
+      body: {name,last_name,patronymic,passport_series,passport_number,passport_issued,passport_issued_date,idn,birth_day}
+    }
+){
+  const data = await this.findOneAndUpdate(
+      {_id: user._id},
+      {
+        name,last_name,patronymic,passport_series,passport_number,passport_issued,passport_issued_date,idn,birth_day
+      },
+      {new: true}
+  );
+  return data;
 };
 
 const User = mongoose.model('User', newSchema);

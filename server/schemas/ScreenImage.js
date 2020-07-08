@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 
-const newSchema = new mongoose.Schema({
+const Schema = new mongoose.Schema({
   destination: {
     type: String
   },
@@ -20,4 +20,5 @@ const newSchema = new mongoose.Schema({
     updatedAt: 'updated_at'
   }
 });
-module.exports = newSchema;
+
+module.exports = Schema;
