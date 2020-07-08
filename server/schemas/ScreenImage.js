@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const Schema = new mongoose.Schema({
+  type: String, // todo enum
   destination: {
     type: String
   },

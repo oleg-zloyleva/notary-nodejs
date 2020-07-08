@@ -30,21 +30,34 @@ newSchema.statics.uploadScreens = async function({params: {id}, files, user}) {
     const document = await this.findById(id);
     if (!document) throw new CustomError('Document not found', 404);
 
-    const fields = (document.representative === Representative.INDIVIDUAL)
-        ? DocProxyTypeAFields[Representative.INDIVIDUAL]
-        : DocProxyTypeAFields[Representative.ENTITY];
+    // const fields = (document.representative === Representative.INDIVIDUAL)
+    //     ? DocProxyTypeAFields[Representative.INDIVIDUAL]
+    //     : DocProxyTypeAFields[Representative.ENTITY];
+    //
+    // fields.map(doc => {
+    //     files[doc].map( async el => {
+    //
+    //         document[doc].push({
+    //             destination: el.destination,
+    //             filename: el.filename,
+    //             path: el.path,
+    //             access: [user._id], // todo set users array
+    //         });
+    //     });
+    // });
+    // document.save();
 
-    fields.map(doc => {
-        files[doc].map( async el => {
-
-            document[doc].push({
+    for (let [key, screenArr] of Object.entries(files)) {
+        screenArr.map(el => {
+            document.screens.push({
+                type: key,
                 destination: el.destination,
                 filename: el.filename,
                 path: el.path,
                 access: [user._id], // todo set users array
-            });
-        });
-    });
+            })
+        })
+    }
     document.save();
 
     return document;
