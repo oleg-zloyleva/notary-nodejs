@@ -1,41 +1,53 @@
 'use strict';
 const mongoose = require('mongoose');
-const ScreenImage = require('../schemas/ScreenImage');
-const { Representative } = require('../helpers/constants');
+const newSchema = require('../schemas/DocProxyTypeA');
+const CustomError = require('../errors/customError');
+const { Representative,DocProxyTypeAFields } = require('../helpers/constants');
 
-const newSchema = new mongoose.Schema({
-  representative: {
-    type: String,
-    enum: Object.values(Representative),
-    required: true,
-  },
-  number: {
-    type: String
-  },
+newSchema.statics.getAll = async function({user}) {
+    const doc = await this.find({user: user._id});
+    if (!doc) throw new CustomError('Error get docs list', 500);
+    return doc;
+};
 
-  /** INDIVIDUAL - Доверитель физическое лицо */
-  passport: [ScreenImage], //10
-  inn: [ScreenImage], //1
-  /** ENTITY - Доверитель юридическое лицо */
-  registration: [ScreenImage], //2 - свидетельство о государственной регистрации,
-  charter: [ScreenImage], //30 - устав,
-  EGRPOU: [ScreenImage], //2 - выписку из ЕГРПОУ,
-  protocol: [ScreenImage], //2 - протокол об избрании руководителя,
-  /** В случае, если от имени юридического лица действует представитель по доверенности */
-  proxy: [ScreenImage], //5 - нотариально удостоверенную доверенность,
-  proxyPassport: [ScreenImage], //10 - паспорт представителя,
-  sealId: {
-    type: String
-  }, //10 - печать юридического лица.
+newSchema.statics.getOne = async function({params: {id}}) {
+    const doc = await this.findById(id);
+    if (!doc) throw new CustomError('Document not found', 404);
+    return doc;
+};
 
-  user: { // relation to user
-    type: mongoose.ObjectId
-  },
-  access: [mongoose.ObjectId] // users who has access to doc and screens
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
-});
+newSchema.statics.createOne = async function({user,body: {representative}}) {
+    const doc = await this.create({
+        representative,
+        user: user._id,
+        access: [user._id],
+    });
+    if (!doc) throw new CustomError('Document not create', 500);
+    return doc;
+};
+
+newSchema.statics.uploadScreens = async function({params: {id}, files, user}) {
+    const document = await this.findById(id);
+    if (!document) throw new CustomError('Document not found', 404);
+
+    const fields = (document.representative === Representative.INDIVIDUAL)
+        ? DocProxyTypeAFields[Representative.INDIVIDUAL]
+        : DocProxyTypeAFields[Representative.ENTITY];
+
+    fields.map(doc => {
+        files[doc].map( async el => {
+
+            document[doc].push({
+                destination: el.destination,
+                filename: el.filename,
+                path: el.path,
+                access: [user._id], // todo set users array
+            });
+        });
+    });
+    document.save();
+
+    return document;
+};
+
 module.exports = mongoose.model('DocProxyTypeA', newSchema);
