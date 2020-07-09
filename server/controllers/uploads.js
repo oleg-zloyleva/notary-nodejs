@@ -4,12 +4,19 @@ const path = require('path');
 
 const mime = require('mime');
 const auth = require('../middlewares/auth');
-const ScreenImage = require('../models/ScreenImage');
+const CustomError = require('../errors/customError');
 
-router.get('/:img', auth, (req,res) => {
+const DocProxyTypeA = require('../models/DocProxyTypeA');
 
-    const filePath = path.join(__dirname, `../uploads/${req.user._id}/${req.params.img}`);
-    // const filePath = path.join(__dirname, '../uploads/5ef342959e904e04053b0313/1593091167760-fcca7f327796218b95f24cb729c30e40.jpg');
+router.get('/:img',  async (req,res, next) => {
+    const {params: {img}} = req;
+    const document = await DocProxyTypeA.findOne({
+        'screens.filename': img
+    });
+
+    if (!document) next(new CustomError('Img not found', 404));
+    const screen = document.screens.find(el => el.filename === img);
+    const filePath = path.join(__dirname, `../uploads/${document.user}/${document._id}/${img}`);
     const stat = fileSystem.statSync(filePath);
     const mimeType = mime.getType(filePath);
 

@@ -38,9 +38,35 @@ const uploadScreens = async (req, res, next) => {
     }
 };
 
+const CustomError = require('../../errors/customError');
+const fileSystem = require('fs');
+const path = require('path');
+const mime = require('mime');
+
+const uploads = async (req, res,next) => {
+    try {
+        const screen = await DocProxyTypeA.getScreenInRootDocument(req);
+
+        const filePath = path.resolve(screen.path);
+        const stat = fileSystem.statSync(filePath);
+        const mimeType = mime.getType(filePath);
+
+        res.writeHead(200, {
+            'Content-Type': mimeType,
+            'Content-Length': stat.size
+        });
+
+        const readStream = fileSystem.createReadStream(filePath);
+        readStream.pipe(res);
+    }catch (e) {
+        next(new CustomError('File not found',404))
+    }
+};
+
 module.exports = {
     findAll,
     findOne,
     createOne,
     uploadScreens,
+    uploads,
 };

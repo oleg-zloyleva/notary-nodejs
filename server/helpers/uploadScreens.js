@@ -5,13 +5,14 @@ const fs = require('fs');
 const mime = require('mime');
 
 const storage = multer.diskStorage({
-    destination: async (req, file, cb) => {
+    destination: (req, file, cb) => {
         try {
             // todo move resolve uploads PATH
-            await fs.mkdir(path.resolve(__dirname,`./../uploads/${req.user._id}`), { recursive: true }, (err) => {
+            const {user,document} = req;
+            fs.mkdirSync(path.resolve(__dirname,`./../uploads/${user._id}/${document._id}`), { recursive: true }, (err) => {
                 if (err) throw err;
             });
-            cb(null, path.resolve(__dirname,`./../uploads/${req.user._id}`))
+            cb(null, path.resolve(__dirname,`./../uploads/${user._id}/${document._id}`))
         }catch (e) {
 
         }

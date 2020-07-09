@@ -85,6 +85,25 @@ paths:
           description: Get user's document Proxy type A.
       security:
         - BearerAuth: []
+  /proxy_a/uploads/{screen}:
+    get:
+      tags:
+        - ProxyA
+      summary: Get screen of documents Proxy type A.
+      produces:
+        - application/json
+      parameters:
+        - name: screen
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's list of documents Proxy type A.
+      security:
+        - BearerAuth: []
 
 definitions:
   Create:

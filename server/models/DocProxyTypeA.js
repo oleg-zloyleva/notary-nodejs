@@ -63,4 +63,14 @@ newSchema.statics.uploadScreens = async function({params: {id}, files, user}) {
     return document;
 };
 
+newSchema.statics.getScreenInRootDocument = async function({params:{img}}){
+    const document = await this.findOne({
+        'screens.filename': img
+    });
+
+    if (!document) throw new CustomError('Img not found', 404);
+
+    return document.screens.find(el => el.filename === img);
+} ;
+
 module.exports = mongoose.model('DocProxyTypeA', newSchema);
