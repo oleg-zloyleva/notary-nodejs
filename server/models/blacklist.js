@@ -1,4 +1,4 @@
-'use strict';
+
 const mongoose = require('mongoose');
 
 const newSchema = new mongoose.Schema({
@@ -13,8 +13,15 @@ const newSchema = new mongoose.Schema({
 }, {
   timestamps: {
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+    updatedAt: 'updated_at',
+  },
 });
+
+newSchema.statics.invalidateToken = async function ({ token, tokenData }) {
+  await this.create({
+    token,
+    expiresAt: tokenData.exp * 1000,
+  });
+};
 
 module.exports = mongoose.model('BlackList', newSchema);

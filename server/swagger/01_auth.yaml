@@ -1,0 +1,89 @@
+tags:
+  - name: 'Auth'
+    description: Login/Register user
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user and return the token.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: login OK
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register new user. Returns the status & send sms.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Register'
+      responses:
+        '200':
+          description: Register OK
+  /auth/activate:
+    post:
+      tags:
+        - Auth
+      summary: Activate new user. Returns the token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Activate'
+      responses:
+        '200':
+          description: Register OK
+  /auth/logout:
+    get:
+      tags:
+        - Auth
+      summary: Returns logout status.
+      description: ''
+      responses:
+        '200':
+          description: OK
+      security:
+        - BearerAuth: []
+
+definitions:
+  Login:
+    type: object
+    properties:
+      phone:
+        type: string
+        example: '1234567890'
+      password:
+        type: string
+        example: '123456789'
+  Register:
+    type: object
+    properties:
+      name:
+        type: string
+        example: John
+      phone:
+        type: string
+        example: '123456789'
+      password:
+        type: string
+        example: '123456789'
+  Activate:
+    type: object
+    properties:
+      sms_code:
+        type: string
+        example: '123456789'

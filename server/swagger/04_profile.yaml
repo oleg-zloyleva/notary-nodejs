@@ -1,0 +1,66 @@
+tags:
+  - name: 'Profile'
+    description: Manage user's profile
+
+paths:
+  /profile:
+    get:
+      tags:
+        - Profile
+      summary: Get user's profile.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's profile.
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Profile
+      summary: Update user's profile.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Update'
+      responses:
+        '200':
+          description: Update user's is done
+      security:
+        - BearerAuth: []
+
+definitions:
+  Update:
+    type: object
+    properties:
+      name:
+        type: string
+        example: 'Oleh'
+      last_name:
+        type: string
+        example: 'Lev'
+      patronymic:
+        type: string
+        example: 'Anat'
+      passport_series:
+        type: string
+        example: 'AK'
+      passport_number:
+        type: integer
+        example: 339173
+      passport_issued:
+        type: string
+        example: 'Dnipro'
+      passport_issued_date:
+        type: integer
+        example: 939085200
+      idn:
+        type: integer
+        example: 111222333444555
+      birth_day:
+        type: integer
+        example: 382928400
