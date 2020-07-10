@@ -23,5 +23,5 @@ exports.Representative = Object.freeze({
 // proxyPassport: [ScreenImage], //10 - паспорт представителя,
 
 exports.DocProxyTypeATypes = Object.freeze({
-  list: ['passport1', 'inn', 'registration', 'charter', 'EGRPOU', 'protocol', 'proxy', 'proxyPassport'],
+  list: ['passport', 'inn', 'registration', 'charter', 'EGRPOU', 'protocol', 'proxy', 'proxyPassport'],
 });

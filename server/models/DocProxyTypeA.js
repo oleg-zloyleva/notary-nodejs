@@ -40,16 +40,10 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
       });
     });
   }
-  // throw new CustomError('err.message',500)
   try {
     await document.save();
-    // .catch(err => {
-    //     console.log("CATCH >>>>>>>>>", err)
-    //     throw new CustomError('+++++', 500)
-    // });
   } catch (e) {
-    console.log('EEEEEEEEEEEEEEEEE', e);
-    // throw new
+    throw new CustomError(e.message, 500);
   }
   return document;
 };
