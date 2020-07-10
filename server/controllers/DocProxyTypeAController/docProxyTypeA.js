@@ -63,10 +63,20 @@ const uploads = async (req, res, next) => {
   }
 };
 
+const sendToCheck = async (req, res, next) => {
+  try {
+    const data = await DocProxyTypeA.sendToCheck(req);
+    return res.json({ data });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   findAll,
   findOne,
   createOne,
   uploadScreens,
   uploads,
+  sendToCheck,
 };

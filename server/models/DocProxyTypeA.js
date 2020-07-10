@@ -58,4 +58,13 @@ newSchema.statics.getScreenInRootDocument = async function ({ params: { img } })
   return document.screens.find((el) => el.filename === img);
 };
 
+newSchema.statics.sendToCheck = async function ({ params: { id } }) {
+  const data = this.findOneAndUpdate(
+    { _id: id },
+    { sendToCheck: true },
+    { new: true },
+  );
+  return data;
+};
+
 module.exports = mongoose.model('DocProxyTypeA', newSchema);
