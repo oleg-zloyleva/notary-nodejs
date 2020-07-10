@@ -1,17 +1,17 @@
-'use strict';
+
 const mongoose = require('mongoose');
 const { Role } = require('../helpers/constants');
 
 const schema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Require field name']
+    required: [true, 'Require field name'],
   },
   last_name: {
-    type: String
+    type: String,
   },
   patronymic: {
-    type: String
+    type: String,
   },
   email: {
     type: String,
@@ -31,7 +31,7 @@ const schema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Require field password']
+    required: [true, 'Require field password'],
   },
   sms_code: {
     type: String,
@@ -64,8 +64,8 @@ const schema = new mongoose.Schema({
 }, {
   timestamps: {
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+    updatedAt: 'updated_at',
+  },
 });
 
 module.exports = schema;

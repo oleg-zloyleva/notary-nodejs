@@ -3,7 +3,7 @@ const path = require('path');
 const Mongoose = require('mongoose');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+const config = require(`${__dirname}/../config/config.js`)[env];
 
 if (config.database.url) {
   Mongoose.connect(config.database.url, config.database.options);
@@ -18,16 +18,14 @@ const db = () => {
 
   fs
     .readdirSync(__dirname)
-    .filter(file => {
-      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-    })
-    .forEach(file => {
+    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+    .forEach((file) => {
       const model = require(path.resolve(__dirname, file))(Mongoose);
       m[model.modelName] = model;
     });
 
   return m;
-}
+};
 
 
 const models = db();

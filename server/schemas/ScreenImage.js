@@ -1,25 +1,40 @@
-'use strict';
+
 const mongoose = require('mongoose');
+const { DocProxyTypeATypes } = require('../helpers/constants');
 
 const Schema = new mongoose.Schema({
-  type: String, // todo enum
+  type: {
+    type: String,
+    enum: {
+      values: Object.values(DocProxyTypeATypes.list),
+      message: 'Invalid Type field value',
+    },
+    required: [true, 'type is required field'],
+  },
   destination: {
-    type: String
+    type: String,
+    required: true,
   },
   filename: {
-    type: String
+    type: String,
+    required: true,
   },
   path: {
-    type: String
+    type: String,
+    required: true,
   },
+
   access: {
-    type: [mongoose.ObjectId]
+    type: [mongoose.ObjectId],
   },
+
+  isApprove: Boolean,
+  fixItDescription: String,
 }, {
   timestamps: {
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+    updatedAt: 'updated_at',
+  },
 });
 
 module.exports = Schema;

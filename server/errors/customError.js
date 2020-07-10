@@ -13,12 +13,12 @@
 /**
  * Class style
  */
-class CustomError extends Error{
-    constructor(text,code) {
-        super();
-        this._statusCode = code;
-        this.message = text;
-    }
+class CustomError extends Error {
+  constructor(text, code) {
+    super();
+    this._statusCode = code;
+    this.message = text;
+  }
 }
 
 module.exports = CustomError;

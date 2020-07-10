@@ -1,147 +1,151 @@
-'use strict';
+
 const mongoose = require('mongoose');
 const CustomError = require('../errors/customError');
-const {getToken,getNewPassword,getSMSCode,isPasswordCorrect} = require('../helpers/func');
+const {
+  getToken, getNewPassword, getSMSCode, isPasswordCorrect,
+} = require('../helpers/func');
 const newSchema = require('../schemas/UserSchema');
 
-newSchema.statics.loginUserReturnToken = async function({phone, password}){
-  const user = await this.findOne({phone});
-  if (!user) throw new CustomError('User not found',404); // status 404
-  if ( !isPasswordCorrect(password, user) ) throw new CustomError('Wrong phone or password',401); // status 401
+newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
+  const user = await this.findOne({ phone });
+  if (!user) throw new CustomError('User not found', 404); // status 404
+  if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401); // status 401
   return getToken(user);
 };
 
-newSchema.statics.activateUsersBySMS = async function({sms_code}){
+newSchema.statics.activateUsersBySMS = async function ({ sms_code }) {
   const user = await this.findOneAndUpdate(
-      {
-        sms_code,
-        phone_verified_at: {
-          $exists: false
-        }
+    {
+      sms_code,
+      phone_verified_at: {
+        $exists: false,
       },
-      {
-        phone_verified_at: Date.now(),
-        sms_code: null,
-      }
+    },
+    {
+      phone_verified_at: Date.now(),
+      sms_code: null,
+    },
   );
 
-  if (!user) throw new CustomError('User for activation is not found',404);
+  if (!user) throw new CustomError('User for activation is not found', 404);
   return getToken(user);
 };
 
-newSchema.statics.registerNewUser = async function ({name,password,phone}) {
+newSchema.statics.registerNewUser = async function ({ name, password, phone }) {
   await this.init();
   // todo update with upsert = true, filter: phone and phone_verified_at => $exists: false
   const newUser = await this.create({
-    name: name,
+    name,
     password: getNewPassword(password),
-    phone: phone,
+    phone,
     sms_code: getSMSCode(),
   });
 
   return process.env.NODE_ENV === 'development' ? newUser : true; // todo remove after
 };
 
-newSchema.statics.createSMSForResetPassword = async function ({phone}) {
+newSchema.statics.createSMSForResetPassword = async function ({ phone }) {
   const user = await this.findOneAndUpdate(
-      {
-        phone,
-        phone_verified_at: {
-          $exists: true
-        },
+    {
+      phone,
+      phone_verified_at: {
+        $exists: true,
       },
-      {
-        sms_code: getSMSCode(),
-      },
-      {
-        new: true
-      }
+    },
+    {
+      sms_code: getSMSCode(),
+    },
+    {
+      new: true,
+    },
   );
   // todo send SMS
-  if (!user) throw new CustomError('User not found',404);
+  if (!user) throw new CustomError('User not found', 404);
 
   return process.env.NODE_ENV === 'development' ? user : true; // todo remove after
 };
 
-newSchema.statics.resetPassword = async function ({sms_code,password}){
+newSchema.statics.resetPassword = async function ({ sms_code, password }) {
   const user = await this.findOneAndUpdate(
-      {
-        sms_code: sms_code,
-        phone_verified_at: {
-          $exists: true
-        },
+    {
+      sms_code,
+      phone_verified_at: {
+        $exists: true,
       },
-      {
-        password: getNewPassword(password),
-        sms_code: null,
-      },
-      {
-        new: true
-      }
+    },
+    {
+      password: getNewPassword(password),
+      sms_code: null,
+    },
+    {
+      new: true,
+    },
   );
-  if (!user) throw new CustomError('User not found',404);
+  if (!user) throw new CustomError('User not found', 404);
 
   return getToken(user);
 };
 
-newSchema.statics.changePassword = async function ({user,body: {password}}){
+newSchema.statics.changePassword = async function ({ user, body: { password } }) {
   await this.findOneAndUpdate(
-      {_id: user._id},
-      {password: getNewPassword(password)},
-      {new: true}
+    { _id: user._id },
+    { password: getNewPassword(password) },
+    { new: true },
   );
 };
 
-newSchema.statics.createSMSForChangePhone = async function ({body: {new_phone}, user: {_id}}) {
+newSchema.statics.createSMSForChangePhone = async function ({ body: { new_phone }, user: { _id } }) {
   const user = await this.findOneAndUpdate(
-      {
-        _id,
-        phone_verified_at: {
-          $exists: true
-        },
+    {
+      _id,
+      phone_verified_at: {
+        $exists: true,
       },
-      {
-        sms_code: getSMSCode(),
-        new_phone,
-      },
-      {
-        new: true
-      }
+    },
+    {
+      sms_code: getSMSCode(),
+      new_phone,
+    },
+    {
+      new: true,
+    },
   );
   // todo send SMS to new_phone
-  if (!user) throw new CustomError('User not found',404);
+  if (!user) throw new CustomError('User not found', 404);
 
   return process.env.NODE_ENV === 'development' ? user : true; // todo remove after
 };
 
-newSchema.statics.changePhone = async function ({user, body: {sms_code}}){
+newSchema.statics.changePhone = async function ({ user, body: { sms_code } }) {
   if (user.sms_code === sms_code) {
     const data = await this.findOneAndUpdate(
-        {_id: user._id},
-        {
-          phone: user.new_phone,
-          new_phone: null,
-          sms_code: null,
-        },
-        {new: true}
+      { _id: user._id },
+      {
+        phone: user.new_phone,
+        new_phone: null,
+        sms_code: null,
+      },
+      { new: true },
     );
     return process.env.NODE_ENV === 'development' ? data : true; // todo remove after
   }
-  throw new CustomError('User not fount',404)
+  throw new CustomError('User not fount', 404);
 };
 
-newSchema.statics.updateMyProfile = async function(
-    {
-      user,
-      body: {name,last_name,patronymic,passport_series,passport_number,passport_issued,passport_issued_date,idn,birth_day}
-    }
-){
+newSchema.statics.updateMyProfile = async function (
+  {
+    user,
+    body: {
+      name, last_name, patronymic, passport_series, passport_number, passport_issued, passport_issued_date, idn, birth_day,
+    },
+  },
+) {
   const data = await this.findOneAndUpdate(
-      {_id: user._id},
-      {
-        name,last_name,patronymic,passport_series,passport_number,passport_issued,passport_issued_date,idn,birth_day
-      },
-      {new: true}
+    { _id: user._id },
+    {
+      name, last_name, patronymic, passport_series, passport_number, passport_issued, passport_issued_date, idn, birth_day,
+    },
+    { new: true },
   );
   return data;
 };

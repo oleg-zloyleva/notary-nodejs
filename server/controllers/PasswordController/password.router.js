@@ -7,7 +7,7 @@ const resetPasswordRequest = require('../../requests/resetPasswordRequest');
 const { checkValidation } = require('../../validators/http');
 
 router.post('/change', auth, changePasswordRequest, checkValidation, passwordHandlers.changePassword);
-router.post('/reset',getSMSForResetPasswordRequest, checkValidation, passwordHandlers.getSMSForResetPassword);
-router.patch('/reset',resetPasswordRequest, checkValidation, passwordHandlers.resetPassword);
+router.post('/reset', getSMSForResetPasswordRequest, checkValidation, passwordHandlers.getSMSForResetPassword);
+router.patch('/reset', resetPasswordRequest, checkValidation, passwordHandlers.resetPassword);
 
 module.exports = router;

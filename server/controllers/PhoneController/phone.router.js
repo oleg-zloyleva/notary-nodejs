@@ -5,7 +5,7 @@ const SMSCodeRequest = require('../../requests/SMSCodeRequest');
 const getSMSForChangePhoneRequest = require('../../requests/getSMSForChangePhoneRequest');
 const { checkValidation } = require('../../validators/http');
 
-router.post('/change', auth,getSMSForChangePhoneRequest, checkValidation, PhoneController.getSMSForChangePhone);
-router.patch('/change', auth,SMSCodeRequest, checkValidation, PhoneController.changePhone);
+router.post('/change', auth, getSMSForChangePhoneRequest, checkValidation, PhoneController.getSMSForChangePhone);
+router.patch('/change', auth, SMSCodeRequest, checkValidation, PhoneController.changePhone);
 
 module.exports = router;
