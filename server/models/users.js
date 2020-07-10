@@ -94,7 +94,9 @@ newSchema.statics.changePassword = async function ({ user, body: { password } })
   );
 };
 
-newSchema.statics.createSMSForChangePhone = async function ({ body: { new_phone }, user: { _id } }) {
+newSchema.statics.createSMSForChangePhone = async function ({
+  body: { new_phone }, user: { _id },
+}) {
   const user = await this.findOneAndUpdate(
     {
       _id,
@@ -117,6 +119,7 @@ newSchema.statics.createSMSForChangePhone = async function ({ body: { new_phone 
 };
 
 newSchema.statics.changePhone = async function ({ user, body: { sms_code } }) {
+  // eslint-disable-next-line camelcase
   if (user.sms_code === sms_code) {
     const data = await this.findOneAndUpdate(
       { _id: user._id },
@@ -136,14 +139,29 @@ newSchema.statics.updateMyProfile = async function (
   {
     user,
     body: {
-      name, last_name, patronymic, passport_series, passport_number, passport_issued, passport_issued_date, idn, birth_day,
+      name,
+      last_name,
+      patronymic,
+      passport_series,
+      passport_number,
+      passport_issued,
+      passport_issued_date,
+      idn, birth_day,
     },
   },
 ) {
   const data = await this.findOneAndUpdate(
     { _id: user._id },
     {
-      name, last_name, patronymic, passport_series, passport_number, passport_issued, passport_issued_date, idn, birth_day,
+      name,
+      last_name,
+      patronymic,
+      passport_series,
+      passport_number,
+      passport_issued,
+      passport_issued_date,
+      idn,
+      birth_day,
     },
     { new: true },
   );

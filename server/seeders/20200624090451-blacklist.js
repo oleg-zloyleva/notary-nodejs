@@ -2,7 +2,7 @@
 const assert = require('assert').strict;
 
 module.exports = {
-  up: (models, mongoose) => models.BlackList.bulkWrite([
+  up: (models) => models.BlackList.bulkWrite([
     {
       insertOne: {
         document: {
@@ -16,5 +16,5 @@ module.exports = {
     console.log(res.insertedCount);
   }),
 
-  down: (models, mongoose) => models.BlackList.remove({}, (err) => assert.equal(null, err)),
+  down: (models) => models.BlackList.remove({}, (err) => assert.equal(null, err)),
 };

@@ -6,6 +6,7 @@ const { unauthorizedResponseHandler } = require('../helpers/http');
 module.exports = async (req, res, next) => {
   try {
     let token = null;
+    // eslint-disable-next-line no-cond-assign
     if (req.header('Authorization') && (token = req.header('Authorization').replace('Bearer ', '')) && token) {
       req.tokenData = jwt.verify(token, process.env.JWT_KEY);
       const tokenInList = await BlackList.findOne({

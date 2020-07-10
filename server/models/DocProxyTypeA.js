@@ -30,7 +30,7 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
   if (!document) throw new CustomError('Document not found', 404);
 
   for (const [key, screenArr] of Object.entries(files)) {
-    screenArr.map((el) => {
+    screenArr.forEach((el) => {
       document.screens.push({
         type: key,
         destination: el.destination,

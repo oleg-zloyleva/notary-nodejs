@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 const assert = require('assert').strict;
 const config = require('./config/appSettings');

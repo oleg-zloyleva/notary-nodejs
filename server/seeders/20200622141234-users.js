@@ -5,7 +5,7 @@ const config = require('../config/appSettings');
 const { Role } = require('../helpers/constants');
 
 module.exports = {
-  up: (models, mongoose) => models.User.bulkWrite([
+  up: (models) => models.User.bulkWrite([
     {
       insertOne: {
         document: {
@@ -33,5 +33,5 @@ module.exports = {
     console.log(res.insertedCount);
   }),
 
-  down: (models, mongoose) => models.User.remove({}, (err) => assert.equal(null, err)),
+  down: (models) => models.User.remove({}, (err) => assert.equal(null, err)),
 };

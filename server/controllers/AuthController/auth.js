@@ -31,7 +31,8 @@ exports.logout = async (req, res, next) => {
   try {
     await BlackList.create({
       token: req.token,
-      expiresAt: req.tokenData.exp * 1000, // todo cron check this value & delete document if date old
+      // todo cron check this value & delete document if date old
+      expiresAt: req.tokenData.exp * 1000,
     });
 
     return res.json({

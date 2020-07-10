@@ -14,12 +14,12 @@ const storage = multer.diskStorage({
       });
       cb(null, path.resolve(__dirname, `./../uploads/${user._id}/${document._id}`));
     } catch (e) {
-
+      console.log(e);
     }
   },
   filename: (req, file, cb) => {
     let ext = path.extname(file.originalname);
-    ext = ext.length > 1 ? ext : '.' + `.${mime.getExtension(file.mimetype)}`;
+    ext = ext.length > 1 ? ext : `.${mime.getExtension(file.mimetype)}`;
     const uploadFileName = `${Date.now()}-${crypto.createHash('md5').update(file.originalname).digest('hex')}${ext}`;
     cb(null, uploadFileName);
   },

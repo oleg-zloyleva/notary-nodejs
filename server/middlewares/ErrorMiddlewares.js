@@ -32,7 +32,7 @@ const MongoErrorMiddleware = (err, req, res, next) => {
   next(err);
 };
 
-const GeneralErrorMiddleware = (err, req, res, next) => {
+const GeneralErrorMiddleware = (err, req, res) => {
   console.log('General >>>>>>>>>>>>>>\n', err);
   return res.status(500).json({
     errors: [{ status: 500, title: err.message }],

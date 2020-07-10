@@ -1,14 +1,6 @@
 const config = require('./appSettings');
 
 module.exports = {
-  // "production": {
-  //   "database": {
-  //     "url": `mongodb://${config.db_user}:${config.db_pass}@mongo:27017/`,
-  //     "options": {
-  //       useNewUrlParser: true, useUnifiedTopology: true, dbName: config.db_name, useCreateIndex: true,
-  //     }
-  //   }
-  // },
   development: {
     database: {
       protocol: 'mongodb',
@@ -21,7 +13,10 @@ module.exports = {
         dbName: config.db_name,
       },
       options: {
-        useNewUrlParser: true, useUnifiedTopology: true, dbName: config.db_name, useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: config.db_name,
+        useCreateIndex: true,
       },
     },
   },
