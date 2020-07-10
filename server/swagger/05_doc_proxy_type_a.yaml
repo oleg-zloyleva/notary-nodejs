@@ -51,10 +51,28 @@ paths:
           description: Get user's document Proxy type A.
       security:
         - BearerAuth: []
+    patch:
+      tags:
+        - ProxyA
+      summary: Send document Proxy type A to Admin.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy type A.
+      security:
+        - BearerAuth: []
     post:
       tags:
         - ProxyA
-      summary: Create new document Proxy type A.
+      summary: Attach to document Proxy type A screens.
       produces:
         - application/json
       parameters:
