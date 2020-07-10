@@ -50,7 +50,7 @@ const swaggerSetup = {
   ],
 };
 app.use(`${config.apiPrefix}/doc`, swaggerUi.serve, swaggerUi.setup(swaggerSetup));
-
+abg
 /** Routers */
 app.use(require('./controllers'));
 
