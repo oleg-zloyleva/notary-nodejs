@@ -28,7 +28,14 @@ const Schema = new mongoose.Schema({
     type: [mongoose.ObjectId],
   },
 
-  isApprove: Boolean,
+  isReturnedToFix: {
+    type: Boolean,
+    default: false,
+  },
+  isApprove: {
+    type: Boolean,
+    default: false,
+  },
   fixItDescription: String,
 }, {
   timestamps: {
