@@ -31,7 +31,7 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
   if (!document) throw new CustomError('Document not found', 404);
 
   for (const [key, screenArr] of Object.entries(files)) {
-    for (const el of screenArr){
+    for (const el of screenArr) {
       const result = await ScreenImage.create({
         type: key,
         destination: el.destination,
