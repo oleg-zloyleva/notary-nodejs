@@ -9,8 +9,14 @@ const schema = new mongoose.Schema({
     enum: Object.values(Representative),
     required: true,
   },
-  sendToCheck: Boolean,
-  isReturnedToFix: Boolean,
+  sendToCheck: {
+    type: Boolean,
+    default: false,
+  },
+  isReturnedToFix: {
+    type: Boolean,
+    default: false,
+  },
   number: {
     type: String,
   },
