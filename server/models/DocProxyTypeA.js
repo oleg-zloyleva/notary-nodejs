@@ -2,15 +2,16 @@
 const mongoose = require('mongoose');
 const newSchema = require('../schemas/DocProxyTypeA');
 const CustomError = require('../errors/customError');
+const ScreenImage = require('./ScreenImage');
 
 newSchema.statics.getAll = async function ({ user }) {
-  const doc = await this.find({ user: user._id });
+  const doc = await this.find({ user: user._id }).populate('screens');
   if (!doc) throw new CustomError('Error get docs list', 500);
   return doc;
 };
 
 newSchema.statics.getOne = async function ({ params: { id } }) {
-  const doc = await this.findById(id);
+  const doc = await this.findById(id).populate('screens');
   if (!doc) throw new CustomError('Document not found', 404);
   return doc;
 };
@@ -30,15 +31,16 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
   if (!document) throw new CustomError('Document not found', 404);
 
   for (const [key, screenArr] of Object.entries(files)) {
-    screenArr.forEach((el) => {
-      document.screens.push({
+    for (const el of screenArr){
+      const result = await ScreenImage.create({
         type: key,
         destination: el.destination,
         filename: el.filename,
         path: el.path,
         access: [user._id], // todo set users array
       });
-    });
+      document.screens.push(result._id);
+    }
   }
   try {
     await document.save();
@@ -48,6 +50,7 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
   return document;
 };
 
+// todo create own route and controller
 newSchema.statics.getScreenInRootDocument = async function ({ params: { img } }) {
   const document = await this.findOne({
     'screens.filename': img,
