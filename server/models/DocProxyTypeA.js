@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const newSchema = require('../schemas/DocProxyTypeA');
 const CustomError = require('../errors/customError');
@@ -48,17 +47,6 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
     throw new CustomError(e.message, 500);
   }
   return document;
-};
-
-// todo create own route and controller
-newSchema.statics.getScreenInRootDocument = async function ({ params: { img } }) {
-  const document = await this.findOne({
-    'screens.filename': img,
-  });
-
-  if (!document) throw new CustomError('Doc with img not found', 404);
-
-  return document.screens.find((el) => el.filename === img);
 };
 
 newSchema.statics.sendToCheck = async function ({ params: { id } }) {

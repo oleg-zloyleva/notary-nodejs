@@ -8,4 +8,6 @@ router.use(`${apiPrefix}/profile`, require('./UserProfileController/profile.rout
 
 router.use(`${apiPrefix}/proxy_a`, require('./DocProxyTypeAController/docProxyTypeA.router'));
 
+router.use(`${apiPrefix}/screens`, require('./ScreenImageController/screenImage.router'));
+
 module.exports = router;

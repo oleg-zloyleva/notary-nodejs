@@ -1,0 +1,34 @@
+tags:
+  - name: 'Screens'
+    description: Manage user's Screens
+
+paths:
+  /screens/{screen}:
+    get:
+      tags:
+        - Screens
+      summary: Get screen of documents.
+      produces:
+        - application/json
+      parameters:
+        - name: screen
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's screens.
+      security:
+        - BearerAuth: []
+
+definitions:
+  Create:
+    type: object
+    properties:
+      representative:
+        type: string
+        enum:
+          - individual
+          - entity
