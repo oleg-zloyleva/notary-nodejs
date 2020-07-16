@@ -1,8 +1,8 @@
-const DocProxyTypeA = require('../../models/DocProxyTypeA');
+const DocTypeB = require('../../models/DocTypeB');
 
 const findAll = async (req, res, next) => {
   try {
-    const data = await DocProxyTypeA.getAll(req);
+    const data = await DocTypeB.getAll(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -11,7 +11,7 @@ const findAll = async (req, res, next) => {
 
 const findOne = async (req, res, next) => {
   try {
-    const data = await DocProxyTypeA.getOne(req);
+    const data = await DocTypeB.getOne(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -20,7 +20,7 @@ const findOne = async (req, res, next) => {
 
 const createOne = async (req, res, next) => {
   try {
-    const data = await DocProxyTypeA.createOne(req);
+    const data = await DocTypeB.createOne(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -29,7 +29,7 @@ const createOne = async (req, res, next) => {
 
 const uploadScreens = async (req, res, next) => {
   try {
-    const document = await DocProxyTypeA.uploadScreens(req);
+    const document = await DocTypeB.uploadScreens(req);
     return res.json({
       data: document,
     });
@@ -40,7 +40,7 @@ const uploadScreens = async (req, res, next) => {
 
 const sendToCheck = async (req, res, next) => {
   try {
-    const data = await DocProxyTypeA.sendToCheck(req);
+    const data = await DocTypeB.sendToCheck(req);
     return res.json({ data });
   } catch (e) {
     next(e);

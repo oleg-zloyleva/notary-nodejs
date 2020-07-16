@@ -1,21 +1,19 @@
-const mongoose = require('mongoose');
-const newSchema = require('../schemas/DocProxyTypeA');
 const CustomError = require('../errors/customError');
-const ScreenImage = require('./ScreenImage');
+const ScreenImage = require('../models/ScreenImage');
 
-newSchema.statics.getAll = async function ({ user }) {
+const getAll = async function ({ user }) {
   const doc = await this.find({ user: user._id }).populate('screens');
   if (!doc) throw new CustomError('Error get docs list', 500);
   return doc;
 };
 
-newSchema.statics.getOne = async function ({ params: { id } }) {
+const getOne = async function ({ params: { id } }) {
   const doc = await this.findById(id).populate('screens');
   if (!doc) throw new CustomError('Document not found', 404);
   return doc;
 };
 
-newSchema.statics.createOne = async function ({ user, body: { representative } }) {
+const createOne = async function ({ user, body: { representative } }) {
   const doc = await this.create({
     representative,
     user: user._id,
@@ -25,8 +23,8 @@ newSchema.statics.createOne = async function ({ user, body: { representative } }
   return doc;
 };
 
-newSchema.statics.uploadScreens = async function ({ params: { id }, files, user }) {
-  const document = await this.findById(id);
+const uploadScreens = async function ({ params: { id }, files, user }) {
+  const document = await this.findById(id).populate('screens');
   if (!document) throw new CustomError('Document not found', 404);
 
   for (const [key, screenArr] of Object.entries(files)) {
@@ -42,20 +40,25 @@ newSchema.statics.uploadScreens = async function ({ params: { id }, files, user 
     }
   }
   try {
-    await document.save();
+    const result = await document.save();
+    return result;
   } catch (e) {
     throw new CustomError(e.message, 500);
   }
-  return document;
 };
 
-newSchema.statics.sendToCheck = async function ({ params: { id } }) {
-  const data = this.findOneAndUpdate(
+const sendToCheck = async function ({ params: { id } }) {
+  return this.findOneAndUpdate(
     { _id: id },
     { sendToCheck: true },
     { new: true },
   );
-  return data;
 };
 
-module.exports = mongoose.model('DocProxyTypeA', newSchema);
+module.exports = {
+  getAll,
+  getOne,
+  createOne,
+  uploadScreens,
+  sendToCheck,
+};

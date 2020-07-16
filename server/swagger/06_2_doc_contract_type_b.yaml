@@ -1,0 +1,115 @@
+tags:
+  - name: 'ContractB'
+    description: Manage user's ContractB
+
+paths:
+  /type_b:
+    get:
+      tags:
+        - ContractB
+      summary: Get user's list of documents Contract type B.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's list of documents Contract type B.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - ContractB
+      summary: Get user's document Contract type B.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Create'
+      responses:
+        '200':
+          description: Get user's document Contract type B.
+      security:
+        - BearerAuth: []
+  /type_b/{id}:
+    get:
+      tags:
+        - ContractB
+      summary: Get user's document Contract type B.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Contract type B.
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - ContractB
+      summary: Send document Contract type B to Admin.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Contract type B.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - ContractB
+      summary: Attach to document Contract type B screens.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                passport:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                inn:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Get user's document Contract type B.
+      security:
+        - BearerAuth: []
+
+definitions:
+  Create:
+    type: object
+    properties:
+      representative:
+        type: string
+        enum:
+          - individual
+          - entity

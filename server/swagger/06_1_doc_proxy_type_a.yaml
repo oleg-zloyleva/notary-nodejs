@@ -1,9 +1,9 @@
 tags:
   - name: 'ProxyA'
-    description: Manage user's profile
+    description: Manage user's ProxyA
 
 paths:
-  /proxy_a:
+  /type_a:
     get:
       tags:
         - ProxyA
@@ -32,7 +32,7 @@ paths:
           description: Get user's document Proxy type A.
       security:
         - BearerAuth: []
-  /proxy_a/{id}:
+  /type_a/{id}:
     get:
       tags:
         - ProxyA

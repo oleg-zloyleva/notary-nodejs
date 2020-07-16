@@ -6,5 +6,5 @@ module.exports = {
     resolve();
   }),
 
-  down: (models) => models.DocProxyTypeB.remove({}, (err) => assert.equal(null, err)),
+  down: (models) => models.DocTypeB.remove({}, (err) => assert.equal(null, err)),
 };
