@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const newSchema = require('../schemas/DocTypeA');
+const newSchema = require('../schemas/docTypeC');
 const docProxyModelMethods = require('../helpers/docModelMethods');
 
 newSchema.statics = {
@@ -7,4 +7,4 @@ newSchema.statics = {
   ...docProxyModelMethods,
 };
 
-module.exports = mongoose.model('DocTypeA', newSchema);
+module.exports = mongoose.model('docTypeС', newSchema);

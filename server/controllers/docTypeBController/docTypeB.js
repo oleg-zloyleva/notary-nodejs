@@ -1,49 +1,49 @@
-const DocTypeB = require('../../models/DocTypeB');
+const docTypeB = require('../../models/docTypeB');
 
 const findAll = async (req, res, next) => {
   try {
-    const data = await DocTypeB.getAll(req);
+    const data = await docTypeB.getAll(req);
     return res.json({ data });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
 const findOne = async (req, res, next) => {
   try {
-    const data = await DocTypeB.getOne(req);
+    const data = await docTypeB.getOne(req);
     return res.json({ data });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
 const createOne = async (req, res, next) => {
   try {
-    const data = await DocTypeB.createOne(req);
+    const data = await docTypeB.createOne(req);
     return res.json({ data });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
 const uploadScreens = async (req, res, next) => {
   try {
-    const document = await DocTypeB.uploadScreens(req);
+    const document = await docTypeB.uploadScreens(req);
     return res.json({
       data: document,
     });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
 const sendToCheck = async (req, res, next) => {
   try {
-    const data = await DocTypeB.sendToCheck(req);
+    const data = await docTypeB.sendToCheck(req);
     return res.json({ data });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
