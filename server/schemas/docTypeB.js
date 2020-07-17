@@ -1,6 +1,4 @@
-
 const mongoose = require('mongoose');
-const ScreenImage = require('./ScreenImage');
 const { Representative } = require('../helpers/constants');
 
 const schema = new mongoose.Schema({
@@ -21,7 +19,7 @@ const schema = new mongoose.Schema({
     type: String,
   },
 
-  screens: [ScreenImage],
+  screens: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ScreenImage' }],
 
   sealId: {
     type: String,
