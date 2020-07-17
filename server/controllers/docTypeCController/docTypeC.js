@@ -1,8 +1,8 @@
-const DocTypeC = require('../../models/DocTypeC');
+const docTypeC = require('../../models/docTypeC');
 
 const findAll = async (req, res, next) => {
   try {
-    const data = await DocTypeC.getAll(req);
+    const data = await docTypeC.getAll(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -11,7 +11,7 @@ const findAll = async (req, res, next) => {
 
 const findOne = async (req, res, next) => {
   try {
-    const data = await DocTypeC.getOne(req);
+    const data = await docTypeC.getOne(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -20,7 +20,7 @@ const findOne = async (req, res, next) => {
 
 const createOne = async (req, res, next) => {
   try {
-    const data = await DocTypeC.createOne(req);
+    const data = await docTypeC.createOne(req);
     return res.json({ data });
   } catch (e) {
     next(e);
@@ -29,7 +29,7 @@ const createOne = async (req, res, next) => {
 
 const uploadScreens = async (req, res, next) => {
   try {
-    const document = await DocTypeC.uploadScreens(req);
+    const document = await docTypeC.uploadScreens(req);
     return res.json({
       data: document,
     });
@@ -40,7 +40,7 @@ const uploadScreens = async (req, res, next) => {
 
 const sendToCheck = async (req, res, next) => {
   try {
-    const data = await DocTypeC.sendToCheck(req);
+    const data = await docTypeC.sendToCheck(req);
     return res.json({ data });
   } catch (e) {
     next(e);

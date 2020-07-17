@@ -1,0 +1,115 @@
+tags:
+  - name: 'Proxy C'
+    description: Manage user's Proxy C
+
+paths:
+  /type_c:
+    get:
+      tags:
+        - Proxy C
+      summary: Get user's list of documents Proxy C.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's list of documents Proxy C.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Proxy C
+      summary: Get user's document Proxy C.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Create'
+      responses:
+        '200':
+          description: Get user's document Proxy C.
+      security:
+        - BearerAuth: []
+  /type_c/{id}:
+    get:
+      tags:
+        - Proxy C
+      summary: Get user's document Proxy C.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy C.
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Proxy C
+      summary: Send document Proxy C to Admin.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy C.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Proxy C
+      summary: Attach to document Proxy C screens.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                passport:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                inn:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Get user's document Proxy C.
+      security:
+        - BearerAuth: []
+
+definitions:
+  Create:
+    type: object
+    properties:
+      representative:
+        type: string
+        enum:
+          - individual
+          - entity
