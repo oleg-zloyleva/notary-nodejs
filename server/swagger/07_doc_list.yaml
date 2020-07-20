@@ -1,0 +1,17 @@
+tags:
+  - name: 'Doc List'
+    description: Manage Doc List
+
+paths:
+  /docs:
+    get:
+      tags:
+        - Doc List
+      summary: Get list of Doc List
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's list of documents Proxy type A.
+      security:
+        - BearerAuth: []
