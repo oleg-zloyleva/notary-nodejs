@@ -47,6 +47,33 @@ const uploadScreens = async function ({ params: { id }, files, user }) {
   }
 };
 
+const removeScreenHandler = (screen) => {
+  const foo = async () => {
+    console.log('Rem screen >>> ', screen._id);
+    await ScreenImage.deleteOne({ _id: screen._id });
+  };
+  foo();
+  return false;
+};
+
+// eslint-disable-next-line no-unused-vars
+const removeScreen = async function ({ params: { id }, body: { screens }, user }) {
+  // find doc
+  const document = await this.findById(id).populate('screens');
+  // check permission
+  // find screen in doc
+  // eslint-disable-next-line max-len
+  const newScreensArr = document.screens.filter((el) => (!screens.includes(String(el._id)) ? true : removeScreenHandler(el)));
+
+  // remove screen file
+  // remove screen data from Doc: Relation and Screen
+  await document.depopulate('screens');
+  document.screens = newScreensArr;
+  const x = await document.save();
+  console.log(x, newScreensArr);
+  return document;
+};
+
 const sendToCheck = async function ({ params: { id } }) {
   return this.findOneAndUpdate(
     { _id: id },
@@ -60,5 +87,6 @@ module.exports = {
   getOne,
   createOne,
   uploadScreens,
+  removeScreen,
   sendToCheck,
 };

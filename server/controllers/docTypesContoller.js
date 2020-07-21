@@ -39,6 +39,17 @@ const docTypeHandlers = (modelName) => {
     }
   };
 
+  const removeScreen = async (req, res, next) => {
+    try {
+      const document = await docType.removeScreen(req);
+      return res.json({
+        data: document,
+      });
+    } catch (e) {
+      return next(e);
+    }
+  };
+
   const sendToCheck = async (req, res, next) => {
     try {
       const data = await docType.sendToCheck(req);
@@ -53,6 +64,7 @@ const docTypeHandlers = (modelName) => {
     findOne,
     createOne,
     uploadScreens,
+    removeScreen,
     sendToCheck,
   };
 };

@@ -69,6 +69,7 @@ paths:
           description: Get user's document Proxy type A.
       security:
         - BearerAuth: []
+  /type_a/{id}/screens:
     post:
       tags:
         - ProxyA
@@ -103,6 +104,30 @@ paths:
           description: Get user's document Proxy type A.
       security:
         - BearerAuth: []
+    delete:
+      tags:
+        - ProxyA
+      summary: Attach to document Proxy type A screens.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/RemoveScreens'
+      responses:
+        '200':
+          description: Get user's document Proxy type A.
+      security:
+        - BearerAuth: []
 
 definitions:
   Create:
@@ -113,3 +138,14 @@ definitions:
         enum:
           - individual
           - entity
+  RemoveScreens:
+    type: object
+    properties:
+      screens:
+        type: array
+        items:
+          type: string
+        example:
+          - '5efc755ec02041062dd943b9'
+          - '5efc755ec02041062dd943b9'
+          - '5efc755ec02041062dd943b9'

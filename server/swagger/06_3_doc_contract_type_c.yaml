@@ -69,6 +69,7 @@ paths:
           description: Get user's document Proxy C.
       security:
         - BearerAuth: []
+  /type_c/{id}/screens:
     post:
       tags:
         - Proxy C

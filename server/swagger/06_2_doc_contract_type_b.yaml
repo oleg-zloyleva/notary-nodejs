@@ -69,6 +69,7 @@ paths:
           description: Get user's document Contract type B.
       security:
         - BearerAuth: []
+  /type_b/{id}/screens:
     post:
       tags:
         - ContractB
