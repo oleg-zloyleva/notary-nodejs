@@ -47,31 +47,41 @@ const uploadScreens = async function ({ params: { id }, files, user }) {
   }
 };
 
+const fs = require('fs');
 const removeScreenHandler = (screen) => {
-  const foo = async () => {
-    console.log('Rem screen >>> ', screen._id);
+  const removeFileAndDBRow = async () => {
+    if (fs.existsSync(screen.path)) {
+      // remove screen file
+      fs.unlinkSync(screen.path);
+    } else {
+      console.log("File doesn't exist"); // todo Logged
+    }
+    // remove screen data from Doc: Screen
     await ScreenImage.deleteOne({ _id: screen._id });
   };
-  foo();
+  removeFileAndDBRow();
   return false;
 };
 
-// eslint-disable-next-line no-unused-vars
 const removeScreen = async function ({ params: { id }, body: { screens }, user }) {
-  // find doc
-  const document = await this.findById(id).populate('screens');
-  // check permission
-  // find screen in doc
-  // eslint-disable-next-line max-len
-  const newScreensArr = document.screens.filter((el) => (!screens.includes(String(el._id)) ? true : removeScreenHandler(el)));
+  try {
+    // find doc
+    const document = await this.findById(id).populate('screens');
+    // check permission
+    if (!document.access.includes(user._id)) throw new CustomError('Forbidden for remove file', 403);
+    // find screen for remove in doc other screens -> save
+    const newScreensArr = document.screens.filter(
+      (el) => (!screens.includes(String(el._id)) ? true : removeScreenHandler(el)),
+    );
+    // update screens relations
+    await document.depopulate('screens');
+    document.screens = newScreensArr;
+    await document.save();
 
-  // remove screen file
-  // remove screen data from Doc: Relation and Screen
-  await document.depopulate('screens');
-  document.screens = newScreensArr;
-  const x = await document.save();
-  console.log(x, newScreensArr);
-  return document;
+    return document;
+  } catch (e) {
+    throw new CustomError(e.message, 500);
+  }
 };
 
 const sendToCheck = async function ({ params: { id } }) {
