@@ -14,10 +14,11 @@
  * Class style
  */
 class CustomError extends Error {
-  constructor(text, code) {
+  constructor(text, code, data = null) {
     super();
     this._statusCode = code;
     this.message = text;
+    this.data = data;
   }
 }
 

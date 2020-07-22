@@ -8,8 +8,8 @@ const newSchema = require('../schemas/UserSchema');
 
 newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
   const user = await this.findOne({ phone });
-  if (!user) throw new CustomError('User not found', 404); // status 404
-  if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401); // status 401
+  if (!user) throw new CustomError(`User with phone:${phone} not found`, 404, { phone }); // status 404
+  if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401, { phone }); // status 401
   return getToken(user);
 };
 
