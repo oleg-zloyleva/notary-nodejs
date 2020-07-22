@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 const express = require('express');
+const logger = require('./logs');
 
 const app = express();
 const config = require('./config/appSettings');
@@ -61,5 +62,6 @@ app.use(ErrorMiddleWare.MongoErrorMiddleware);
 app.use(ErrorMiddleWare.GeneralErrorMiddleware);
 
 app.listen(config.port, () => {
+  logger.log('info', 'Server was started', { metadata: null });
   console.log(`App was started at ${config.port} port. And connected to Mongo`.white.bgCyan);
 });
