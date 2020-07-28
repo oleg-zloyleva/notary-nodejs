@@ -11,6 +11,7 @@ router.use(`${apiPrefix}/type_b`, require('./docTypeBController/docTypeB.router'
 router.use(`${apiPrefix}/type_c`, require('./docTypeCController/docTypeC.router'));
 router.use(`${apiPrefix}/type_d`, require('./docTypeDController/docTypeD.router'));
 router.use(`${apiPrefix}/type_e`, require('./docTypeEController/docTypeE.router'));
+router.use(`${apiPrefix}/type_f`, require('./docTypeFController/docTypeF.router'));
 
 router.use(`${apiPrefix}/screens`, require('./ScreenImageController/screenImage.router'));
 router.use(`${apiPrefix}/docs`, require('./docsListController/docsList.router'));
