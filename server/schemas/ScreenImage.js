@@ -1,12 +1,12 @@
 
 const mongoose = require('mongoose');
-const { DocProxyTypeATypes } = require('../helpers/constants');
+const { DocTypes } = require('../helpers/constants');
 
 const Schema = new mongoose.Schema({
   type: {
     type: String,
     enum: {
-      values: Object.values(DocProxyTypeATypes.list),
+      values: Object.values(DocTypes.list),
       message: 'Invalid Type field value',
     },
     required: [true, 'type is required field'],

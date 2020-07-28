@@ -1,0 +1,116 @@
+tags:
+  - name: 'Proxy E'
+    description: Manage user's Proxy E
+
+paths:
+  /type_e:
+    get:
+      tags:
+        - Proxy E
+      summary: Get user's list of documents Proxy E.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's list of documents Proxy E.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Proxy E
+      summary: Get user's document Proxy E.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Create'
+      responses:
+        '200':
+          description: Get user's document Proxy E.
+      security:
+        - BearerAuth: []
+  /type_e/{id}:
+    get:
+      tags:
+        - Proxy E
+      summary: Get user's document Proxy E.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy E.
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Proxy E
+      summary: Send document Proxy E to Admin.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy E.
+      security:
+        - BearerAuth: []
+  /type_e/{id}/screens:
+    post:
+      tags:
+        - Proxy E
+      summary: Attach to document Proxy E screens.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                passport:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                inn:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Get user's document Proxy E.
+      security:
+        - BearerAuth: []
+
+definitions:
+  Create:
+    type: object
+    properties:
+      representative:
+        type: string
+        enum:
+          - individual
+          - entity

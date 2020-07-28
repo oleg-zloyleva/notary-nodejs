@@ -1,3 +1,3 @@
-const router = require('../docTypesRouter')('docTypeC');
+const router = require('../docTypesRouter')('docTypeD');
 
 module.exports = router;

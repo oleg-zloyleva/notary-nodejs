@@ -55,9 +55,10 @@ exports.Representative = Object.freeze({
 // eslint-disable-next-line max-len
 // incomeTaxReceipt // 5 - квитанция Продавцом налога с доходов физических лиц от продажи недвижимого имущества
 
-exports.DocProxyTypeATypes = Object.freeze({
+exports.DocTypes = Object.freeze({
   list: [
     'passport', 'inn', 'registration', 'charter', 'EGRPOU', 'protocol', 'proxy', 'proxyPassport',
     'purchaseAgreement', 'certificateNoRestrictions', 'permissionFromGuardianship', 'marriageCertificate', 'spouseConsent', 'incomeTaxReceipt',
+    'mainProxy',
   ],
 });
