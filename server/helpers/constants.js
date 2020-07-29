@@ -59,6 +59,6 @@ exports.DocTypes = Object.freeze({
   list: [
     'passport', 'inn', 'registration', 'charter', 'EGRPOU', 'protocol', 'proxy', 'proxyPassport',
     'purchaseAgreement', 'certificateNoRestrictions', 'permissionFromGuardianship', 'marriageCertificate', 'spouseConsent', 'incomeTaxReceipt',
-    'mainProxy',
+    'mainProxy', 'landDocuments', 'propertyValue', 'housePlan', 'manageHouseBuilding',
   ],
 });
