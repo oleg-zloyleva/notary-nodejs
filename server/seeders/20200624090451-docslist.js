@@ -63,6 +63,36 @@ module.exports = {
         },
       },
     },
+    {
+      insertOne: {
+        document: {
+          title: 'Документ доверенности удостоверенной в порядке передоверия',
+          description: '-',
+          requirements: '-',
+          code: 'docTypeE',
+        },
+      },
+    },
+    {
+      insertOne: {
+        document: {
+          title: 'Документ завещания',
+          description: '-',
+          requirements: '-',
+          code: 'docTypeF',
+        },
+      },
+    },
+    {
+      insertOne: {
+        document: {
+          title: 'Документ дарения недвижимости',
+          description: '-',
+          requirements: '-',
+          code: 'docTypeG',
+        },
+      },
+    },
   ]).then((res) => {
     // Prints "1"
     console.log(res.insertedCount);
