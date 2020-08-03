@@ -93,6 +93,16 @@ module.exports = {
         },
       },
     },
+    {
+      insertOne: {
+        document: {
+          title: 'Документ договора ипотеки',
+          description: '-',
+          requirements: '-',
+          code: 'docTypeH',
+        },
+      },
+    },
   ]).then((res) => {
     // Prints "1"
     console.log(res.insertedCount);
