@@ -1,30 +1,31 @@
 const CustomError = require('../errors/customError');
 const ScreenImage = require('../models/ScreenImage');
 
-const getAll = async function ({ user }) {
-  const doc = await this.find({ user: user._id }).populate('screens');
+const getAll = async function ({ user }, docType) {
+  const doc = await this.find({ user: user._id, docType }).populate('screens');
   if (!doc) throw new CustomError('Error get docs list', 500);
   return doc;
 };
 
-const getOne = async function ({ params: { id } }) {
-  const doc = await this.findById(id).populate('screens');
+const getOne = async function ({ params: { id } }, docType) {
+  const doc = await this.findOne({ _id: id, docType }).populate('screens');
   if (!doc) throw new CustomError('Document not found', 404);
   return doc;
 };
 
-const createOne = async function ({ user, body: { representative } }) {
+const createOne = async function ({ user, body: { representative } }, docType) {
   const doc = await this.create({
     representative,
     user: user._id,
     access: [user._id],
+    docType,
   });
   if (!doc) throw new CustomError('Document not create', 500);
   return doc;
 };
 
-const uploadScreens = async function ({ params: { id }, files, user }) {
-  const document = await this.findById(id).populate('screens');
+const uploadScreens = async function ({ params: { id }, files, user }, docType) {
+  const document = await this.findOne({ _id: id, docType }).populate('screens');
   if (!document) throw new CustomError('Document not found', 404);
 
   for (const [key, screenArr] of Object.entries(files)) {
@@ -63,10 +64,10 @@ const removeScreenHandler = (screen) => {
   return false;
 };
 
-const removeScreen = async function ({ params: { id }, body: { screens }, user }) {
+const removeScreen = async function ({ params: { id }, body: { screens }, user }, docType) {
   try {
     // find doc
-    const document = await this.findById(id).populate('screens');
+    const document = await this.findOne({ _id: id, docType }).populate('screens');
     // check permission
     if (!document.access.includes(user._id)) throw new CustomError('Forbidden for remove file', 403);
     // find screen for remove in doc other screens -> save
@@ -84,9 +85,9 @@ const removeScreen = async function ({ params: { id }, body: { screens }, user }
   }
 };
 
-const sendToCheck = async function ({ params: { id } }) {
+const sendToCheck = async function ({ params: { id } }, docType) {
   return this.findOneAndUpdate(
-    { _id: id },
+    { _id: id, docType },
     { sendToCheck: true },
     { new: true },
   );

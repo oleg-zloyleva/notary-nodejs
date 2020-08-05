@@ -9,6 +9,17 @@ exports.Representative = Object.freeze({
   ENTITY: 'entity',
 });
 
+exports.docTypes = Object.freeze({
+  a: 'docTypeA',
+  b: 'docTypeB',
+  c: 'docTypeC',
+  d: 'docTypeD',
+  e: 'docTypeE',
+  f: 'docTypeF',
+  g: 'docTypeG',
+  h: 'docTypeH',
+});
+
 // Type A
 // /** INDIVIDUAL - Доверитель физическое лицо */
 // passport: [ScreenImage], //10
