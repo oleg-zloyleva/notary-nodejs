@@ -1,4 +1,5 @@
 const assert = require('assert').strict;
+const { docTypes } = require('../helpers/constants');
 
 module.exports = {
   up: (models) => models.docsList.bulkWrite([
@@ -29,7 +30,7 @@ module.exports = {
             + 'фото (до 10 снимков)\n'
             + '- печать юридического лица.\n'
             + 'текстовое поле для ввода идентификационного кода печати',
-          code: 'docTypeA',
+          code: docTypes.a,
         },
       },
     },
@@ -39,7 +40,7 @@ module.exports = {
           title: 'Договор купли-продажи недвижимого имущества',
           description: '-',
           requirements: '-',
-          code: 'docTypeB',
+          code: docTypes.b,
         },
       },
     },
@@ -49,7 +50,7 @@ module.exports = {
           title: 'Доверенность на управление и распоряжение транспортным средством',
           description: '-',
           requirements: '-',
-          code: 'docTypeC',
+          code: docTypes.c,
         },
       },
     },
@@ -59,7 +60,7 @@ module.exports = {
           title: 'Доверенность на распоряжение недвижимостью',
           description: '-',
           requirements: '-',
-          code: 'docTypeD',
+          code: docTypes.d,
         },
       },
     },
@@ -69,7 +70,7 @@ module.exports = {
           title: 'Документ доверенности удостоверенной в порядке передоверия',
           description: '-',
           requirements: '-',
-          code: 'docTypeE',
+          code: docTypes.e,
         },
       },
     },
@@ -79,7 +80,7 @@ module.exports = {
           title: 'Документ завещания',
           description: '-',
           requirements: '-',
-          code: 'docTypeF',
+          code: docTypes.f,
         },
       },
     },
@@ -89,7 +90,7 @@ module.exports = {
           title: 'Документ дарения недвижимости',
           description: '-',
           requirements: '-',
-          code: 'docTypeG',
+          code: docTypes.g,
         },
       },
     },
@@ -99,7 +100,7 @@ module.exports = {
           title: 'Документ договора ипотеки',
           description: '-',
           requirements: '-',
-          code: 'docTypeH',
+          code: docTypes.h,
         },
       },
     },
