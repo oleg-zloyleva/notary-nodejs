@@ -58,7 +58,7 @@ class DocTypesController {
     } catch (e) {
       return next(e);
     }
-  };
+  }
 
   async sendToCheck(req, res, next) {
     try {
@@ -70,8 +70,6 @@ class DocTypesController {
   }
 }
 
-const getDocTypeController = (docType) => {
-  return new DocTypesController(docType);
-};
+const getDocTypeController = (docType) => new DocTypesController(docType);
 
 module.exports = getDocTypeController;
