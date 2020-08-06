@@ -1,0 +1,116 @@
+tags:
+  - name: 'Proxy I'
+    description: Manage user's Proxy I
+
+paths:
+  /type_i:
+    get:
+      tags:
+        - Proxy I
+      summary: Get user's list of documents Proxy I.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get user's list of documents Proxy I.
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Proxy I
+      summary: Create user's document Proxy I.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Create'
+      responses:
+        '200':
+          description: Get user's document Proxy I.
+      security:
+        - BearerAuth: []
+  /type_i/{id}:
+    get:
+      tags:
+        - Proxy I
+      summary: Get user's document Proxy I.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy I.
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Proxy I
+      summary: Send document Proxy I to Admin.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      responses:
+        '200':
+          description: Get user's document Proxy I.
+      security:
+        - BearerAuth: []
+  /type_i/{id}/screens:
+    post:
+      tags:
+        - Proxy I
+      summary: Attach to document Proxy I screens.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+          default: '5efc755ec02041062dd943b9'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                passport:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                inn:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Get user's document Proxy I.
+      security:
+        - BearerAuth: []
+
+definitions:
+  Create:
+    type: object
+    properties:
+      representative:
+        type: string
+        enum:
+          - individual
+          - entity

@@ -18,6 +18,7 @@ exports.docTypes = Object.freeze({
   f: 'docTypeF',
   g: 'docTypeG',
   h: 'docTypeH',
+  i: 'docTypeI',
 });
 
 // Type A
