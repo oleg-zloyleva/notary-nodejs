@@ -104,6 +104,16 @@ module.exports = {
         },
       },
     },
+    {
+      insertOne: {
+        document: {
+          title: 'Документ разрешения выезда ребенка заграницу',
+          description: '-',
+          requirements: '-',
+          code: docTypes.i,
+        },
+      },
+    },
   ]).then((res) => {
     // Prints "1"
     console.log(res.insertedCount);

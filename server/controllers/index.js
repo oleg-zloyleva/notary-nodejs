@@ -15,6 +15,7 @@ router.use(`${apiPrefix}/type_e`, require('./docTypesRouter')(docTypes.e));
 router.use(`${apiPrefix}/type_f`, require('./docTypesRouter')(docTypes.f));
 router.use(`${apiPrefix}/type_g`, require('./docTypesRouter')(docTypes.g));
 router.use(`${apiPrefix}/type_h`, require('./docTypesRouter')(docTypes.h));
+router.use(`${apiPrefix}/type_i`, require('./docTypesRouter')(docTypes.i));
 
 router.use(`${apiPrefix}/screens`, require('./ScreenImageController/screenImage.router'));
 router.use(`${apiPrefix}/docs`, require('./docsListController/docsList.router'));

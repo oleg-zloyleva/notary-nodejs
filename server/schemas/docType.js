@@ -28,9 +28,10 @@ const schema = new mongoose.Schema({
 
   screens: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ScreenImage' }],
 
-  sealId: {
-    type: String,
-  }, // 10 - печать юридического лица.
+  textFields: {
+    type: Map,
+    of: String,
+  },
 
   user: { // relation to user
     type: mongoose.ObjectId,
