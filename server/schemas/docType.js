@@ -26,9 +26,14 @@ const schema = new mongoose.Schema({
     type: String,
   },
 
-  screens: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ScreenImage' }],
+  screens: [ // values
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ScreenImage',
+    },
+  ],
 
-  textFields: {
+  textFields: { // values
     type: Map,
     of: String,
   },

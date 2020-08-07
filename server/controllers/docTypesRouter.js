@@ -6,6 +6,7 @@ const routerHandler = (docType) => {
   const upload = require('../helpers/uploadScreens');
 
   router.get('/', auth, docTypeController.getAllItems);
+  router.get('/create', auth, docTypeController.getCreateData);
   router.get('/:id', auth, docTypeController.findOneItem);
   router.patch('/:id', auth, docTypeController.sendToCheckItem);
   router.post('/', auth, docTypeController.createOneItem);

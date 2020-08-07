@@ -9,6 +9,11 @@ exports.Representative = Object.freeze({
   ENTITY: 'entity',
 });
 
+exports.fieldTypes = Object.freeze({
+  SCREEN: 'screen',
+  TEXT: 'text',
+});
+
 exports.docTypes = Object.freeze({
   a: 'docTypeA',
   b: 'docTypeB',

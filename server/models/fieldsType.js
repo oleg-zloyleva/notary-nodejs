@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { Representative, fieldTypes } = require('../helpers/constants');
 
 const newSchema = new mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
   },
@@ -9,25 +10,19 @@ const newSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  count: {
+    type: Number,
+  },
   requirements: {
     type: String,
+    enum: Object.values(Representative),
     required: true,
   },
-  docType: {
+  type: {
     type: String,
+    enum: Object.values(fieldTypes),
     required: true,
-  },
-  fieldsTypes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'fieldsType',
-    },
-  ],
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
   },
 });
 
-module.exports = mongoose.model('docsList', newSchema);
+module.exports = mongoose.model('fieldType', newSchema);

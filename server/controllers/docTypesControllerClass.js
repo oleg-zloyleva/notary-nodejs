@@ -20,6 +20,24 @@ class DocTypesController {
     }
   }
 
+  async getCreateData(req, res, next) {
+    try {
+      const data = {
+        fields: [
+          {
+            name: 'docTypeX',
+            count: 30, // null
+            representative: 'individual', // entity
+            type: 'screen', // text
+          },
+        ],
+      };
+      return res.json({ data });
+    } catch (e) {
+      return next(e);
+    }
+  }
+
   async findOne(req, res, next) {
     try {
       const data = await docTypeModel.getOne(req, this.docType);
