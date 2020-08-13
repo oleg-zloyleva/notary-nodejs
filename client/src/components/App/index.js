@@ -1,11 +1,15 @@
 import React from 'react';
-import { ContainerComponent } from '../ContainerComponent';
+import { HeaderComponent } from '../HeaderComponent';
+import { ContentComponent } from '../ContentComponent';
+import { FooterComponent } from '../FooterComponent';
 
 const App = () => {
   return (
-    <ContainerComponent>
-      textContainerComponent
-    </ContainerComponent>
+    <>
+      <HeaderComponent />
+      <ContentComponent />
+      <FooterComponent />
+    </>
   );
 };
 
