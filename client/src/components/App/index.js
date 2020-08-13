@@ -1,17 +1,12 @@
 import React from 'react';
-import styled from "styled-components";
+import { ContainerComponent } from '../ContainerComponent';
 
-const ContainerWrapper = styled.div`
-  margin: 0 auto;
-  width: 1280px;
-`;
-
-function App() {
+const App = () => {
   return (
-    <ContainerWrapper>
-      text
-    </ContainerWrapper>
+    <ContainerComponent>
+      textContainerComponent
+    </ContainerComponent>
   );
-}
+};
 
 export { App };
