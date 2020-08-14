@@ -10,7 +10,6 @@ const LinkButtonComponentWrapper = styled(Link)`
    cursor:pointer;
    width: 180px;
    height: 48px;
-   margin: 0 20px;
    background: ${props => props.background_color};
    border: 1px solid ${props => props.border_color};
    border-radius: 10px;

@@ -9,7 +9,6 @@ const ButtonWrapper = styled('button')`
    cursor:pointer;
    width: 180px;
    height: 48px;
-   margin: 0 20px;
    background: ${props => props.backgroundColor};
    border: 1px solid ${props => props.borderColor};
    border-radius: 10px;

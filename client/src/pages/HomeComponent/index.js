@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
-
-const HomeWrapper = styled.div`
-  width: 600px;
-  margin: 0 auto;
-`;
+import {ColWrapper} from "../../styledComonents/ColWrapper";
 
 const H1Wrapper = styled.h1`
   margin: 40px 0;
@@ -26,14 +22,14 @@ const DescriptionWrapper = styled.div`
 `;
 
 const HomeComponent = () => (
-  <HomeWrapper>
+  <ColWrapper width="600px">
     <H1Wrapper>Lorem ipsum dolor sit amet </H1Wrapper>
     <DescriptionWrapper>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a vulputate mattis consequat velit non sit eget.</DescriptionWrapper>
     <ButtonsWrapper>
       <LinkButtonComponent to='/login'>Увійти</LinkButtonComponent>
       <LinkButtonComponent to='/register'>Реєстрація</LinkButtonComponent>
     </ButtonsWrapper>
-  </HomeWrapper>
+  </ColWrapper>
 );
 
 export { HomeComponent };

@@ -20,7 +20,7 @@ const LabelWrapper = styled.label`
 const InputWrapper = styled.input`
   border: 1px solid #C8C8C8;
   border-radius: 10px;
-  width: 100%;
+  //width: 100%;
   height: 48px;
   font-style: normal;
   font-weight: normal;
