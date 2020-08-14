@@ -1,33 +1,15 @@
 import React, {useState} from "react";
-import styled from "styled-components";
+
 import { FormInputComponent } from '../../components/FormInputComponent';
 import { ButtonComponent } from '../../components/ButtonComponent';
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
 import { ConfirmRegistrationComponent } from '../../components/ConfirmRegistrationComponent';
 import {CongratsActivatePhoneComponent} from "../../components/CongratsActivatePhoneComponent";
 
-const RegisterWrapper = styled.div`
-  width: 400px;
-  margin: 0 auto;
-`;
-
-const H1Wrapper = styled.h1`
-  margin: 32px 0;
-  text-align: center;
-  font-weight: normal;
-  font-size: 38px;
-  line-height: 45px;
-`;
-
-const DescriptionWrapper = styled.div`
-  margin: 32px 0;
-  text-align: center;
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import {ColWrapper} from "../../styledComonents/ColWrapper";
+import {H2Wrapper} from "../../styledComonents/H2Wrapper";
+import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper"
+import {ButtonsAuthWrapper} from "../../styledComonents/ButtonsAuthWrapper"
 
 const RegisterComponent = () => {
   const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
@@ -39,22 +21,21 @@ const RegisterComponent = () => {
   };
 
   return (
-    <RegisterWrapper>
-      <H1Wrapper>Реєстрація</H1Wrapper>
+    <ColWrapper>
+      <H2Wrapper>Реєстрація</H2Wrapper>
       <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
       <FormInputComponent labelText="Введіть ім’я" id="name" />
       <FormInputComponent labelText="Введіть пароль" id="password" type="password" />
       <FormInputComponent labelText="Введіть номер телефону" id="phone" />
 
-      <ButtonsWrapper>
+      <ButtonsAuthWrapper>
         <ButtonComponent onClick={() => setShowConfirmRegistration(true)}>Реєстрація</ButtonComponent>
         <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
-      </ButtonsWrapper>
+      </ButtonsAuthWrapper>
 
       {showConfirmRegistration && <ConfirmRegistrationComponent onClose={() => setShowConfirmRegistration(false)} onSend={confirmPhoneHandler}/>}
       {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
-
-    </RegisterWrapper>
+    </ColWrapper>
   );
 }
 
