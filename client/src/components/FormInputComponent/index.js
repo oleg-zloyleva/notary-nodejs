@@ -11,7 +11,7 @@ const FormInputWrapper = styled.div`
 `;
 
 const LabelWrapper = styled.label`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   color: ${props => props.primaryTextColor ? theme[props.primaryTextColor] : theme.primaryTextColor};
   margin-bottom: 8px;

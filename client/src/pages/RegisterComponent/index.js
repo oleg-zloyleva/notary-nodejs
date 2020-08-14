@@ -4,6 +4,7 @@ import { FormInputComponent } from '../../components/FormInputComponent';
 import { ButtonComponent } from '../../components/ButtonComponent';
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
 import { ConfirmRegistrationComponent } from '../../components/ConfirmRegistrationComponent';
+import {CongratsActivatePhoneComponent} from "../../components/CongratsActivatePhoneComponent";
 
 const RegisterWrapper = styled.div`
   width: 400px;
@@ -29,7 +30,14 @@ const ButtonsWrapper = styled.div`
 `;
 
 const RegisterComponent = () => {
-  const [showConfirmRegistration, setShowConfirmRegistration] = useState(true);
+  const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
+  const [showCongratsActivatePhone, setShowCongratsActivatePhone] = useState(false);
+
+  const confirmPhoneHandler = () => {
+    setShowConfirmRegistration(false);
+    setShowCongratsActivatePhone(true);
+  };
+
   return (
     <RegisterWrapper>
       <H1Wrapper>Реєстрація</H1Wrapper>
@@ -43,7 +51,8 @@ const RegisterComponent = () => {
         <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
       </ButtonsWrapper>
 
-      {showConfirmRegistration && <ConfirmRegistrationComponent onClose={() => setShowConfirmRegistration(false)} />}
+      {showConfirmRegistration && <ConfirmRegistrationComponent onClose={() => setShowConfirmRegistration(false)} onSend={confirmPhoneHandler}/>}
+      {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
 
     </RegisterWrapper>
   );
