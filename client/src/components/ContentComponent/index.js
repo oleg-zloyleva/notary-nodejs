@@ -3,19 +3,14 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import styled from "styled-components";
 
 import { ContainerComponent } from '../ContainerComponent';
 import { HomeComponent } from '../../pages/HomeComponent';
 import { LoginComponent } from '../../pages/LoginComponent';
 import { RegisterComponent } from '../../pages/RegisterComponent';
 
-const ContentComponentWrapper = styled('ContainerComponent')`
-  flex: 1;
-`;
-
 const ContentComponent = () => (
-  <ContentComponentWrapper>
+  <ContainerComponent grow_v>
     <Switch>
       <Route path="/register">
         <RegisterComponent />
@@ -27,7 +22,7 @@ const ContentComponent = () => (
         <HomeComponent />
       </Route>
     </Switch>
-  </ContentComponentWrapper>
+  </ContainerComponent>
 );
 
 export { ContentComponent };

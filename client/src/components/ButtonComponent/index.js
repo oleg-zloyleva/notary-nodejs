@@ -25,7 +25,8 @@ const ButtonWrapper = styled('button')`
 
 const ButtonComponent = ({
   children,
-  colors
+  colors,
+  onClick,
 }) => {
   let backgroundColor, border, color;
 
@@ -50,6 +51,7 @@ const ButtonComponent = ({
       backgroundColor={backgroundColor}
       borderColor={border}
       primaryTextColor={color}
+      onClick={onClick}
     >
       {children}
     </ButtonWrapper>

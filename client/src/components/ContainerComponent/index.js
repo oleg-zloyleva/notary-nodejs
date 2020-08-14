@@ -12,10 +12,11 @@ const ContainerWrapper = styled.div`
   @media (min-width: 1200px) {
     width: 1170px;
   }
+  ${props => props.grow_v && 'flex: 1;'}
 `;
 
-const ContainerComponent = ({children}) => (
-  <ContainerWrapper>{children}</ContainerWrapper>
+const ContainerComponent = ({children, grow_v}) => (
+  <ContainerWrapper grow_v={grow_v}>{children}</ContainerWrapper>
 );
 
 export { ContainerComponent };

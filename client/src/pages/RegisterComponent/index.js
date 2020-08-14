@@ -29,7 +29,7 @@ const ButtonsWrapper = styled.div`
 `;
 
 const RegisterComponent = () => {
-  const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
+  const [showConfirmRegistration, setShowConfirmRegistration] = useState(true);
   return (
     <RegisterWrapper>
       <H1Wrapper>Реєстрація</H1Wrapper>
@@ -39,11 +39,11 @@ const RegisterComponent = () => {
       <FormInputComponent labelText="Введіть номер телефону" id="phone" />
 
       <ButtonsWrapper>
-        <ButtonComponent>Реєстрація</ButtonComponent>
+        <ButtonComponent onClick={() => setShowConfirmRegistration(true)}>Реєстрація</ButtonComponent>
         <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
       </ButtonsWrapper>
 
-      {showConfirmRegistration && <ConfirmRegistrationComponent />}
+      {showConfirmRegistration && <ConfirmRegistrationComponent onClose={() => setShowConfirmRegistration(false)} />}
 
     </RegisterWrapper>
   );
