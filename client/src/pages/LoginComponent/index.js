@@ -23,6 +23,6 @@ const LoginComponent = () => {
       </ButtonsAuthWrapper>
     </ColWrapper>
   );
-}
+};
 
 export { LoginComponent };

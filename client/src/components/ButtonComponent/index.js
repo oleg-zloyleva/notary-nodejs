@@ -55,6 +55,6 @@ const ButtonComponent = ({
       {children}
     </ButtonWrapper>
   );
-}
+};
 
 export { ButtonComponent };
