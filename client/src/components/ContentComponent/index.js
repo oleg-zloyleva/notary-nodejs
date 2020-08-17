@@ -8,10 +8,15 @@ import { ContainerComponent } from '../ContainerComponent';
 import { HomeComponent } from '../../pages/HomeComponent';
 import { LoginComponent } from '../../pages/LoginComponent';
 import { RegisterComponent } from '../../pages/RegisterComponent';
+import {UserProfileComponent} from "../../pages/UserProfileComponent";
+import {PrivateRouteComponent} from "../PrivateRouteComponent";
 
 const ContentComponent = () => (
   <ContainerComponent grow_v>
     <Switch>
+      <PrivateRouteComponent path="/profile">
+        <UserProfileComponent />
+      </PrivateRouteComponent>
       <Route path="/register">
         <RegisterComponent />
       </Route>

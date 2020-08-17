@@ -1,5 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit";
 
+// todo: get init from localStorage
 const initState = {
   token: null,
   user: null,
