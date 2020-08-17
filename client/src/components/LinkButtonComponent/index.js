@@ -57,6 +57,6 @@ const LinkButtonComponent = ({
         {children}
      </LinkButtonComponentWrapper>
    );
-}
+};
 
 export { LinkButtonComponent };

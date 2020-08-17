@@ -2,6 +2,7 @@
 const colors = require('colors');
 const express = require('express');
 const logger = require('./logs');
+const cors = require('./middlewares/cors');
 
 const app = express();
 const config = require('./config/appSettings');
@@ -17,6 +18,7 @@ mongo.run();
 
 /** Middleware */
 app.use(express.json());
+app.use(cors);
 
 const swaggerDefinition = {
   openapi: '3.0.0',

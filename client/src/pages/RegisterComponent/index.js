@@ -37,6 +37,6 @@ const RegisterComponent = () => {
       {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
     </ColWrapper>
   );
-}
+};
 
 export { RegisterComponent };

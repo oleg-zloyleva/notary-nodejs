@@ -10,7 +10,10 @@ newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
   const user = await this.findOne({ phone });
   if (!user) throw new CustomError(`User with phone:${phone} not found`, 404, { phone }); // status 404
   if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401, { phone }); // status 401
-  return getToken(user);
+  return {
+    token: getToken(user),
+    user,
+  };
 };
 
 newSchema.statics.activateUsersBySMS = async function ({ sms_code }) {
@@ -28,7 +31,10 @@ newSchema.statics.activateUsersBySMS = async function ({ sms_code }) {
   );
 
   if (!user) throw new CustomError('User for activation is not found', 404);
-  return getToken(user);
+  return {
+    token: getToken(user),
+    user,
+  };
 };
 
 newSchema.statics.registerNewUser = async function ({ name, password, phone }) {

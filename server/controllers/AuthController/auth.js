@@ -1,9 +1,10 @@
 const User = require('../../models/users');
+const BlackList = require('../../models/blacklist');
 
 exports.login = async (req, res, next) => {
   try {
-    const token = await User.loginUserReturnToken(req.body);
-    return res.json({ token });
+    const data = await User.loginUserReturnToken(req.body);
+    return res.json(data);
   } catch (e) {
     return next(e);
   }
