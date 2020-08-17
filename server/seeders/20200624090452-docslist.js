@@ -3,7 +3,6 @@ const { docTypes } = require('../helpers/constants');
 
 module.exports = {
   up: async (models) => {
-
     const fieldTypeData = await models.fieldType.find({});
     const fieldsTypesArray = fieldTypeData.filter((el) => ['passport_proxy', 'inn_proxy', 'registration_entity',
       'charter_entity', 'EGRPOU_entity', 'protocol_entity', 'representative_proxy']

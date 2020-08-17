@@ -1,4 +1,5 @@
 const User = require('../../models/users');
+const BlackList = require('../../models/blacklist');
 
 exports.login = async (req, res, next) => {
   try {
