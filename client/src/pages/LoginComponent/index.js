@@ -27,7 +27,7 @@ const LoginComponent = () => {
       phone,
       password,
     }));
-    history.push('/profile');
+    history.push('/profile/');
   };
 
   return (

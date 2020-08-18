@@ -12,6 +12,8 @@ const ContainerWrapper = styled.div`
   @media (min-width: 1200px) {
     width: 1170px;
   }
+  display: flex;
+  align-items: stretch;
   ${props => props.grow_v && 'flex: 1;'}
 `;
 
