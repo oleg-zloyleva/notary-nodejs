@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ContainerComponent } from '../ContainerComponent';
 import styled from "styled-components";
+import {useSelector} from "react-redux";
+
+import { ContainerComponent } from '../ContainerComponent';
 import {LogoutComponent} from "../LogoutComponent";
+import {LogoLinkButton} from "../LogoLinkButton";
 
 const HeaderWrapper = styled('div')`
    height: 80px;
@@ -28,19 +30,22 @@ const UserAvatar = styled('div')`
   background: #C4C4C4;
 `;
 
-const HeaderUserComponent = () => (
-  <HeaderWrapper>
-    <ContainerComponent justifyContent='space-between'>
-      <Link to='/'>Logo</Link>
-      <FlexWrapper>
-        <UserProfile>
-          <UserAvatar />
-          <div>User</div>
-        </UserProfile>
-        <LogoutComponent/>
-      </FlexWrapper>
-    </ContainerComponent>
-  </HeaderWrapper>
-);
+const HeaderUserComponent = () => {
+  const {user} = useSelector(state => state.user);
+  return (
+    <HeaderWrapper>
+      <ContainerComponent justifyContent='space-between'>
+        <LogoLinkButton />
+        <FlexWrapper>
+          <UserProfile>
+            <UserAvatar />
+            <div>{user.name}</div>
+          </UserProfile>
+          <LogoutComponent/>
+        </FlexWrapper>
+      </ContainerComponent>
+    </HeaderWrapper>
+  );
+}
 
 export { HeaderUserComponent };

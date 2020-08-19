@@ -7,7 +7,7 @@ const state = loadState();
 
 const initState = {
   token: state ? state?.user?.token : null,
-  user: null,
+  user: state ? state?.user?.user : null,
 };
 
 const userReducer = createReducer(initState, {

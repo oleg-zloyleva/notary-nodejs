@@ -1,11 +1,10 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import styled from "styled-components";
 
 import logout from "./logout.svg";
-import {useDispatch} from "react-redux";
 import {logoutThunkHandler} from "../../store/actions/authActionsCreators";
-
 
 const LogoutWrapper = styled('div')`
   display: flex;
