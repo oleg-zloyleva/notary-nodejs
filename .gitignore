@@ -6,4 +6,4 @@ node_modules/
 
 tasks
 
-client/cypress/integration/examples/*.js
+#client/cypress/integration/examples/*.js
