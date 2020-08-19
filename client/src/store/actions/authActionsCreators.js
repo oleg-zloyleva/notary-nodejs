@@ -1,5 +1,5 @@
-import axios from "axios";
 import {appLoadedAction, appLoadingAction} from "./appActionsCreator";
+import {authAjaxQuery, clearState} from "../../helpers";
 
 const loginAction = (data) => ({
   payload: data,
@@ -9,10 +9,11 @@ const loginAction = (data) => ({
 export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   try{
     dispatch(appLoadingAction());
-    const {data} = await axios.post(`${process.env.REACT_APP_DOMAIN}/auth/login`, {
-      phone,
-      password,
-    });
+    const data = await authAjaxQuery({method:'post', url: 'auth/login', data: {
+        phone,
+        password,
+      }});
+
     console.log('data',data)
     dispatch(loginAction({
       token: data.token,
@@ -24,4 +25,16 @@ export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   }
 };
 
+const logoutAction = () => ({
+  type: 'user/logoutUser'
+});
 
+export const logoutThunkHandler = () => async (dispatch) => {
+  try{
+    await authAjaxQuery({method:'get', url: 'auth/logout'});
+    await clearState();
+  }catch (e) {
+    console.log(e)
+  }
+  dispatch(logoutAction());
+};

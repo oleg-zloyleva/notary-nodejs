@@ -12,6 +12,7 @@ const initState = {
 
 const userReducer = createReducer(initState, {
   'user/loginUser': (state, {payload}) => ({...payload}),
+  'user/logoutUser': () => ({user: null, token: null}),
 });
 
 export { userReducer };
