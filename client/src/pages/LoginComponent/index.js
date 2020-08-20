@@ -50,7 +50,7 @@ const LoginComponent = () => {
         <FormInputComponent labelText="Введіть пароль" id="password" type="password" value={password}
                             changeValue={setPassword}/>
         <ButtonsAuthWrapper>
-          <ButtonComponent onClick={loginFetchHandler}>Увійти</ButtonComponent>
+          <ButtonComponent id="login" onClick={loginFetchHandler}>Увійти</ButtonComponent>
           <ButtonComponent colors="secondary" onClick={() => setForgotPassword(true)}>Забули пароль?</ButtonComponent>
         </ButtonsAuthWrapper>
       </ColWrapper>

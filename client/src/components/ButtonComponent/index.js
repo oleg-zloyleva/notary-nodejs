@@ -26,6 +26,7 @@ const ButtonComponent = ({
   children,
   colors,
   onClick,
+  id,
 }) => {
   let backgroundColor, border, color;
 
@@ -51,6 +52,7 @@ const ButtonComponent = ({
       borderColor={border}
       primaryTextColor={color}
       onClick={onClick}
+      id={id}
     >
       {children}
     </ButtonWrapper>
