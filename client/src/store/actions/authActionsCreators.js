@@ -1,5 +1,5 @@
-import axios from "axios";
 import {appLoadedAction, appLoadingAction} from "./appActionsCreator";
+import {authAjaxQuery, clearState} from "../../helpers";
 
 const loginAction = (data) => ({
   payload: data,
@@ -8,20 +8,48 @@ const loginAction = (data) => ({
 
 export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   try{
-    dispatch(appLoadingAction());
-    const {data} = await axios.post(`${process.env.REACT_APP_DOMAIN}/auth/login`, {
-      phone,
-      password,
-    });
+    await dispatch(appLoadingAction());
+    const data = await authAjaxQuery({method:'post', url: 'auth/login', data: {
+        phone,
+        password,
+      }});
+
     console.log('data',data)
-    dispatch(loginAction({
+    await dispatch(loginAction({
       token: data.token,
       user: data.user,
     }));
-    dispatch(appLoadedAction());
   }catch (e) {
     // todo: dispatch Error
+  }finally {
+    await dispatch(appLoadedAction());
   }
 };
 
+const logoutAction = () => ({
+  type: 'user/logoutUser'
+});
 
+export const logoutThunkHandler = () => async (dispatch) => {
+  try{
+    await dispatch(appLoadingAction());
+    await authAjaxQuery({method:'get', url: 'auth/logout'});
+    await clearState();
+  }catch (e) {
+    console.log(e)
+  }finally {
+    await dispatch(appLoadedAction());
+  }
+  await dispatch(logoutAction());
+};
+
+export const sendForgotPasswordAction = (phone) => async (dispatch) => {
+  try{
+    await dispatch(appLoadingAction());
+    await authAjaxQuery({method:'post', url: 'password/reset', data: {phone}});
+  }catch (e) {
+    console.log(e)
+  }finally {
+    await dispatch(appLoadedAction());
+  }
+};

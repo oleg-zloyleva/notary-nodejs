@@ -11,11 +11,15 @@ import {ColWrapper} from "../../styledComonents/ColWrapper";
 import {H2Wrapper} from "../../styledComonents/H2Wrapper";
 import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper";
 
-import {loginThunkHandler} from "../../store/actions/authActionsCreators";
+import {loginThunkHandler, sendForgotPasswordAction} from "../../store/actions/authActionsCreators";
+import {GuestContentComponent} from "../../components/GuestContentComponent";
+import {ModalForgotPasswordComponent} from "../../components/ModalForgotPasswordComponent";
 
 const LoginComponent = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [showForgotPassword, setForgotPassword] = useState(false);
+
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -27,21 +31,32 @@ const LoginComponent = () => {
       phone,
       password,
     }));
-    history.push('/profile');
+    history.push('/profile/');
+  };
+
+  const sendForgotPassword = async (phone) => {
+    console.log('sendForgotPassword',phone);
+    // todo dispatch sendForgotPassword
+    await dispatch(sendForgotPasswordAction(phone));
+    // todo show modal for enter sms_code
   };
 
   return (
-    <ColWrapper>
-      <H2Wrapper>Увійти</H2Wrapper>
-      <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
-      <FormInputComponent labelText="Введіть номер телефону" id="phone" value={phone} changeValue={setPhone}/>
-      <FormInputComponent labelText="Введіть пароль" id="password" type="password" value={password}
-                          changeValue={setPassword}/>
-      <ButtonsAuthWrapper>
-        <ButtonComponent onClick={loginFetchHandler}>Увійти</ButtonComponent>
-        <LinkButtonComponent to="/login" colors="secondary">Забули пароль?</LinkButtonComponent>
-      </ButtonsAuthWrapper>
-    </ColWrapper>
+    <GuestContentComponent>
+      <ColWrapper>
+        <H2Wrapper>Увійти</H2Wrapper>
+        <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
+        <FormInputComponent labelText="Введіть номер телефону" id="phone" value={phone} changeValue={setPhone}/>
+        <FormInputComponent labelText="Введіть пароль" id="password" type="password" value={password}
+                            changeValue={setPassword}/>
+        <ButtonsAuthWrapper>
+          <ButtonComponent onClick={loginFetchHandler}>Увійти</ButtonComponent>
+          <ButtonComponent colors="secondary" onClick={() => setForgotPassword(true)}>Забули пароль?</ButtonComponent>
+        </ButtonsAuthWrapper>
+      </ColWrapper>
+
+      {showForgotPassword && <ModalForgotPasswordComponent onSend={sendForgotPassword} onClose={() => setForgotPassword(false)} />}
+    </GuestContentComponent>
   );
 };
 
