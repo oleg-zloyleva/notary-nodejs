@@ -8,20 +8,21 @@ const loginAction = (data) => ({
 
 export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   try{
-    dispatch(appLoadingAction());
+    await dispatch(appLoadingAction());
     const data = await authAjaxQuery({method:'post', url: 'auth/login', data: {
         phone,
         password,
       }});
 
     console.log('data',data)
-    dispatch(loginAction({
+    await dispatch(loginAction({
       token: data.token,
       user: data.user,
     }));
-    dispatch(appLoadedAction());
   }catch (e) {
     // todo: dispatch Error
+  }finally {
+    await dispatch(appLoadedAction());
   }
 };
 
@@ -31,10 +32,24 @@ const logoutAction = () => ({
 
 export const logoutThunkHandler = () => async (dispatch) => {
   try{
+    await dispatch(appLoadingAction());
     await authAjaxQuery({method:'get', url: 'auth/logout'});
     await clearState();
   }catch (e) {
     console.log(e)
+  }finally {
+    await dispatch(appLoadedAction());
   }
-  dispatch(logoutAction());
+  await dispatch(logoutAction());
+};
+
+export const sendForgotPasswordAction = (phone) => async (dispatch) => {
+  try{
+    await dispatch(appLoadingAction());
+    await authAjaxQuery({method:'post', url: 'password/reset', data: {phone}});
+  }catch (e) {
+    console.log(e)
+  }finally {
+    await dispatch(appLoadedAction());
+  }
 };
