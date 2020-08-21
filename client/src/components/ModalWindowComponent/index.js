@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import styled from "styled-components";
 import {CloseButtonComponent} from "../CloseButtonComponent";
 
@@ -23,13 +23,21 @@ const ModalWindow  = styled('div')`
   padding: 40px;
 `;
 
-const ModalWindowComponent = ({onClose, children}) => (
-  <ModalWindowWrapper>
-    <ModalWindow>
-      <CloseButtonComponent onClick={onClose} />
-      {children}
-    </ModalWindow>
-  </ModalWindowWrapper>
-);
+const ModalWindowComponent = ({onClose, children}) => {
+  const inputEl = useRef(null);
+
+  const closeHandler = (e) => {
+    if(e.target === inputEl.current) onClose();
+  };
+
+  return (
+    <ModalWindowWrapper ref={inputEl} onClick={closeHandler}>
+      <ModalWindow>
+        <CloseButtonComponent onClick={onClose} />
+        {children}
+      </ModalWindow>
+    </ModalWindowWrapper>
+  );
+}
 
 export { ModalWindowComponent };

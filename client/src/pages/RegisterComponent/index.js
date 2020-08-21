@@ -10,32 +10,63 @@ import {ColWrapper} from "../../styledComonents/ColWrapper";
 import {H2Wrapper} from "../../styledComonents/H2Wrapper";
 import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper"
 import {ButtonsAuthWrapper} from "../../styledComonents/ButtonsAuthWrapper"
+import {GuestContentComponent} from "../../components/GuestContentComponent";
+import {useDispatch} from "react-redux";
+import {activateUserFetchAction, registerFetchAction} from "../../store/actions/authActionsCreators";
 
 const RegisterComponent = () => {
+  const dispatch = useDispatch();
   const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
   const [showCongratsActivatePhone, setShowCongratsActivatePhone] = useState(false);
 
-  const confirmPhoneHandler = () => {
-    setShowConfirmRegistration(false);
-    setShowCongratsActivatePhone(true);
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [sms_code, setSMSCodeHandler] = useState('');
+
+  const registrationHandler = async () => {
+    try{
+      // await dispatch(registerFetchAction({name, password, phone}));
+      await setShowConfirmRegistration(true);
+      // await setName('');
+      // await setPassword('');
+      // await setPhone('');
+    }
+    catch (e) {
+      console.log(e.data, e.status)
+    }
+  };
+
+  const confirmPhoneHandler = async () => {
+    await dispatch(activateUserFetchAction({sms_code}));
+    await setSMSCodeHandler('');
+    await setShowConfirmRegistration(false);
+    await setShowCongratsActivatePhone(true);
+  };
+
+  const closeConfirmRegistrationWindow = async () => {
+    await setSMSCodeHandler('');
+    await setShowConfirmRegistration(false)
   };
 
   return (
-    <ColWrapper>
-      <H2Wrapper>Реєстрація</H2Wrapper>
-      <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
-      <FormInputComponent labelText="Введіть ім’я" id="name" />
-      <FormInputComponent labelText="Введіть пароль" id="password" type="password" />
-      <FormInputComponent labelText="Введіть номер телефону" id="phone" />
+    <GuestContentComponent>
+      <ColWrapper>
+        <H2Wrapper>Реєстрація</H2Wrapper>
+        <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
+        <FormInputComponent labelText="Введіть ім’я" id="name" value={name} changeValue={setName} />
+        <FormInputComponent labelText="Введіть пароль" id="password" type="password" value={password} changeValue={setPassword} />
+        <FormInputComponent labelText="Введіть номер телефону" id="phone" value={phone} changeValue={setPhone} />
 
-      <ButtonsAuthWrapper>
-        <ButtonComponent onClick={() => setShowConfirmRegistration(true)}>Реєстрація</ButtonComponent>
-        <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
-      </ButtonsAuthWrapper>
+        <ButtonsAuthWrapper>
+          <ButtonComponent onClick={registrationHandler}>Реєстрація</ButtonComponent>
+          <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
+        </ButtonsAuthWrapper>
 
-      {showConfirmRegistration && <ConfirmRegistrationComponent onClose={() => setShowConfirmRegistration(false)} onSend={confirmPhoneHandler}/>}
-      {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
-    </ColWrapper>
+        {showConfirmRegistration && <ConfirmRegistrationComponent onClose={closeConfirmRegistrationWindow} onSend={confirmPhoneHandler} setSMSCodeHandler={setSMSCodeHandler} sms_code={sms_code} />}
+        {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
+      </ColWrapper>
+    </GuestContentComponent>
   );
 };
 

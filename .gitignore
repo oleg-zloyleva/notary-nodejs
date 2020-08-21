@@ -5,3 +5,5 @@ node_modules/
 .env
 
 tasks
+
+#client/cypress/integration/examples/*.js

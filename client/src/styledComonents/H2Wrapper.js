@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const H2Wrapper = styled.h1`
-  margin: 24px 0;
+  margin: 0px;
   text-align: center;
   font-weight: normal;
   font-size: 38px;
