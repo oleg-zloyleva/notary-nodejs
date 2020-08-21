@@ -8,8 +8,9 @@ const LoaderIconComponent = () => {
 
   const countTick = async () => await setTick((tick + 1) > 7 ? 0 : tick + 1);
   const setColor = (index, el) => index === el ? light : dark;
-  useEffect(() => {
-    setTimeout(countTick, 200)
+  useEffect( () => {
+    const timerHandler = setTimeout(countTick, 500);
+    return () => clearTimeout(timerHandler);
   },[tick]);
 
   return (

@@ -35,10 +35,11 @@ const ButtonWrapper = styled('div')`
 const ConfirmRegistrationComponent = ({
   onClose,
   onSend,
+  sms_code,
+  setSMSCodeHandler,
 }) => (
   <ModalWindowComponent
     onClose={onClose}
-    onSend={onSend}
   >
     <CircleWrapper />
     <DescriptionWrapper>
@@ -46,7 +47,7 @@ const ConfirmRegistrationComponent = ({
       <p>Будь ласка, введіть код у форму нищє.</p>
     </DescriptionWrapper>
     <InputWrapper>
-      <FormInputComponent labelText="Код з СМС" id="sms_code" />
+      <FormInputComponent labelText="Код з СМС" id="sms_code" changeValue={setSMSCodeHandler} value={sms_code} />
     </InputWrapper>
     <ButtonWrapper>
       <ButtonComponent onClick={onSend}>Відправити</ButtonComponent>

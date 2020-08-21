@@ -1,5 +1,6 @@
 import {appLoadedAction, appLoadingAction} from "./appActionsCreator";
 import {authAjaxQuery, clearState} from "../../helpers";
+import {CustomError} from "../../Errors/CustomError";
 
 const loginAction = (data) => ({
   payload: data,
@@ -20,7 +21,10 @@ export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
       user: data.user,
     }));
   }catch (e) {
-    // todo: dispatch Error
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.data,
+    });
   }finally {
     await dispatch(appLoadedAction());
   }
@@ -36,7 +40,10 @@ export const logoutThunkHandler = () => async (dispatch) => {
     await authAjaxQuery({method:'get', url: 'auth/logout'});
     await clearState();
   }catch (e) {
-    console.log(e)
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.data,
+    });
   }finally {
     await dispatch(appLoadedAction());
   }
@@ -48,7 +55,38 @@ export const sendForgotPasswordAction = (phone) => async (dispatch) => {
     await dispatch(appLoadingAction());
     await authAjaxQuery({method:'post', url: 'password/reset', data: {phone}});
   }catch (e) {
-    console.log(e)
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.data,
+    });
+  }finally {
+    await dispatch(appLoadedAction());
+  }
+};
+
+export const registerFetchAction = (data) => async (dispatch) => {
+  try{
+    await dispatch(appLoadingAction());
+    await authAjaxQuery({method:'post', url: 'auth/register', data});
+  }catch (e) {
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.data,
+    });
+  }finally {
+    await dispatch(appLoadedAction());
+  }
+};
+
+export const activateUserFetchAction = (data) => async (dispatch) => {
+  try{
+    await dispatch(appLoadingAction());
+    await authAjaxQuery({method:'post', url: 'auth/activate', data});
+  }catch (e) {
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.data,
+    });
   }finally {
     await dispatch(appLoadedAction());
   }

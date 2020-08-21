@@ -40,7 +40,10 @@ const fetchData = (options = {}) => {
       },
     })
       .then(res => (res.status >= 200 && res.status < 300) ? resolve(res.data) : reject(res))
-      .catch((err) => reject(err))
+      .catch((err) => {
+        console.log('fetchData error', err.response)
+        return reject(err)
+      })
   })
 };
 
