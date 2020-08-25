@@ -15,21 +15,13 @@ const App = () => {
     <>
       {showLoading && <LoaderComponent />}
       <Switch>
-        <PrivateRouteComponent path="/profile">
-          <UserProfileComponent />
-        </PrivateRouteComponent>
-        <Route path="/register">
-          <RegisterComponent />
-        </Route>
-        <Route path="/login">
-          <LoginComponent />
-        </Route>
-        <Route path="/">
-          <HomeComponent />
-        </Route>
+        <PrivateRouteComponent path="/profile" component={UserProfileComponent} />
+        <Route path="/register" component={RegisterComponent} />
+        <Route path="/login" component={LoginComponent} />
+        <Route path="/" component={HomeComponent} />
       </Switch>
     </>
   );
-}
+};
 
 export { App };
