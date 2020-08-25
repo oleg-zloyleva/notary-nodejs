@@ -10,15 +10,15 @@ const loginAction = (data) => ({
 export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   try{
     await dispatch(appLoadingAction());
-    const data = await authAjaxQuery({method:'post', url: 'auth/login', data: {
+    const response = await authAjaxQuery({method:'post', url: 'auth/login', data: {
         phone,
         password,
       }});
 
-    console.log('data',data)
+    console.log('response',response);
     await dispatch(loginAction({
-      token: data.token,
-      user: data.user,
+      token: response.token,
+      user: response.user,
     }));
   }catch (e) {
     throw new CustomError({
@@ -81,7 +81,13 @@ export const registerFetchAction = (data) => async (dispatch) => {
 export const activateUserFetchAction = (data) => async (dispatch) => {
   try{
     await dispatch(appLoadingAction());
-    await authAjaxQuery({method:'post', url: 'auth/activate', data});
+    const response = await authAjaxQuery({method:'post', url: 'auth/activate', data});
+
+    console.log('response',response);
+    await dispatch(loginAction({
+      token: response.token,
+      user: response.user,
+    }));
   }catch (e) {
     throw new CustomError({
       data: e.response.data,

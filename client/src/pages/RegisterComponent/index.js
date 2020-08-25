@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 
 import { FormInputComponent } from '../../components/FormInputComponent';
 import { ButtonComponent } from '../../components/ButtonComponent';
@@ -15,6 +16,7 @@ import {useDispatch} from "react-redux";
 import {activateUserFetchAction, registerFetchAction} from "../../store/actions/authActionsCreators";
 
 const RegisterComponent = () => {
+  let history = useHistory();
   const dispatch = useDispatch();
   const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
   const [showCongratsActivatePhone, setShowCongratsActivatePhone] = useState(false);
@@ -26,11 +28,8 @@ const RegisterComponent = () => {
 
   const registrationHandler = async () => {
     try{
-      // await dispatch(registerFetchAction({name, password, phone}));
+      await dispatch(registerFetchAction({name, password, phone}));
       await setShowConfirmRegistration(true);
-      // await setName('');
-      // await setPassword('');
-      // await setPhone('');
     }
     catch (e) {
       console.log(e.data, e.status)
@@ -42,6 +41,12 @@ const RegisterComponent = () => {
     await setSMSCodeHandler('');
     await setShowConfirmRegistration(false);
     await setShowCongratsActivatePhone(true);
+
+    await setTimeout(async () => {
+      console.log('setTimeout');
+      await setShowCongratsActivatePhone(false);
+      history.push('/profile');
+    }, 1000);
   };
 
   const closeConfirmRegistrationWindow = async () => {

@@ -21,8 +21,8 @@ exports.register = async (req, res, next) => {
 
 exports.activate = async (req, res, next) => {
   try {
-    const token = await User.activateUsersBySMS(req.body);
-    return res.json({ token });
+    const data = await User.activateUsersBySMS(req.body);
+    return res.json(data);
   } catch (e) {
     return next(e);
   }

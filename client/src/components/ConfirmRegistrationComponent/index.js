@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 import {FormInputComponent} from "../FormInputComponent";
 import {ButtonComponent} from "../ButtonComponent";
@@ -54,5 +55,12 @@ const ConfirmRegistrationComponent = ({
     </ButtonWrapper>
   </ModalWindowComponent>
 );
+
+ConfirmRegistrationComponent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onSend: PropTypes.func.isRequired,
+  sms_code: PropTypes.string.isRequired,
+  setSMSCodeHandler: PropTypes.func.isRequired,
+};
 
 export { ConfirmRegistrationComponent };

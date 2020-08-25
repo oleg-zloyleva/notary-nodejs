@@ -9,7 +9,8 @@ const store = createStore(reducer, composeWithDevTools(
 ));
 
 store.subscribe(() => {
-  saveState(store.getState())
+  const state = store.getState();
+  saveState(state);
 });
 
 export { store };
