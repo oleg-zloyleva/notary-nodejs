@@ -12,7 +12,11 @@ newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
   if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401, { phone }); // status 401
   return {
     token: getToken(user),
-    user,
+    user: {
+        name: user.name,
+        last_name: user.last_name,
+        email: user.email,
+    },
   };
 };
 

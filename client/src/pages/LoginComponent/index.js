@@ -43,7 +43,7 @@ const LoginComponent = () => {
       }));
       history.push('/profile/');
     }catch (e) {
-      
+
     }
   };
 
@@ -56,7 +56,7 @@ const LoginComponent = () => {
       await setForgotPassword(false);
       await setShowSendSMSCod(true);
     }catch (e) {
-      
+
     }
   };
 
