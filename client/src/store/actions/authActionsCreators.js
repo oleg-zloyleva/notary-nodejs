@@ -97,3 +97,20 @@ export const activateUserFetchAction = (data) => async (dispatch) => {
     await dispatch(appLoadedAction());
   }
 };
+
+export const resetPasswordFetchAction = (data) => async (dispatch) => {
+  console.log('resetPasswordFetchAction',data);
+  try {
+    await dispatch(appLoadingAction());
+    const response = await authAjaxQuery({method: 'patch', url: 'password/reset', data});
+    console.log('response',response);
+  }catch (e) {
+    console.log("error", e)
+    throw new CustomError({
+      data: e.response.data,
+      status: e.response.status,
+    });
+  }finally {
+    await dispatch(appLoadedAction());
+  }
+};

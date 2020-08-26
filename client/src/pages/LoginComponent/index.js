@@ -11,14 +11,23 @@ import {ColWrapper} from "../../styledComonents/ColWrapper";
 import {H2Wrapper} from "../../styledComonents/H2Wrapper";
 import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper";
 
-import {loginThunkHandler, sendForgotPasswordAction} from "../../store/actions/authActionsCreators";
+import {
+  loginThunkHandler,
+  resetPasswordFetchAction,
+  sendForgotPasswordAction
+} from "../../store/actions/authActionsCreators";
 import {GuestContentComponent} from "../../components/GuestContentComponent";
 import {ModalForgotPasswordComponent} from "../../components/ModalForgotPasswordComponent";
+import {ModalResetPasswordComponent} from "../../components/ModalResetPasswordComponent";
 
 const LoginComponent = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showForgotPassword, setForgotPassword] = useState(false);
+  const [showSendSMSCode, setShowSendSMSCod] = useState(false);
+
+  const [sms_code, setSMSCodeHandler] = useState('');
+  const [validCode, setValidCode] = useState(false);
 
   const dispatch = useDispatch();
   let history = useHistory();
@@ -39,6 +48,26 @@ const LoginComponent = () => {
     // todo dispatch sendForgotPassword
     await dispatch(sendForgotPasswordAction(phone));
     // todo show modal for enter sms_code
+    await setForgotPassword(false);
+    await setShowSendSMSCod(true);
+  };
+
+  const resendHandler = async () => {
+    await setForgotPassword(true);
+    await setShowSendSMSCod(false);
+  };
+
+  const inputSMSCodeHandler = async (text) => {
+    await setValidCode(false);
+    await setSMSCodeHandler(text);
+    if(/^\d{10}$/.test(text)){
+      await setValidCode(true);
+    }
+  };
+
+  const resetPasswordHandler = async () => {
+    console.log('resetPasswordHandler');
+    await dispatch(resetPasswordFetchAction({sms_code, password}));
   };
 
   return (
@@ -55,7 +84,26 @@ const LoginComponent = () => {
         </ButtonsAuthWrapper>
       </ColWrapper>
 
-      {showForgotPassword && <ModalForgotPasswordComponent onSend={sendForgotPassword} onClose={() => setForgotPassword(false)} />}
+      {showForgotPassword && (
+        <ModalForgotPasswordComponent
+          onSend={sendForgotPassword}
+          onClose={() => setForgotPassword(false)}
+        />
+        )}
+      {
+        showSendSMSCode && (
+          <ModalResetPasswordComponent
+            onReSend={resendHandler}
+            onClose={() => setShowSendSMSCod(false)}
+            onSend={resetPasswordHandler}
+            setSMSCodeHandler={inputSMSCodeHandler}
+            sms_code={sms_code}
+            validCode={validCode}
+            password={password}
+            setPassword={setPassword}
+          />
+        )
+      }
     </GuestContentComponent>
   );
 };

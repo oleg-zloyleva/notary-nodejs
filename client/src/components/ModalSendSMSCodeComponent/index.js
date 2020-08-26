@@ -31,9 +31,10 @@ const ButtonWrapper = styled('div')`
   margin: 32px auto 0px;
   display: flex;
   justify-content: center;
+  width: 400px;
 `;
 
-const ConfirmRegistrationComponent = ({
+const ModalSendSMSCodeComponent = ({
   onClose,
   onSend,
   sms_code,
@@ -56,11 +57,11 @@ const ConfirmRegistrationComponent = ({
   </ModalWindowComponent>
 );
 
-ConfirmRegistrationComponent.propTypes = {
+ModalSendSMSCodeComponent.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,
   sms_code: PropTypes.string.isRequired,
   setSMSCodeHandler: PropTypes.func.isRequired,
 };
 
-export { ConfirmRegistrationComponent };
+export { ModalSendSMSCodeComponent };

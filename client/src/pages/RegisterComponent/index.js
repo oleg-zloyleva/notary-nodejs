@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import { FormInputComponent } from '../../components/FormInputComponent';
 import { ButtonComponent } from '../../components/ButtonComponent';
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
-import { ConfirmRegistrationComponent } from '../../components/ConfirmRegistrationComponent';
+import { ModalSendSMSCodeComponent } from '../../components/ModalSendSMSCodeComponent';
 import {CongratsActivatePhoneComponent} from "../../components/CongratsActivatePhoneComponent";
 
 import {ColWrapper} from "../../styledComonents/ColWrapper";
@@ -68,7 +68,7 @@ const RegisterComponent = () => {
           <LinkButtonComponent to="/login" colors="secondary">Увійти</LinkButtonComponent>
         </ButtonsAuthWrapper>
 
-        {showConfirmRegistration && <ConfirmRegistrationComponent onClose={closeConfirmRegistrationWindow} onSend={confirmPhoneHandler} setSMSCodeHandler={setSMSCodeHandler} sms_code={sms_code} />}
+        {showConfirmRegistration && <ModalSendSMSCodeComponent onClose={closeConfirmRegistrationWindow} onSend={confirmPhoneHandler} setSMSCodeHandler={setSMSCodeHandler} sms_code={sms_code} />}
         {showCongratsActivatePhone && <CongratsActivatePhoneComponent onClose={() => setShowCongratsActivatePhone(false)} />}
       </ColWrapper>
     </GuestContentComponent>

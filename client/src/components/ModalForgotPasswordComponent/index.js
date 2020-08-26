@@ -1,8 +1,10 @@
 import React, {useState} from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+
 import {ModalWindowComponent} from "../ModalWindowComponent";
 import {FormInputComponent} from "../FormInputComponent";
 import {ButtonComponent} from "../ButtonComponent";
-import styled from "styled-components";
 
 const CircleWrapper = styled('div')`
   width: 80px;
@@ -39,7 +41,6 @@ const ModalForgotPasswordComponent = ({
   return (
     <ModalWindowComponent
       onClose={onClose}
-      onSend={onSend}
     >
       <CircleWrapper />
       <DescriptionWrapper>
@@ -53,6 +54,11 @@ const ModalForgotPasswordComponent = ({
       </ButtonWrapper>
     </ModalWindowComponent>
   );
+};
+
+ModalForgotPasswordComponent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onSend: PropTypes.func.isRequired,
 };
 
 export { ModalForgotPasswordComponent };

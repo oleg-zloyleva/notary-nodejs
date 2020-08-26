@@ -1,5 +1,7 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
+
 import {CloseButtonComponent} from "../CloseButtonComponent";
 
 const ModalWindowWrapper = styled('div')`
@@ -38,6 +40,11 @@ const ModalWindowComponent = ({onClose, children}) => {
       </ModalWindow>
     </ModalWindowWrapper>
   );
-}
+};
+
+ModalWindowComponent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export { ModalWindowComponent };
