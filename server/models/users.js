@@ -89,7 +89,10 @@ newSchema.statics.resetPassword = async function ({ sms_code, password }) {
   );
   if (!user) throw new CustomError('User not found', 404);
 
-  return getToken(user);
+    return {
+        token: getToken(user),
+        user,
+    };
 };
 
 newSchema.statics.changePassword = async function ({ user, body: { password } }) {

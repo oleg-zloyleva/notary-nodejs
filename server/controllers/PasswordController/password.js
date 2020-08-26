@@ -24,8 +24,8 @@ const getSMSForResetPassword = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
   try {
-    const token = await User.resetPassword(req.body);
-    return res.json({ token });
+    const data = await User.resetPassword(req.body);
+    return res.json(data);
   } catch (e) {
     return next(e);
   }

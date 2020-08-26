@@ -33,23 +33,31 @@ const LoginComponent = () => {
   let history = useHistory();
 
   const loginFetchHandler = async () => {
-    // Validate
+    try{
+      // Validate
 
-    // fire action Login
-    await dispatch(loginThunkHandler({
-      phone,
-      password,
-    }));
-    history.push('/profile/');
+      // fire action Login
+      await dispatch(loginThunkHandler({
+        phone,
+        password,
+      }));
+      history.push('/profile/');
+    }catch (e) {
+      
+    }
   };
 
   const sendForgotPassword = async (phone) => {
-    console.log('sendForgotPassword',phone);
-    // todo dispatch sendForgotPassword
-    await dispatch(sendForgotPasswordAction(phone));
-    // todo show modal for enter sms_code
-    await setForgotPassword(false);
-    await setShowSendSMSCod(true);
+    try{
+      console.log('sendForgotPassword',phone);
+      // todo dispatch sendForgotPassword
+      await dispatch(sendForgotPasswordAction(phone));
+      // todo show modal for enter sms_code
+      await setForgotPassword(false);
+      await setShowSendSMSCod(true);
+    }catch (e) {
+      
+    }
   };
 
   const resendHandler = async () => {
@@ -66,8 +74,13 @@ const LoginComponent = () => {
   };
 
   const resetPasswordHandler = async () => {
-    console.log('resetPasswordHandler');
-    await dispatch(resetPasswordFetchAction({sms_code, password}));
+    try{
+      console.log('resetPasswordHandler');
+      await dispatch(resetPasswordFetchAction({sms_code, password}));
+      history.push('/profile/');
+    }catch (e) {
+
+    }
   };
 
   return (

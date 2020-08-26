@@ -23,7 +23,7 @@ export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
   }catch (e) {
     throw new CustomError({
       data: e.response.data,
-      status: e.response.data,
+      status: e.response.status,
     });
   }finally {
     await dispatch(appLoadedAction());
@@ -42,7 +42,7 @@ export const logoutThunkHandler = () => async (dispatch) => {
   }catch (e) {
     throw new CustomError({
       data: e.response.data,
-      status: e.response.data,
+      status: e.response.status,
     });
   }finally {
     await dispatch(appLoadedAction());
@@ -57,7 +57,7 @@ export const sendForgotPasswordAction = (phone) => async (dispatch) => {
   }catch (e) {
     throw new CustomError({
       data: e.response.data,
-      status: e.response.data,
+      status: e.response.status,
     });
   }finally {
     await dispatch(appLoadedAction());
@@ -71,7 +71,7 @@ export const registerFetchAction = (data) => async (dispatch) => {
   }catch (e) {
     throw new CustomError({
       data: e.response.data,
-      status: e.response.data,
+      status: e.response.status,
     });
   }finally {
     await dispatch(appLoadedAction());
@@ -91,7 +91,7 @@ export const activateUserFetchAction = (data) => async (dispatch) => {
   }catch (e) {
     throw new CustomError({
       data: e.response.data,
-      status: e.response.data,
+      status: e.response.status,
     });
   }finally {
     await dispatch(appLoadedAction());
@@ -104,8 +104,12 @@ export const resetPasswordFetchAction = (data) => async (dispatch) => {
     await dispatch(appLoadingAction());
     const response = await authAjaxQuery({method: 'patch', url: 'password/reset', data});
     console.log('response',response);
+    await dispatch(loginAction({
+      token: response.token,
+      user: response.user,
+    }));
   }catch (e) {
-    console.log("error", e)
+    console.log("error", e);
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
