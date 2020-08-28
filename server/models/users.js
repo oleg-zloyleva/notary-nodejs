@@ -9,14 +9,10 @@ const newSchema = require('../schemas/UserSchema');
 newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
   const user = await this.findOne({ phone });
   if (!user) throw new CustomError(`User with phone:${phone} not found`, 404, { phone }); // status 404
-  if (!isPasswordCorrect(password, user)) throw new CustomError('Wrong phone or password', 401, { phone }); // status 401
+  if (!isPasswordCorrect(password, user.password)) throw new CustomError('Wrong phone or password', 401, { phone }); // status 401
   return {
     token: getToken(user),
-    user: {
-        name: user.name,
-        last_name: user.last_name,
-        email: user.email,
-    },
+    user: user.toJSON(),
   };
 };
 
@@ -31,6 +27,9 @@ newSchema.statics.activateUsersBySMS = async function ({ sms_code }) {
     {
       phone_verified_at: Date.now(),
       sms_code: null,
+    },
+    {
+      new: true,
     },
   );
 
@@ -93,10 +92,10 @@ newSchema.statics.resetPassword = async function ({ sms_code, password }) {
   );
   if (!user) throw new CustomError('User not found', 404);
 
-    return {
-        token: getToken(user),
-        user,
-    };
+  return {
+    token: getToken(user),
+    user,
+  };
 };
 
 newSchema.statics.changePassword = async function ({ user, body: { password } }) {
@@ -159,7 +158,8 @@ newSchema.statics.updateMyProfile = async function (
       passport_number,
       passport_issued,
       passport_issued_date,
-      idn, birth_day,
+      idn,
+      birth_day,
     },
   },
 ) {

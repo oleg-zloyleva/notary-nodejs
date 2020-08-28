@@ -16,4 +16,5 @@ exports.getToken = (user) => jwt.sign(
   { expiresIn: +config.expiresIn * 1000 },
 );
 
-exports.isPasswordCorrect = (password, user) => bcrypt.compareSync(password, user.password);
+// eslint-disable-next-line max-len
+exports.isPasswordCorrect = (enterPassword, userPassword) => bcrypt.compareSync(enterPassword, userPassword);

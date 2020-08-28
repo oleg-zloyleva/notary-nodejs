@@ -12,12 +12,12 @@ module.exports = async (req, res, next) => {
       const tokenInList = await BlackList.findOne({
         token,
       });
-      if (tokenInList) return unauthorizedResponseHandler(res, 'Unauthorized user');
+      if (tokenInList) return unauthorizedResponseHandler(res, 'Unauthorized user, not valid token');
       const user = await User.findOne({
         phone: req.tokenData.phone,
       });
 
-      if (!user) return unauthorizedResponseHandler(res, 'Unauthorized user');
+      if (!user) return unauthorizedResponseHandler(res, 'Unauthorized user, not found user');
       req.token = token;
       req.user = user;
       next();
