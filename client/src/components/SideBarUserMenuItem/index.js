@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
-import styled from "styled-components";
-import { useRouteMatch } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const LiWrapper = styled('li')`
   
@@ -22,10 +22,10 @@ const NavLinkWrapper = styled(NavLink)`
   }
 `;
 
-const SideBarUserMenuItem = ({title, path, Icon}) => {
+const SideBarUserMenuItem = ({ title, path, Icon }) => {
   const [iconColor, setIconColor] = useState('#777');
   const match = useRouteMatch(`/profile/${path}`);
-  useEffect(() => setIconColor(Boolean(match)?'#fff':'#777'));
+  useEffect(() => setIconColor(match ? '#fff' : '#777'));
 
   return (
     <LiWrapper>
@@ -37,6 +37,12 @@ const SideBarUserMenuItem = ({title, path, Icon}) => {
       </NavLinkWrapper>
     </LiWrapper>
   );
+};
+
+SideBarUserMenuItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  Icon: PropTypes.node.isRequired,
 };
 
 export { SideBarUserMenuItem };

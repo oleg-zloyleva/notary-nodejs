@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {FormInputComponent} from "../FormInputComponent";
-import {ButtonComponent} from "../ButtonComponent";
-import {ModalWindowComponent} from "../ModalWindowComponent";
+import { FormInputComponent } from '../FormInputComponent';
+import { ButtonComponent } from '../ButtonComponent';
+import { ModalWindowComponent } from '../ModalWindowComponent';
 
 const CircleWrapper = styled('div')`
   width: 80px;
@@ -15,11 +15,11 @@ const CircleWrapper = styled('div')`
 `;
 
 const DescriptionWrapper = styled('div')`
-font-weight: normal;
-font-size: 14px;
-line-height: 140%;
-text-align: center;
-color: #333333;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  color: #333333;
 `;
 
 const InputWrapper = styled('div')`
@@ -40,56 +40,50 @@ const ModalResetPasswordComponent = ({
   onReSend,
   sms_code,
   setSMSCodeHandler,
-  extraButton,
   validCode,
   password,
   setPassword,
-}) => {
-  const [newPassword, setNewPassword] = useState('');
-  return (
-    <ModalWindowComponent
-      onClose={onClose}
-    >
-      <CircleWrapper />
-      <DescriptionWrapper>
-        {
-          validCode ?
-            (
-              <p>Будь ласка вигадайте новий пароль</p>
-            ) :
-            (
-              <>
-                <p>На вказаний вами номер телефону було відправлено код.</p>
-                <p>Будь ласка, введіть код у форму нищє.</p>
-              </>
-            )
-        }
-      </DescriptionWrapper>
-      <InputWrapper>
-        <FormInputComponent labelText="Код з СМС" id="sms_code" changeValue={setSMSCodeHandler} value={sms_code} />
-        {
-          validCode && (
+}) => (
+  <ModalWindowComponent onClose={onClose}>
+    <CircleWrapper />
+    <DescriptionWrapper>
+      {
+        validCode
+          ? (
+            <p>Будь ласка вигадайте новий пароль</p>
+          ) : (
             <>
-              <FormInputComponent labelText="Введіть новий пароль" id="password" changeValue={setPassword} value={password} type="password" />
-              {/*<FormInputComponent labelText="Підтвердіть новий пароль" id="new_password" changeValue={setNewPassword} value={newPassword} />*/}
+              <p>На вказаний вами номер телефону було відправлено код.</p>
+              <p>Будь ласка, введіть код у форму нищє.</p>
             </>
           )
-        }
-      </InputWrapper>
+      }
+    </DescriptionWrapper>
+    <InputWrapper>
+      <FormInputComponent labelText="Код з СМС" id="sms_code" changeValue={setSMSCodeHandler} value={sms_code} />
+      {
+        validCode && (
+          <FormInputComponent labelText="Введіть новий пароль" id="password" changeValue={setPassword} value={password} type="password" />
+        )
+      }
+    </InputWrapper>
 
-      <ButtonWrapper align={!!extraButton}>
-        <ButtonComponent onClick={onSend}>Відправити</ButtonComponent>
-        {!validCode && <ButtonComponent onClick={onReSend} colors={'secondary'}>Отримати повторно</ButtonComponent>}
-      </ButtonWrapper>
-    </ModalWindowComponent>
-  );
-};
+    <ButtonWrapper>
+      <ButtonComponent onClick={onSend}>Відправити</ButtonComponent>
+      {!validCode && <ButtonComponent onClick={onReSend} colors="secondary">Отримати повторно</ButtonComponent>}
+    </ButtonWrapper>
+  </ModalWindowComponent>
+);
 
 ModalResetPasswordComponent.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,
+  onReSend: PropTypes.func.isRequired,
   sms_code: PropTypes.string.isRequired,
   setSMSCodeHandler: PropTypes.func.isRequired,
+  validCode: PropTypes.bool.isRequired,
+  password: PropTypes.string.isRequired,
+  setPassword: PropTypes.func.isRequired,
 };
 
 export { ModalResetPasswordComponent };

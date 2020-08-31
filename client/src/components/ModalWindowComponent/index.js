@@ -1,8 +1,8 @@
-import React, {useRef} from "react";
-import styled from "styled-components";
+import React, { useRef } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {CloseButtonComponent} from "../CloseButtonComponent";
+import { CloseButtonComponent } from '../CloseButtonComponent';
 
 const ModalWindowWrapper = styled('div')`
   position: absolute;
@@ -16,7 +16,7 @@ const ModalWindowWrapper = styled('div')`
   justify-content: center;
 `;
 
-const ModalWindow  = styled('div')`
+const ModalWindow = styled('div')`
   width: 480px;
   background: #FFFFFF;
   box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
@@ -25,11 +25,11 @@ const ModalWindow  = styled('div')`
   padding: 40px;
 `;
 
-const ModalWindowComponent = ({onClose, children}) => {
+const ModalWindowComponent = ({ onClose, children }) => {
   const inputEl = useRef(null);
 
   const closeHandler = (e) => {
-    if(e.target === inputEl.current) onClose();
+    if (e.target === inputEl.current) onClose();
   };
 
   return (

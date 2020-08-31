@@ -1,16 +1,16 @@
 import React from 'react';
-import {Route, Switch} from "react-router-dom";
+import { Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import {PrivateRouteComponent} from "../PrivateRouteComponent";
-import {UserProfileComponent} from "../../pages/UserProfileComponent";
-import {RegisterComponent} from "../../pages/RegisterComponent";
-import {LoginComponent} from "../../pages/LoginComponent";
-import {HomeComponent} from "../../pages/HomeComponent";
-import {LoaderComponent} from "../LoaderComponent";
-import {useSelector} from "react-redux";
+import { PrivateRouteComponent } from '../PrivateRouteComponent';
+import { UserProfileComponent } from '../../pages/UserProfileComponent';
+import { RegisterComponent } from '../../pages/RegisterComponent';
+import { LoginComponent } from '../../pages/LoginComponent';
+import { HomeComponent } from '../../pages/HomeComponent';
+import { LoaderComponent } from '../LoaderComponent';
 
 const App = () => {
-  const {showLoading} = useSelector(state => state.app);
+  const { showLoading } = useSelector((state) => state.app);
   return (
     <>
       {showLoading && <LoaderComponent />}

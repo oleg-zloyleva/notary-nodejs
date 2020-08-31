@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React, {useState} from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import {ModalWindowComponent} from "../ModalWindowComponent";
-import {FormInputComponent} from "../FormInputComponent";
-import {ButtonComponent} from "../ButtonComponent";
+import { ModalWindowComponent} from '../ModalWindowComponent';
+import { FormInputComponent } from '../FormInputComponent';
+import { ButtonComponent } from '../ButtonComponent';
 
 const CircleWrapper = styled('div')`
   width: 80px;
@@ -15,11 +15,11 @@ const CircleWrapper = styled('div')`
 `;
 
 const DescriptionWrapper = styled('div')`
-font-weight: normal;
-font-size: 14px;
-line-height: 140%;
-text-align: center;
-color: #333333;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  color: #333333;
 `;
 
 const InputWrapper = styled('div')`

@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+import styled from 'styled-components';
+
 import { ContainerComponent } from '../ContainerComponent';
-import styled from "styled-components";
-import {LogoLinkButton} from "../LogoLinkButton";
+import { LogoLinkButton } from '../LogoLinkButton';
 
 const HeaderWrapper = styled('div')`
    height: 80px;

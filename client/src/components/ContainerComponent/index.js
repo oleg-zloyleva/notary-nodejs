@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const ContainerWrapper = styled.div`
   margin: 0 auto;
@@ -16,11 +16,11 @@ const ContainerWrapper = styled.div`
   }
   display: flex;
   align-items: stretch;
-  ${props => props.grow_v && 'flex: 1;'}
-  ${props => props.justifyContent && `justify-content: ${props.justifyContent};`}
+  ${(props) => props.grow_v && 'flex: 1;'}
+  ${(props) => props.justifyContent && `justify-content: ${props.justifyContent};`}
 `;
 
-const ContainerComponent = ({children, ...rest}) => (
+const ContainerComponent = ({ children, ...rest }) => (
   <ContainerWrapper {...rest}>{children}</ContainerWrapper>
 );
 

@@ -1,6 +1,8 @@
-import React from "react";
-import {ModalWindowComponent} from "../ModalWindowComponent";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import { ModalWindowComponent } from '../ModalWindowComponent';
 
 const CircleWrapper = styled('div')`
   width: 80px;
@@ -18,7 +20,7 @@ text-align: center;
 color: #333333;
 `;
 
-const CongratsActivatePhoneComponent = ({onClose}) => (
+const CongratsActivatePhoneComponent = ({ onClose }) => (
   <ModalWindowComponent
     onClose={onClose}
   >
@@ -29,5 +31,9 @@ const CongratsActivatePhoneComponent = ({onClose}) => (
     </DescriptionWrapper>
   </ModalWindowComponent>
 );
+
+CongratsActivatePhoneComponent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 export { CongratsActivatePhoneComponent };

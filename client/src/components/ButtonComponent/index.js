@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+
 import { theme } from '../../theme';
 
 const ButtonWrapper = styled('button')`
@@ -9,11 +10,11 @@ const ButtonWrapper = styled('button')`
    cursor:pointer;
    width: 180px;
    height: 48px;
-   background: ${props => props.backgroundColor};
-   border: 1px solid ${props => props.borderColor};
+   background: ${(props) => props.backgroundColor};
+   border: 1px solid ${(props) => props.borderColor};
    border-radius: 10px;
    text-decoration: none;
-   color: ${props => props.color};
+   color: ${(props) => props.color};
    font-weight: normal;
    font-size: 14px;
    line-height: 16px;
@@ -28,7 +29,9 @@ const ButtonComponent = ({
   onClick,
   id,
 }) => {
-  let backgroundColor, border, color;
+  let backgroundColor;
+  let border;
+  let color;
 
   switch (colors) {
     case 'primary':

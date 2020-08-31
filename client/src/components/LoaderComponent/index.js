@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import {LoaderIconComponent} from "./LoaderIconComponent";
+import { LoaderIconComponent } from './LoaderIconComponent';
 
 const ModalWindowWrapper = styled('div')`
   position: absolute;

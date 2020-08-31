@@ -1,10 +1,10 @@
-import React from "react";
-import {HeaderComponent} from "../HeaderComponent";
-import {FooterComponent} from "../FooterComponent";
-import {ContainerComponent} from "../ContainerComponent";
+import React from 'react';
 
+import { HeaderComponent } from '../HeaderComponent';
+import { FooterComponent } from '../FooterComponent';
+import { ContainerComponent } from '../ContainerComponent';
 
-const GuestContentComponent = ({children}) => (
+const GuestContentComponent = ({ children }) => (
   <>
     <HeaderComponent />
     <ContainerComponent grow_v>

@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 
-const light = 'rgba(60,60,67,0.11)', dark = '#3C3C43';
+const light = 'rgba(60,60,67,0.11)';
+const dark = '#3C3C43';
 
 const LoaderIconComponent = () => {
-
   const [tick, setTick] = useState(0);
 
+  // eslint-disable-next-line no-return-await
   const countTick = async () => await setTick((tick + 1) > 7 ? 0 : tick + 1);
-  const setColor = (index, el) => index === el ? light : dark;
-  useEffect( () => {
+  const setColor = (index, el) => (index === el ? light : dark);
+  useEffect(() => {
     const timerHandler = setTimeout(countTick, 500);
     return () => clearTimeout(timerHandler);
-  },[tick]);
+  }, [tick]);
 
   return (
     <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,10 +1,11 @@
-import React from "react";
-import {useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import styled from "styled-components";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-import logout from "./logout.svg";
-import {logoutThunkHandler} from "../../store/actions/authActionsCreators";
+import { logoutThunkHandler } from '../../store/actions/authActionsCreators';
+
+import logout from './logout.svg';
 
 const LogoutWrapper = styled('div')`
   display: flex;
@@ -14,7 +15,7 @@ const LogoutWrapper = styled('div')`
 `;
 
 const LogoutComponent = () => {
-  let history = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const logoutHandler = async () => {
@@ -24,7 +25,7 @@ const LogoutComponent = () => {
 
   return (
     <LogoutWrapper onClick={() => logoutHandler()}>
-      <img src={logout} alt=""/>
+      <img src={logout} alt="" />
     </LogoutWrapper>
   );
 };

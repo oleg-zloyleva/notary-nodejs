@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import {Link} from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const LogoWrapper = styled('div')`
   width: 260px;
@@ -14,7 +14,7 @@ const LogoWrapper = styled('div')`
 
 const LogoLinkButton = () => (
   <LogoWrapper>
-    <Link to='/'>Logo</Link>
+    <Link to="/">Logo</Link>
   </LogoWrapper>
 );
 

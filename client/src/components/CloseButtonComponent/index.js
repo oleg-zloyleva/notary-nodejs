@@ -1,6 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import svg from './close.svg'
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import svg from './close.svg';
 
 const CloseButtonWrapper = styled('div')`
   position:absolute;
@@ -9,10 +11,14 @@ const CloseButtonWrapper = styled('div')`
   cursor:pointer;
 `;
 
-const CloseButtonComponent = ({onClick}) => (
+const CloseButtonComponent = ({ onClick }) => (
   <CloseButtonWrapper onClick={onClick}>
     <img src={svg} alt="Close" />
   </CloseButtonWrapper>
 );
+
+CloseButtonComponent.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 export { CloseButtonComponent };
