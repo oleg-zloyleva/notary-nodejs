@@ -1,8 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
-import {ColWrapper} from "../../styledComonents/ColWrapper";
-import {GuestContentComponent} from "../../components/GuestContentComponent";
+import { ColWrapper } from '../../styledComonents/ColWrapper';
+import { GuestContentComponent } from '../../components/GuestContentComponent';
 
 const H1Wrapper = styled.h1`
   margin: 0;
@@ -31,8 +32,8 @@ const HomeComponent = () => (
       <H1Wrapper>Lorem ipsum dolor sit amet </H1Wrapper>
       <DescriptionWrapper>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a vulputate mattis consequat velit non sit eget.</DescriptionWrapper>
       <ButtonsWrapper>
-        <LinkButtonComponent to='/login'>Увійти</LinkButtonComponent>
-        <LinkButtonComponent to='/register'>Реєстрація</LinkButtonComponent>
+        <LinkButtonComponent to="/login">Увійти</LinkButtonComponent>
+        <LinkButtonComponent to="/register">Реєстрація</LinkButtonComponent>
       </ButtonsWrapper>
     </ColWrapper>
   </GuestContentComponent>

@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const ColWrapper = styled.div`
-  width: ${({width}) => (width || '400px')};
+  width: ${({ width }) => (width || '400px')};
   margin: 0 auto;
   
   display: flex;
@@ -9,4 +9,4 @@ const ColWrapper = styled.div`
   justify-content: center;
 `;
 
-export { ColWrapper }
+export { ColWrapper };

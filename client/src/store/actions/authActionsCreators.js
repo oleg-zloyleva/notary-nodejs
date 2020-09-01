@@ -1,120 +1,125 @@
-import {appLoadedAction, appLoadingAction} from "./appActionsCreator";
-import {authAjaxQuery, clearState} from "../../helpers";
-import {CustomError} from "../../Errors/CustomError";
+import { authAjaxQuery, clearState } from '../../helpers';
+import { CustomError } from '../../Errors/CustomError';
+
+import { appLoadedAction, appLoadingAction } from './appActionsCreator';
 
 const loginAction = (data) => ({
   payload: data,
-  type: 'user/loginUser'
+  type: 'user/loginUser',
 });
 
-export const loginThunkHandler = ({password, phone}) => async (dispatch) => {
-  try{
+export const loginThunkHandler = ({ password, phone }) => async (dispatch) => {
+  try {
     await dispatch(appLoadingAction());
-    const response = await authAjaxQuery({method:'post', url: 'auth/login', data: {
+    const response = await authAjaxQuery({
+      method: 'post',
+      url: 'auth/login',
+      data: {
         phone,
         password,
-      }});
+      },
+    });
 
-    console.log('response',response);
+    console.log('response', response);
     await dispatch(loginAction({
       token: response.token,
       user: response.user,
     }));
-  }catch (e) {
+  } catch (e) {
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
 };
 
 const logoutAction = () => ({
-  type: 'user/logoutUser'
+  type: 'user/logoutUser',
 });
 
 export const logoutThunkHandler = () => async (dispatch) => {
-  try{
+  try {
     await dispatch(appLoadingAction());
-    await authAjaxQuery({method:'get', url: 'auth/logout'});
+    await authAjaxQuery({ method: 'get', url: 'auth/logout' });
     await clearState();
-  }catch (e) {
+  } catch (e) {
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
   await dispatch(logoutAction());
 };
 
 export const sendForgotPasswordAction = (phone) => async (dispatch) => {
-  try{
+  try {
     await dispatch(appLoadingAction());
-    await authAjaxQuery({method:'post', url: 'password/reset', data: {phone}});
-  }catch (e) {
+    await authAjaxQuery({ method: 'post', url: 'password/reset', data: { phone } });
+  } catch (e) {
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
 };
 
 export const registerFetchAction = (data) => async (dispatch) => {
-  try{
+  try {
     await dispatch(appLoadingAction());
-    await authAjaxQuery({method:'post', url: 'auth/register', data});
-  }catch (e) {
+    await authAjaxQuery({ method: 'post', url: 'auth/register', data });
+  } catch (e) {
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
 };
 
 export const activateUserFetchAction = (data) => async (dispatch) => {
-  try{
+  try {
     await dispatch(appLoadingAction());
-    const response = await authAjaxQuery({method:'post', url: 'auth/activate', data});
+    const response = await authAjaxQuery({ method: 'post', url: 'auth/activate', data });
 
-    console.log('response',response);
+    console.log('response', response);
     await dispatch(loginAction({
       token: response.token,
       user: response.user,
     }));
-  }catch (e) {
+  } catch (e) {
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
 };
 
 export const resetPasswordFetchAction = (data) => async (dispatch) => {
-  console.log('resetPasswordFetchAction',data);
+  console.log('resetPasswordFetchAction', data);
   try {
     await dispatch(appLoadingAction());
-    const response = await authAjaxQuery({method: 'patch', url: 'password/reset', data});
-    console.log('response',response);
+    const response = await authAjaxQuery({ method: 'patch', url: 'password/reset', data });
+    console.log('response', response);
     await dispatch(loginAction({
       token: response.token,
       user: response.user,
     }));
-  }catch (e) {
-    console.log("error", e);
+  } catch (e) {
+    console.log('error', e);
     throw new CustomError({
       data: e.response.data,
       status: e.response.status,
     });
-  }finally {
+  } finally {
     await dispatch(appLoadedAction());
   }
 };

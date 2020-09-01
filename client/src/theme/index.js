@@ -1,4 +1,4 @@
-const theme ={
+const theme = {
   primaryBgColor: '#C4C4C4',
   primaryBorderColor: '#C4C4C4',
   primaryTextColor: '#333333',

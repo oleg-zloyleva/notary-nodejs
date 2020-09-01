@@ -1,24 +1,21 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import {FormInputComponent} from "../../components/FormInputComponent";
-import {ButtonComponent} from "../../components/ButtonComponent";
-import {LinkButtonComponent} from "../../components/LinkButtonComponent";
-
-import {ButtonsAuthWrapper} from "../../styledComonents/ButtonsAuthWrapper";
-import {ColWrapper} from "../../styledComonents/ColWrapper";
-import {H2Wrapper} from "../../styledComonents/H2Wrapper";
-import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper";
-
+import { FormInputComponent } from '../../components/FormInputComponent';
+import { ButtonComponent } from '../../components/ButtonComponent';
+import { ButtonsAuthWrapper } from '../../styledComonents/ButtonsAuthWrapper';
+import { ColWrapper } from '../../styledComonents/ColWrapper';
+import { H2Wrapper } from '../../styledComonents/H2Wrapper';
+import { DescriptionWrapper } from '../../styledComonents/DescriptionWrapper';
 import {
   loginThunkHandler,
   resetPasswordFetchAction,
-  sendForgotPasswordAction
-} from "../../store/actions/authActionsCreators";
-import {GuestContentComponent} from "../../components/GuestContentComponent";
-import {ModalForgotPasswordComponent} from "../../components/ModalForgotPasswordComponent";
-import {ModalResetPasswordComponent} from "../../components/ModalResetPasswordComponent";
+  sendForgotPasswordAction,
+} from '../../store/actions/authActionsCreators';
+import { GuestContentComponent } from '../../components/GuestContentComponent';
+import { ModalForgotPasswordComponent } from '../../components/ModalForgotPasswordComponent';
+import { ModalResetPasswordComponent } from '../../components/ModalResetPasswordComponent';
 
 const LoginComponent = () => {
   const [phone, setPhone] = useState('');
@@ -30,10 +27,10 @@ const LoginComponent = () => {
   const [validCode, setValidCode] = useState(false);
 
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
 
   const loginFetchHandler = async () => {
-    try{
+    try {
       // Validate
 
       // fire action Login
@@ -42,21 +39,21 @@ const LoginComponent = () => {
         password,
       }));
       history.push('/profile/');
-    }catch (e) {
-
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const sendForgotPassword = async (phone) => {
-    try{
-      console.log('sendForgotPassword',phone);
+  const sendForgotPassword = async (phoneNumber) => {
+    try {
+      console.log('sendForgotPassword', phoneNumber);
       // todo dispatch sendForgotPassword
-      await dispatch(sendForgotPasswordAction(phone));
+      await dispatch(sendForgotPasswordAction(phoneNumber));
       // todo show modal for enter sms_code
       await setForgotPassword(false);
       await setShowSendSMSCod(true);
-    }catch (e) {
-
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -68,18 +65,18 @@ const LoginComponent = () => {
   const inputSMSCodeHandler = async (text) => {
     await setValidCode(false);
     await setSMSCodeHandler(text);
-    if(/^\d{10}$/.test(text)){
+    if (/^\d{10}$/.test(text)) {
       await setValidCode(true);
     }
   };
 
   const resetPasswordHandler = async () => {
-    try{
+    try {
       console.log('resetPasswordHandler');
-      await dispatch(resetPasswordFetchAction({sms_code, password}));
+      await dispatch(resetPasswordFetchAction({ sms_code, password }));
       history.push('/profile/');
-    }catch (e) {
-
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -88,9 +85,14 @@ const LoginComponent = () => {
       <ColWrapper>
         <H2Wrapper>Увійти</H2Wrapper>
         <DescriptionWrapper>Будь ласка, заповніть всі поля.</DescriptionWrapper>
-        <FormInputComponent labelText="Введіть номер телефону" id="phone" value={phone} changeValue={setPhone}/>
-        <FormInputComponent labelText="Введіть пароль" id="password" type="password" value={password}
-                            changeValue={setPassword}/>
+        <FormInputComponent labelText="Введіть номер телефону" id="phone" value={phone} changeValue={setPhone} />
+        <FormInputComponent
+          labelText="Введіть пароль"
+          id="password"
+          type="password"
+          value={password}
+          changeValue={setPassword}
+        />
         <ButtonsAuthWrapper>
           <ButtonComponent id="login" onClick={loginFetchHandler}>Увійти</ButtonComponent>
           <ButtonComponent colors="secondary" onClick={() => setForgotPassword(true)}>Забули пароль?</ButtonComponent>
@@ -102,7 +104,7 @@ const LoginComponent = () => {
           onSend={sendForgotPassword}
           onClose={() => setForgotPassword(false)}
         />
-        )}
+      )}
       {
         showSendSMSCode && (
           <ModalResetPasswordComponent
@@ -121,4 +123,4 @@ const LoginComponent = () => {
   );
 };
 
-export {LoginComponent};
+export { LoginComponent };

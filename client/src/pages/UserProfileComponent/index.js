@@ -1,28 +1,30 @@
-import React, {useEffect} from "react";
-import {useSelector} from "react-redux";
-import {Route, Switch, useHistory, useRouteMatch} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  Route, Switch, useHistory, useRouteMatch,
+} from 'react-router-dom';
+import styled from 'styled-components';
 
-import {SideBarUserComponent} from "../../components/SideBarUserComponent";
-import {ContainerComponent} from "../../components/ContainerComponent";
-import {HeaderUserComponent} from "../../components/HeaderUserComponent";
-import {FooterComponent} from "../../components/FooterComponent";
-import {StepsFillingDataComponent} from "../../components/StepsFillingDataComponent";
-import styled from "styled-components";
+import { SideBarUserComponent } from '../../components/SideBarUserComponent';
+import { ContainerComponent } from '../../components/ContainerComponent';
+import { HeaderUserComponent } from '../../components/HeaderUserComponent';
+import { FooterComponent } from '../../components/FooterComponent';
+import { StepsFillingDataComponent } from '../../components/StepsFillingDataComponent';
 
 const ContentWrapper = styled('div')`
   flex: 1;
 `;
 
 const UserProfileComponent = () => {
-  const { fill_profile } = useSelector(state => state.user.user);
+  const { fillProfile } = useSelector((state) => state.user.user);
   /**
    * Redirect user if path = /profile to /profile/personal
    */
-  let history = useHistory();
+  const history = useHistory();
   const match = useRouteMatch('/profile/');
   useEffect(() => {
-    if(match?.isExact) history.push('/profile/personal');
-  },[]);
+    if (match?.isExact) history.push('/profile/personal');
+  }, []);
 
   return (
     <>
@@ -31,10 +33,10 @@ const UserProfileComponent = () => {
         <SideBarUserComponent />
 
         <ContentWrapper>
-          {!fill_profile && <StepsFillingDataComponent />}
+          {!fillProfile && <StepsFillingDataComponent />}
 
           {
-            fill_profile && (
+            fillProfile && (
               <Switch>
                 <Route path="/profile/personal">
                   <div>Personal</div>

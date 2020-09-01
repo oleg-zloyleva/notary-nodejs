@@ -1,22 +1,21 @@
-import React, {useState} from "react";
-import {useHistory} from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { FormInputComponent } from '../../components/FormInputComponent';
 import { ButtonComponent } from '../../components/ButtonComponent';
 import { LinkButtonComponent } from '../../components/LinkButtonComponent';
 import { ModalSendSMSCodeComponent } from '../../components/ModalSendSMSCodeComponent';
-import {CongratsActivatePhoneComponent} from "../../components/CongratsActivatePhoneComponent";
-
-import {ColWrapper} from "../../styledComonents/ColWrapper";
-import {H2Wrapper} from "../../styledComonents/H2Wrapper";
-import {DescriptionWrapper} from "../../styledComonents/DescriptionWrapper"
-import {ButtonsAuthWrapper} from "../../styledComonents/ButtonsAuthWrapper"
-import {GuestContentComponent} from "../../components/GuestContentComponent";
-import {useDispatch} from "react-redux";
-import {activateUserFetchAction, registerFetchAction} from "../../store/actions/authActionsCreators";
+import { CongratsActivatePhoneComponent } from '../../components/CongratsActivatePhoneComponent';
+import { ColWrapper } from '../../styledComonents/ColWrapper';
+import { H2Wrapper } from '../../styledComonents/H2Wrapper';
+import { DescriptionWrapper } from '../../styledComonents/DescriptionWrapper';
+import { ButtonsAuthWrapper } from '../../styledComonents/ButtonsAuthWrapper';
+import { GuestContentComponent } from '../../components/GuestContentComponent';
+import { activateUserFetchAction, registerFetchAction } from '../../store/actions/authActionsCreators';
 
 const RegisterComponent = () => {
-  let history = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showConfirmRegistration, setShowConfirmRegistration] = useState(false);
   const [showCongratsActivatePhone, setShowCongratsActivatePhone] = useState(false);
@@ -27,17 +26,16 @@ const RegisterComponent = () => {
   const [sms_code, setSMSCodeHandler] = useState('');
 
   const registrationHandler = async () => {
-    try{
-      await dispatch(registerFetchAction({name, password, phone}));
+    try {
+      await dispatch(registerFetchAction({ name, password, phone }));
       await setShowConfirmRegistration(true);
-    }
-    catch (e) {
-      console.log(e.data, e.status)
+    } catch (e) {
+      console.log(e.data, e.status);
     }
   };
 
   const confirmPhoneHandler = async () => {
-    await dispatch(activateUserFetchAction({sms_code}));
+    await dispatch(activateUserFetchAction({ sms_code }));
     await setSMSCodeHandler('');
     await setShowConfirmRegistration(false);
     await setShowCongratsActivatePhone(true);
@@ -51,7 +49,7 @@ const RegisterComponent = () => {
 
   const closeConfirmRegistrationWindow = async () => {
     await setSMSCodeHandler('');
-    await setShowConfirmRegistration(false)
+    await setShowConfirmRegistration(false);
   };
 
   return (

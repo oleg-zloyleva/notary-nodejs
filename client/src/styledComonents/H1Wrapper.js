@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const H1Wrapper = styled.h1`
   margin: 32px 0;
