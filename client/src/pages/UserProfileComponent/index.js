@@ -13,6 +13,8 @@ import { StepsFillingDataComponent } from '../../components/StepsFillingDataComp
 
 const ContentWrapper = styled('div')`
   flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const UserProfileComponent = () => {

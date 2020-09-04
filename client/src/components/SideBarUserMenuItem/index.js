@@ -42,7 +42,7 @@ const SideBarUserMenuItem = ({ title, path, Icon }) => {
 SideBarUserMenuItem.propTypes = {
   title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  Icon: PropTypes.node.isRequired,
+  Icon: PropTypes.elementType.isRequired,
 };
 
 export { SideBarUserMenuItem };

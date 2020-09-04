@@ -77,7 +77,7 @@ const schema = new mongoose.Schema({
     type: String,
     enum: Object.values(Role),
   },
-  fill_profile: {
+  fillProfile: {
     type: Boolean,
     default: false,
   },

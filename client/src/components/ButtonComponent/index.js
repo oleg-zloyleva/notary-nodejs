@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { theme } from '../../theme';
 
@@ -10,6 +11,7 @@ const ButtonWrapper = styled('button')`
    cursor:pointer;
    width: 180px;
    height: 48px;
+   padding: 12px 16px;
    background: ${(props) => props.backgroundColor};
    border: 1px solid ${(props) => props.borderColor};
    border-radius: 10px;
@@ -60,6 +62,13 @@ const ButtonComponent = ({
       {children}
     </ButtonWrapper>
   );
+};
+
+ButtonComponent.propTypes = {
+  children: PropTypes.node.isRequired,
+  colors: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };
 
 export { ButtonComponent };

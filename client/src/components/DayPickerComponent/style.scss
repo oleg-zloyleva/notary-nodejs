@@ -1,0 +1,28 @@
+
+.DayPicker-wrapper{
+  outline: none;
+}
+.DayPicker-WeekdaysRow{
+  display: flex;
+  .DayPicker-Weekday{
+    width: 16px;
+    height: 16px;
+    margin: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.DayPicker-Week{
+  display: flex;
+  .DayPicker-Day{
+    width: 16px;
+    height: 16px;
+    margin: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StepItemWrapper = styled('li')`
   display: flex;
@@ -41,5 +42,13 @@ const StepItemComponent = ({
     {!last && <DividerWrapper filled={filled} />}
   </StepItemWrapper>
 );
+
+StepItemComponent.propTypes = {
+  el: PropTypes.object.isRequired,
+  filled: PropTypes.bool,
+  active: PropTypes.bool,
+  last: PropTypes.bool,
+  setActiveStep: PropTypes.func.isRequired,
+};
 
 export { StepItemComponent };
