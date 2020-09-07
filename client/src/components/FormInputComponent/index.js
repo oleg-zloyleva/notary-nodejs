@@ -35,11 +35,12 @@ const InputWrapper = styled.input`
 `;
 
 const FormInputComponent = ({
-  labelText, id, type, primaryTextColor, value, changeValue,
+  labelText, id, type, primaryTextColor, value, changeValue, children,
 }) => (
   <FormInputWrapper>
     <LabelWrapper htmlFor={id} primaryTextColor={primaryTextColor}>{labelText}</LabelWrapper>
-    <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} />
+    { children && children }
+    { !children && <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} /> }
   </FormInputWrapper>
 );
 
