@@ -116,4 +116,4 @@ const YearMonthFormComponent = ({
   );
 };
 
-export { YearMonthFormComponent };i
+export { YearMonthFormComponent };
