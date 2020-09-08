@@ -66,7 +66,7 @@ const ButtonComponent = ({
 
 ButtonComponent.propTypes = {
   children: PropTypes.node.isRequired,
-  colors: PropTypes.string.isRequired,
+  colors: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   id: PropTypes.string,
 };
