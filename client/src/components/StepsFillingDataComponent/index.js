@@ -11,7 +11,7 @@ import { StepFifthComponent } from './StepFifthComponent';
 const StepsFillingDataWrapper = styled('div')`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   flex: 1;
   position:relative;
@@ -30,7 +30,7 @@ const StepsFillingDataComponent = () => {
       id: 1, filled: true, active: false, component: (<StepFirstComponent />),
     },
     {
-      id: 2, filled: true, active: true, component: (<StepSecondComponent />),
+      id: 2, filled: true, active: false, component: (<StepSecondComponent />),
     },
     {
       id: 3, filled: false, active: false, component: (<StepThirdComponent />),
@@ -39,7 +39,7 @@ const StepsFillingDataComponent = () => {
       id: 4, filled: false, active: false, component: (<StepFourthComponent />),
     },
     {
-      id: 5, filled: false, active: false, component: (<StepFifthComponent />),
+      id: 5, filled: false, active: true, component: (<StepFifthComponent />),
     },
   ]);
 

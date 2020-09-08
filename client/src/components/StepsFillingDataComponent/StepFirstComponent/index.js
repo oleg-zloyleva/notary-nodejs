@@ -4,8 +4,7 @@ import { FormInputComponent } from '../../FormInputComponent';
 import { ButtonComponent } from '../../ButtonComponent';
 import { StepWrapperComponent } from '../StepWrapperComponent';
 import { ButtonWrapperComponent } from '../ButtonWrapperComponent';
-
-import img from './arrow-right.svg';
+import img from '../../../assets/svg/arrow-right.svg';
 
 const StepFirstComponent = () => (
   <StepWrapperComponent>

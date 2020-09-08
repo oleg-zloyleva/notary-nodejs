@@ -10,6 +10,9 @@ const FormInputWrapper = styled.div`
   &:not(:last-child){
     margin-bottom: 24px;
   }
+  ${(props) => props.mr && `margin-right: calc(var(--indent) *${props.mr});`}
+  ${(props) => props.width && `width: ${props.width}px;`}
+  ${(props) => props.flexGrow && `flex-grow: ${props.flexGrow};`}
 `;
 
 const LabelWrapper = styled.label`
@@ -34,6 +37,22 @@ const InputWrapper = styled.input`
    }
 `;
 
+const TextareaWrapper = styled('textarea')`
+  border: 1px solid #C8C8C8;
+  border-radius: 10px;
+  width: 100%;
+  //height: 48px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 16px;
+  &:focus{
+    outline: none;
+  }
+  resize: none;
+`;
+
 const InputContainerWrapper = styled('div')`
   position:relative;
 `;
@@ -47,12 +66,18 @@ const IconWrapper = styled('div')`
 `;
 
 const FormInputComponent = ({
-  labelText, id, type, primaryTextColor, value, changeValue, children,
+  labelText, id, type, primaryTextColor, value, changeValue, children, mr, width, flexGrow, textarea,
 }) => (
-  <FormInputWrapper>
+  <FormInputWrapper mr={mr} width={width} flexGrow={flexGrow}>
     <LabelWrapper htmlFor={id} primaryTextColor={primaryTextColor}>{labelText}</LabelWrapper>
     <InputContainerWrapper>
-      <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} />
+      {
+        textarea ? (
+          <TextareaWrapper id={id} onChange={(e) => changeValue(e.target.value)} rows={3}>{value}</TextareaWrapper>
+        ) : (
+          <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} />
+        )
+      }
       <IconWrapper>
         {children}
       </IconWrapper>

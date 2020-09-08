@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StepWrapper = styled('div')`
-  width: 400px;
+  width: ${(props) => props.width || 400}px;
   background: #FFFFFF;
   box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -11,8 +11,8 @@ const StepWrapper = styled('div')`
   margin-bottom: 100px;
 `;
 
-const StepWrapperComponent = ({ children }) => (
-  <StepWrapper>
+const StepWrapperComponent = ({ children, width }) => (
+  <StepWrapper width={width}>
     {children}
   </StepWrapper>
 );

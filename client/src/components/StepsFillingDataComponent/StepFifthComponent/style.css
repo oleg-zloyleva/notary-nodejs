@@ -1,0 +1,4 @@
+.upload__image-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
