@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import DayPicker from 'react-day-picker';
-// import 'react-day-picker/lib/style.css';
 import './style.scss';
 import styled from 'styled-components';
 
 import { YearMonthFormComponent } from './YearMonthFormComponent';
 
 const YearNavigationWrapper = styled('div')`
-  position:absolute;
   background-color: #fff;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 24px;
   overflow: hidden;
 `;

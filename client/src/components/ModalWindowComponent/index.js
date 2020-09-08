@@ -1,20 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { CloseButtonComponent } from '../CloseButtonComponent';
-
-const ModalWindowWrapper = styled('div')`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255,255,255, .7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { ModalOverlayComponent } from '../ModalOverlayComponent';
 
 const ModalWindow = styled('div')`
   width: 480px;
@@ -25,22 +14,14 @@ const ModalWindow = styled('div')`
   padding: 40px;
 `;
 
-const ModalWindowComponent = ({ onClose, children }) => {
-  const inputEl = useRef(null);
-
-  const closeHandler = (e) => {
-    if (e.target === inputEl.current) onClose();
-  };
-
-  return (
-    <ModalWindowWrapper ref={inputEl} onClick={closeHandler}>
-      <ModalWindow>
-        <CloseButtonComponent onClick={onClose} />
-        {children}
-      </ModalWindow>
-    </ModalWindowWrapper>
-  );
-};
+const ModalWindowComponent = ({ onClose, children }) => (
+  <ModalOverlayComponent onClose={onClose}>
+    <ModalWindow>
+      <CloseButtonComponent onClick={onClose} />
+      {children}
+    </ModalWindow>
+  </ModalOverlayComponent>
+);
 
 ModalWindowComponent.propTypes = {
   onClose: PropTypes.func.isRequired,

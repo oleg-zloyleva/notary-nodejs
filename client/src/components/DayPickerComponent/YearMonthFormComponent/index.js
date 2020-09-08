@@ -97,7 +97,7 @@ const YearMonthFormComponent = ({
             <SelectMonthAreaWrapper>
               {
                 chunk(months, 3).map((row, r) => (
-                  <RowWrapper>
+                  <RowWrapper key={r}>
                     {
                       row.map((month, i) => (
                         <MonthItemWrapper key={month} value={i} onClick={() => onChange(new Date(date.getFullYear(), (r + 4) + i))}>

@@ -22,8 +22,8 @@ const LabelWrapper = styled.label`
 const InputWrapper = styled.input`
   border: 1px solid #C8C8C8;
   border-radius: 10px;
-  //width: 100%;
-  //height: 48px;
+  width: 100%;
+  height: 48px;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -34,20 +34,37 @@ const InputWrapper = styled.input`
    }
 `;
 
+const InputContainerWrapper = styled('div')`
+  position:relative;
+`;
+
+const IconWrapper = styled('div')`
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translate(0, -50%);
+    cursor:pointer;
+`;
+
 const FormInputComponent = ({
-  labelText, id, type, primaryTextColor, value, changeValue,
+  labelText, id, type, primaryTextColor, value, changeValue, children,
 }) => (
   <FormInputWrapper>
     <LabelWrapper htmlFor={id} primaryTextColor={primaryTextColor}>{labelText}</LabelWrapper>
-    <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} />
+    <InputContainerWrapper>
+      <InputWrapper type={type || 'text'} id={id} value={value} onChange={(e) => changeValue(e.target.value)} />
+      <IconWrapper>
+        {children}
+      </IconWrapper>
+    </InputContainerWrapper>
   </FormInputWrapper>
 );
 
 FormInputComponent.propTypes = {
   labelText: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  primaryTextColor: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  primaryTextColor: PropTypes.string,
   value: PropTypes.string.isRequired,
   changeValue: PropTypes.func.isRequired,
 };
