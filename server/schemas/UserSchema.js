@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, 'Require field name'],
   },
-  last_name: {
+  lastName: {
     type: String,
   },
   patronymic: {
@@ -33,37 +33,37 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, 'Require field password'],
   },
-  sms_code: {
+  smsCode: {
     type: String,
   },
   phone_verified_at: {
     type: Number,
   },
-  passport_series: {
+  passportSeries: {
     type: String,
   },
-  passport_number: {
+  passportNumber: {
     type: String,
   },
-  passport_issued: {
+  passportIssued: {
     type: String,
   },
-  passport_issued_date: {
+  passportIssuedDate: {
     type: Number,
   },
 
-  passport_screens: [
+  passportScreens: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ScreenImage',
     },
   ],
 
-  idn: {
+  inn: {
     type: String,
   },
 
-  idn_screens: [
+  inn_screens: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ScreenImage',

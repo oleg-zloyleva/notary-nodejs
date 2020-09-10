@@ -16,17 +16,17 @@ newSchema.statics.loginUserReturnToken = async function ({ phone, password }) {
   };
 };
 
-newSchema.statics.activateUsersBySMS = async function ({ sms_code }) {
+newSchema.statics.activateUsersBySMS = async function ({ smsCode }) {
   const user = await this.findOneAndUpdate(
     {
-      sms_code,
+      smsCode,
       phone_verified_at: {
         $exists: false,
       },
     },
     {
       phone_verified_at: Date.now(),
-      sms_code: null,
+      smsCode: null,
     },
     {
       new: true,
@@ -47,7 +47,7 @@ newSchema.statics.registerNewUser = async function ({ name, password, phone }) {
     name,
     password: getNewPassword(password),
     phone,
-    sms_code: getSMSCode(),
+    smsCode: getSMSCode(),
   });
 
   return process.env.NODE_ENV === 'development' ? newUser : true; // todo remove after
@@ -62,7 +62,7 @@ newSchema.statics.createSMSForResetPassword = async function ({ phone }) {
       },
     },
     {
-      sms_code: getSMSCode(),
+      smsCode: getSMSCode(),
     },
     {
       new: true,
@@ -74,17 +74,17 @@ newSchema.statics.createSMSForResetPassword = async function ({ phone }) {
   return process.env.NODE_ENV === 'development' ? user : true; // todo remove after
 };
 
-newSchema.statics.resetPassword = async function ({ sms_code, password }) {
+newSchema.statics.resetPassword = async function ({ smsCode, password }) {
   const user = await this.findOneAndUpdate(
     {
-      sms_code,
+      smsCode,
       phone_verified_at: {
         $exists: true,
       },
     },
     {
       password: getNewPassword(password),
-      sms_code: null,
+      smsCode: null,
     },
     {
       new: true,
@@ -117,7 +117,7 @@ newSchema.statics.createSMSForChangePhone = async function ({
       },
     },
     {
-      sms_code: getSMSCode(),
+      smsCode: getSMSCode(),
       new_phone,
     },
     {
@@ -130,15 +130,15 @@ newSchema.statics.createSMSForChangePhone = async function ({
   return process.env.NODE_ENV === 'development' ? user : true; // todo remove after
 };
 
-newSchema.statics.changePhone = async function ({ user, body: { sms_code } }) {
+newSchema.statics.changePhone = async function ({ user, body: { smsCode } }) {
   // eslint-disable-next-line camelcase
-  if (user.sms_code === sms_code) {
+  if (user.smsCode === smsCode) {
     const data = await this.findOneAndUpdate(
       { _id: user._id },
       {
         phone: user.new_phone,
         new_phone: null,
-        sms_code: null,
+        smsCode: null,
       },
       { new: true },
     );
@@ -152,13 +152,13 @@ newSchema.statics.updateMyProfile = async function (
     user,
     body: {
       name,
-      last_name,
+      lastName,
       patronymic,
-      passport_series,
-      passport_number,
-      passport_issued,
-      passport_issued_date,
-      idn,
+      passportSeries,
+      passportNumber,
+      passportIssued,
+      passportIssuedDate,
+      inn,
       birth_day,
     },
   },
@@ -167,13 +167,13 @@ newSchema.statics.updateMyProfile = async function (
     { _id: user._id },
     {
       name,
-      last_name,
+      lastName,
       patronymic,
-      passport_series,
-      passport_number,
-      passport_issued,
-      passport_issued_date,
-      idn,
+      passportSeries,
+      passportNumber,
+      passportIssued,
+      passportIssuedDate,
+      inn,
       birth_day,
     },
     { new: true },

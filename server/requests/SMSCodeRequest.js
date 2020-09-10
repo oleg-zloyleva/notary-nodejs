@@ -1,10 +1,10 @@
 const { check } = require('express-validator');
 
 const rules = [
-  check('sms_code')
+  check('smsCode')
     .exists().withMessage('Field is require')
     .isLength({ min: 4 })
-    .withMessage('Not correct length of sms_code'),
+    .withMessage('Not correct length of smsCode'),
 ];
 
 module.exports = rules;

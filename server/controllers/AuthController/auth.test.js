@@ -15,7 +15,7 @@ const mockLogin = {
   phone: '0991234567',
 };
 const mockActivate = {
-  sms_code: '123456789',
+  smsCode: '123456789',
 };
 
 const mockPassword = {

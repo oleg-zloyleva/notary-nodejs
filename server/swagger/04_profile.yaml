@@ -40,25 +40,25 @@ definitions:
       name:
         type: string
         example: 'Oleh'
-      last_name:
+      lastName:
         type: string
         example: 'Lev'
       patronymic:
         type: string
         example: 'Anat'
-      passport_series:
+      passportSeries:
         type: string
         example: 'AK'
-      passport_number:
+      passportNumber:
         type: integer
         example: 339173
-      passport_issued:
+      passportIssued:
         type: string
         example: 'Dnipro'
-      passport_issued_date:
+      passportIssuedDate:
         type: integer
         example: 939085200
-      idn:
+      inn:
         type: integer
         example: 111222333444555
       birth_day:

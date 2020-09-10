@@ -84,6 +84,6 @@ definitions:
   Activate:
     type: object
     properties:
-      sms_code:
+      smsCode:
         type: string
         example: '123456789'
